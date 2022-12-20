@@ -34,13 +34,13 @@ export default function SignUp({ submit, loginLink }) {
 
     // validacion de inputs
     if (!validateEmail(user.email)) {
-      global.notify("Correo electronico invalido", { variant: "error" });
+      // global.notify("Correo electronico invalido", { variant: "error" });
       return;
     }
 
     for (const key in user) {
       if (!user[key] || user[key] == "") {
-        global.notify("Campos Incompletos", { variant: "warning" });
+        // global.notify("Campos Incompletos", { variant: "warning" });
         return;
       }
     }

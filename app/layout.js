@@ -8,13 +8,18 @@ import theme from "./utils/theme";
 
 // PUSH NOTIFICATIONS
 import { SnackbarProvider } from "notistack";
+import { useSnackbar } from "notistack";
 import { IconButton } from "@mui/material";
 import Grow from "@mui/material/Grow";
 import CloseIcon from "@mui/icons-material/Close";
+
 const notistackRef = React.createRef();
 const onClickDismiss = (key) => () => {
   notistackRef.current.closeSnackbar(key);
 };
+// const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+// global.notify = enqueueSnackbar;
+// global.close = closeSnackbar;
 
 export default function RootLayout({ children }) {
   return (
