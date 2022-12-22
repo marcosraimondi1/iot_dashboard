@@ -180,9 +180,7 @@ function DashboardContent({ children, logout, title }) {
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           {/* I T E M S   D E L   D A S H B O A R D */}
-          <Grid container spacing={3}>
-            {children}
-          </Grid>
+          {children}
           <Copyright sx={{ pt: 4 }} />
         </Container>
       </Box>
