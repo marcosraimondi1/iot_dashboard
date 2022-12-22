@@ -4,20 +4,11 @@ import Paper from "@mui/material/Paper";
 
 export default function WidgetCard({ children, title }) {
   return (
-    <Paper elevation={8}>
-      <div style={{ margin: "5px" }}>
+    <Paper style={{ margin: "3px" }} elevation={8}>
+      <div style={{ margin: "7px" }}>
         <h4>{title}</h4>
       </div>
-      <div
-        style={{
-          display: "flex",
-          margin: "5px",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        {children}
-      </div>
+      <div>{children}</div>
     </Paper>
   );
 }

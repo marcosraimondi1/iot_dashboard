@@ -6,9 +6,18 @@ export default function IotIndicator({ config }) {
     <WidgetCard
       title={config?.selectedDevice.name + " - " + config?.variableFullName}
     >
-      <Icon style={{ fontSize: "48px" }} color="secondary">
-        shower
-      </Icon>
+      <div
+        style={{
+          display: "flex",
+          margin: "5px",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Icon style={{ fontSize: "48px" }} color="secondary">
+          shower
+        </Icon>
+      </div>
     </WidgetCard>
   );
 }

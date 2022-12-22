@@ -42,10 +42,19 @@ export default function IotButton({ config }) {
     <WidgetCard
       title={config?.selectedDevice.name + " - " + config?.variableFullName}
     >
-      <Icon style={{ color: "red", fontSize: "48px" }}>light_mode</Icon>
-      <Button onClick={sendValue} disabled={sending} variant="contained">
-        Send
-      </Button>
+      <div
+        style={{
+          display: "flex",
+          margin: "5px",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Icon style={{ color: "red", fontSize: "48px" }}>light_mode</Icon>
+        <Button onClick={sendValue} disabled={sending} variant="contained">
+          Send
+        </Button>
+      </div>
     </WidgetCard>
   );
 }

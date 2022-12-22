@@ -47,10 +47,19 @@ export default function IotSwitch({ config }) {
     <WidgetCard
       title={config?.selectedDevice.name + " - " + config?.variableFullName}
     >
-      <Icon style={{ fontSize: "48px" }} color={value ? "secondary" : "info"}>
-        lightbulb
-      </Icon>
-      <Switch color="secondary" checked={value} onChange={sendValue} />
+      <div
+        style={{
+          display: "flex",
+          margin: "5px",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Icon style={{ fontSize: "48px" }} color={value ? "secondary" : "info"}>
+          lightbulb
+        </Icon>
+        <Switch color="secondary" checked={value} onChange={sendValue} />
+      </div>
     </WidgetCard>
   );
 }
