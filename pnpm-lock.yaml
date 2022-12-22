@@ -8,6 +8,8 @@ specifiers:
   '@next/font': 13.0.6
   eslint: 8.30.0
   eslint-config-next: 13.0.6
+  highcharts: ^10.3.2
+  highcharts-react-official: ^3.1.0
   next: 13.0.6
   notistack: ^2.0.8
   prop-types: ^15.8.1
@@ -23,6 +25,8 @@ dependencies:
   '@next/font': 13.0.6
   eslint: 8.30.0
   eslint-config-next: 13.0.6_eslint@8.30.0
+  highcharts: 10.3.2
+  highcharts-react-official: 3.1.0_te4ewwxaxwecf5nz7fx3ln6n5m
   next: 13.0.6_biqbaboplfbrettd7655fr4n2y
   notistack: 2.0.8_5xc7st3lbyyqttunho6vibvvne
   prop-types: 15.8.1
@@ -1689,6 +1693,20 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
+
+  /highcharts-react-official/3.1.0_te4ewwxaxwecf5nz7fx3ln6n5m:
+    resolution: {integrity: sha512-CkWJHrVMOc6CT8KFu1dR+a0w5OxCVKKgZUNWtEi5TmR0xqBDIDe+RyM652MAN/jBYppxMo6TCUVlRObCyWAn0Q==}
+    peerDependencies:
+      highcharts: '>=6.0.0'
+      react: '>=16.8.0'
+    dependencies:
+      highcharts: 10.3.2
+      react: 18.2.0
+    dev: false
+
+  /highcharts/10.3.2:
+    resolution: {integrity: sha512-uDSuAOTKXOA90WUE38KKJawzMPjeIX/4UH3fMxZdoypbGVjsbuHO6jJSdeGf1LaDpu5wRg/xjO4QXzJqXfIrkA==}
+    dev: false
 
   /hoist-non-react-statics/3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
