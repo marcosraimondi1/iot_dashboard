@@ -167,3 +167,7 @@ export default function Rtnumberchart({ config }) {
     </WidgetCard>
   );
 }
+
+// HIGHCHARTS DOCS
+// https://api.highcharts.com/highcharts/
+// https://www.npmjs.com/package/highcharts-react-official#options-details
