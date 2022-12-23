@@ -25,7 +25,7 @@ export default function RtnumberchartForm() {
   const [decimalPlaces, setDecimalPlaces] = useState(2);
 
   return (
-    <Card title="Real Time Number Chart">
+    <Card>
       <div
         style={{
           display: "flex",

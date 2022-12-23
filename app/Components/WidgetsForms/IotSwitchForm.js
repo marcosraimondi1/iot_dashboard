@@ -21,7 +21,7 @@ export default function IotSwitchForm() {
   const [colSize, setColSize] = useState(6);
 
   return (
-    <Card title="IoT Switch">
+    <Card>
       <div
         style={{
           display: "flex",

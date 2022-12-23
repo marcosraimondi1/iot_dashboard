@@ -23,7 +23,7 @@ export default function IotIndicatorForm({ config, setConfig }) {
   const [colSize, setColSize] = useState(6);
 
   return (
-    <Card title="IoT Indicator">
+    <Card>
       <div
         style={{
           display: "flex",
