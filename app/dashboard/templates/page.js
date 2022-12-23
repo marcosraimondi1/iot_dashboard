@@ -1,12 +1,49 @@
 "use client";
 import { useState } from "react";
 import IotIndicatorForm from "../../Components/WidgetsForms/IotIndicatorForm";
+import IotSwitchForm from "../../Components/WidgetsForms/IotSwitchForm";
+import IotButtonForm from "../../Components/WidgetsForms/IotButtonForm";
+import RtnumberchartForm from "../../Components/WidgetsForms/RtnumberchartForm";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+
+const widgets = [
+  { value: "IotIndicator", label: "IoT Indicator" },
+  { value: "IotSwitch", label: "IoT Switch" },
+  { value: "IotButton", label: "IoT Button" },
+  { value: "Rtnumberchart", label: "IoT Real Time Number Chart" },
+];
+
 export default function Templates() {
   const [config, setConfig] = useState({});
+  const [selectedWidget, setSelectedWidget] = useState("IotIndicator");
+
+  let widgetForm;
+  if (selectedWidget == "IotIndicator")
+    widgetForm = <IotIndicatorForm config={config} setConfig={setConfig} />;
+  else if (selectedWidget == "IotSwitch")
+    widgetForm = <IotSwitchForm config={config} setConfig={setConfig} />;
+  else if (selectedWidget == "IotButton")
+    widgetForm = <IotButtonForm config={config} setConfig={setConfig} />;
+  else widgetForm = <RtnumberchartForm config={config} setConfig={setConfig} />;
+
   return (
     <>
       <h1>Templates</h1>
-      <IotIndicatorForm config={config} setConfig={setConfig} />
+      <TextField
+        select
+        value={selectedWidget}
+        onChange={(e) => {
+          setSelectedWidget(e.target.value);
+        }}
+      >
+        {widgets.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
+      {widgetForm}
     </>
   );
 }
