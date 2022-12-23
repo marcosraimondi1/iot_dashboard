@@ -2,6 +2,8 @@ import { useState } from "react";
 import Card from "../Card/Card";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import Grid from "@mui/material/Grid";
+import IotButton from "../widgets/IotButton";
 
 const colors = [
   { value: "success", label: "success" },
@@ -20,93 +22,117 @@ export default function IotButtonForm() {
   const [color, setColor] = useState("success");
   const [colSize, setColSize] = useState(6);
   const [message, setMessage] = useState("");
+
+  let iotButtonConfig = {
+    variableFullName,
+    icon,
+    color,
+    colSize,
+    message,
+    selectedDevice: {
+      name: "Home",
+    },
+  };
+
   return (
-    <Card>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          padding: "20px",
-          justifyContent: "space-evenly",
-        }}
-      >
-        {/* VAR NAME */}
-        <TextField
-          required
-          color="primary"
-          value={variableFullName}
-          onChange={(e) => {
-            setVariableFullName(e.target.value);
-          }}
-          label="Var Name"
-          type="text"
-        />
-        <br />
-
-        {/* ICON */}
-        <TextField
-          required
-          value={icon}
-          onChange={(e) => {
-            setIcon(e.target.value);
-          }}
-          label="Icon"
-          type="text"
-        />
-        <br />
-
-        {/* MESSAGE */}
-        <TextField
-          required
-          value={message}
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-          label="Message"
-          type="text"
-        />
-        <br />
-
-        {/* COlOR */}
-        <TextField
-          required
-          select
-          value={color}
-          color={color}
-          onChange={(e) => {
-            setColor(e.target.value);
-          }}
-          label="Color"
-        >
-          {colors.map((option) => (
-            <MenuItem
-              key={option.value}
-              value={option.value}
-              sx={{ color: option.value + ".main" }}
+    <>
+      <Grid container spacing={3}>
+        <Grid item xs={6}>
+          <Card>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                padding: "20px",
+                justifyContent: "space-evenly",
+              }}
             >
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <br />
+              {/* VAR NAME */}
+              <TextField
+                required
+                color="primary"
+                value={variableFullName}
+                onChange={(e) => {
+                  setVariableFullName(e.target.value);
+                }}
+                label="Var Name"
+                type="text"
+              />
+              <br />
 
-        {/* SIZE */}
-        <TextField
-          required
-          select
-          label="Size"
-          value={colSize}
-          onChange={(e) => {
-            setColSize(e.target.value);
-          }}
-        >
-          {colSizes.map((xs) => (
-            <MenuItem key={xs} value={xs}>
-              {xs}
-            </MenuItem>
-          ))}
-        </TextField>
-      </div>
-    </Card>
+              {/* ICON */}
+              <TextField
+                required
+                value={icon}
+                onChange={(e) => {
+                  setIcon(e.target.value);
+                }}
+                label="Icon"
+                type="text"
+              />
+              <br />
+
+              {/* MESSAGE */}
+              <TextField
+                required
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                }}
+                label="Message"
+                type="text"
+              />
+              <br />
+
+              {/* COlOR */}
+              <TextField
+                required
+                select
+                value={color}
+                color={color}
+                onChange={(e) => {
+                  setColor(e.target.value);
+                }}
+                label="Color"
+              >
+                {colors.map((option) => (
+                  <MenuItem
+                    key={option.value}
+                    value={option.value}
+                    sx={{ color: option.value + ".main" }}
+                  >
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <br />
+
+              {/* SIZE */}
+              <TextField
+                required
+                select
+                label="Size"
+                value={colSize}
+                onChange={(e) => {
+                  setColSize(e.target.value);
+                }}
+              >
+                {colSizes.map((xs) => (
+                  <MenuItem key={xs} value={xs}>
+                    {xs}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
+          </Card>
+        </Grid>
+
+        <Grid item xs={6}>
+          <Grid item xs={colSize}>
+            <IotButton config={iotButtonConfig} />
+          </Grid>
+        </Grid>
+      </Grid>
+    </>
   );
 }

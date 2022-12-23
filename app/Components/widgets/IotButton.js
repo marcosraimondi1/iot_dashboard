@@ -40,7 +40,7 @@ export default function IotButton({ config }) {
 
   return (
     <Card
-      title={config?.selectedDevice.name + " - " + config?.variableFullName}
+      title={config?.selectedDevice?.name + " - " + config?.variableFullName}
     >
       <div
         style={{
@@ -50,7 +50,9 @@ export default function IotButton({ config }) {
           justifyContent: "space-between",
         }}
       >
-        <Icon style={{ color: "red", fontSize: "48px" }}>light_mode</Icon>
+        <Icon style={{ fontSize: "48px" }} color={config.color}>
+          {config.icon}
+        </Icon>
         <Button onClick={sendValue} disabled={sending} variant="contained">
           Send
         </Button>
