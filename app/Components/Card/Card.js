@@ -2,7 +2,7 @@
 
 import Paper from "@mui/material/Paper";
 
-export default function WidgetCard({ children, title }) {
+export default function Card({ children, title }) {
   return (
     <Paper style={{ margin: "3px" }} elevation={8}>
       <div style={{ margin: "7px" }}>

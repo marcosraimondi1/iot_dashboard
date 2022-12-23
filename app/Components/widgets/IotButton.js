@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import WidgetCard from "../WidgetCard/WidgetCard";
+import Card from "../Card/Card";
 import Icon from "@mui/material/Icon";
 import Button from "@mui/material/Button";
 
@@ -39,7 +39,7 @@ export default function IotButton({ config }) {
   };
 
   return (
-    <WidgetCard
+    <Card
       title={config?.selectedDevice.name + " - " + config?.variableFullName}
     >
       <div
@@ -55,6 +55,6 @@ export default function IotButton({ config }) {
           Send
         </Button>
       </div>
-    </WidgetCard>
+    </Card>
   );
 }

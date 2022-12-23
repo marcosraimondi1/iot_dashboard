@@ -1,5 +1,5 @@
 import Icon from "@mui/material/Icon";
-import WidgetCard from "../WidgetCard/WidgetCard";
+import Card from "../Card/Card";
 import { useState, useEffect } from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
@@ -158,13 +158,13 @@ export default function Rtnumberchart({ config }) {
   );
 
   return (
-    <WidgetCard title={title}>
+    <Card title={title}>
       <HighchartsReact
         highcharts={Highcharts}
         constructorType={"stockChart"}
         options={chartOptions}
       />
-    </WidgetCard>
+    </Card>
   );
 }
 

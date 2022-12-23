@@ -1,9 +1,9 @@
-import WidgetCard from "../WidgetCard/WidgetCard";
+import Card from "../Card/Card";
 import Icon from "@mui/material/Icon";
 
 export default function IotIndicator({ config }) {
   return (
-    <WidgetCard
+    <Card
       title={config?.selectedDevice.name + " - " + config?.variableFullName}
     >
       <div
@@ -18,7 +18,7 @@ export default function IotIndicator({ config }) {
           shower
         </Icon>
       </div>
-    </WidgetCard>
+    </Card>
   );
 }
 

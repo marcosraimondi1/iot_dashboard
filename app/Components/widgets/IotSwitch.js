@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Switch from "@mui/material/Switch";
 import Icon from "@mui/material/Icon";
-import WidgetCard from "../WidgetCard/WidgetCard";
+import Card from "../Card/Card";
 
 export default function IotSwitch({ config }) {
   const [value, setValue] = useState(false);
@@ -44,7 +44,7 @@ export default function IotSwitch({ config }) {
   };
 
   return (
-    <WidgetCard
+    <Card
       title={config?.selectedDevice.name + " - " + config?.variableFullName}
     >
       <div
@@ -60,6 +60,6 @@ export default function IotSwitch({ config }) {
         </Icon>
         <Switch color="secondary" checked={value} onChange={sendValue} />
       </div>
-    </WidgetCard>
+    </Card>
   );
 }
