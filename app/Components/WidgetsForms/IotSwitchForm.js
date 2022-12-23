@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import IotSwitch from "../widgets/IotSwitch";
+import Button from "@mui/material/Button";
 
 const colors = [
   { value: "success", label: "success" },
@@ -16,7 +17,7 @@ const colors = [
 
 const colSizes = [2, 3, 4, 6, 8, 12];
 
-export default function IotSwitchForm() {
+export default function IotSwitchForm({ addWidget }) {
   const [variableFullName, setVariableFullName] = useState("");
   const [icon, setIcon] = useState("");
   const [color, setColor] = useState("success");
@@ -109,6 +110,15 @@ export default function IotSwitchForm() {
                   </MenuItem>
                 ))}
               </TextField>
+
+              {/* ADD BUTTON */}
+              <br />
+              <Button
+                onClick={() => addWidget(iotSwitchConfig)}
+                variant="contained"
+              >
+                Add
+              </Button>
             </div>
           </Card>
         </Grid>

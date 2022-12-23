@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import Rtnumberchart from "../widgets/Rtnumberchart";
+import Button from "@mui/material/Button";
 
 const colors = [
   { value: "success", label: "success" },
@@ -16,7 +17,7 @@ const colors = [
 
 const colSizes = [2, 3, 4, 6, 8, 12];
 
-export default function RtnumberchartForm() {
+export default function RtnumberchartForm({ addWidget }) {
   const [variableFullName, setVariableFullName] = useState("");
   const [icon, setIcon] = useState("");
   const [color, setColor] = useState("success");
@@ -165,6 +166,14 @@ export default function RtnumberchartForm() {
                   </MenuItem>
                 ))}
               </TextField>
+              {/* ADD BUTTON */}
+              <br />
+              <Button
+                onClick={() => addWidget(rtnumberchartConfig)}
+                variant="contained"
+              >
+                Add
+              </Button>
             </div>
           </Card>
         </Grid>

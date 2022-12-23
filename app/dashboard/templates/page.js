@@ -4,10 +4,11 @@ import IotIndicatorForm from "../../Components/WidgetsForms/IotIndicatorForm";
 import IotSwitchForm from "../../Components/WidgetsForms/IotSwitchForm";
 import IotButtonForm from "../../Components/WidgetsForms/IotButtonForm";
 import RtnumberchartForm from "../../Components/WidgetsForms/RtnumberchartForm";
+import Template from "../../Components/Template/Template";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
-const widgets = [
+const widgetsOptions = [
   { value: "IotIndicator", label: "IoT Indicator" },
   { value: "IotSwitch", label: "IoT Switch" },
   { value: "IotButton", label: "IoT Button" },
@@ -15,17 +16,24 @@ const widgets = [
 ];
 
 export default function Templates() {
-  const [config, setConfig] = useState({});
+  const [templateConfig, setTemplateConfig] = useState({});
   const [selectedWidget, setSelectedWidget] = useState("IotIndicator");
+  const [widgets, setWidgets] = useState([]);
+
+  const addWidget = (newWidget) => {
+    let newWidgets = widgets.concat(newWidget);
+    setWidgets(newWidgets);
+    console.table(widgets);
+  };
 
   let widgetForm;
   if (selectedWidget == "IotIndicator")
-    widgetForm = <IotIndicatorForm config={config} setConfig={setConfig} />;
+    widgetForm = <IotIndicatorForm addWidget={addWidget} />;
   else if (selectedWidget == "IotSwitch")
-    widgetForm = <IotSwitchForm config={config} setConfig={setConfig} />;
+    widgetForm = <IotSwitchForm addWidget={addWidget} />;
   else if (selectedWidget == "IotButton")
-    widgetForm = <IotButtonForm config={config} setConfig={setConfig} />;
-  else widgetForm = <RtnumberchartForm config={config} setConfig={setConfig} />;
+    widgetForm = <IotButtonForm addWidget={addWidget} />;
+  else widgetForm = <RtnumberchartForm addWidget={addWidget} />;
 
   return (
     <>
@@ -37,7 +45,7 @@ export default function Templates() {
           setSelectedWidget(e.target.value);
         }}
       >
-        {widgets.map((option) => (
+        {widgetsOptions.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
@@ -49,78 +57,6 @@ export default function Templates() {
 }
 
 // <template>
-//   <div>
-//     <!-- Widget Configurator -->
-//     <div class="row">
-//       <card>
-//         <div slot="header">
-//           <h4 class="card-title">Widgets</h4>
-//         </div>
-
-//         <div class="row">
-//           <!-- Widget Selector and Forms -->
-//           <div class="col-6">
-//             <!-- Widget Selector -->
-//             <el-select
-//               v-model="widgetType"
-//               class="select-success"
-//               placeholder="Select Widget"
-//               style="width: 100%"
-//             >
-//               <el-option
-//                 class="text-dark"
-//                 value="numberchart"
-//                 label="Number Chart INPUT <-"
-//               />
-
-//               <el-option
-//                 class="text-dark"
-//                 value="indicator"
-//                 label="Boolean Indicator INPUT <-"
-//               />
-
-//               <el-option class="text-dark" value="map" label="Map INPUT <-" />
-
-//               <el-option
-//                 class="text-dark"
-//                 value="button"
-//                 label="Button OUTPUT ->"
-//               />
-
-//               <el-option
-//                 class="text-dark"
-//                 value="switch"
-//                 label="Switch OUTPUT ->"
-//               />
-//             </el-select>
-
-//             <br />
-//             <br />
-
-//             <!-- Form Number Chart Type -->
-
-//             <!-- Form Switch Type -->
-
-//             <!-- Form Button Type -->
-
-//             <!-- Form Indicator Type -->
-
-//           <!-- Widget Preview -->
-//           <div class="col-6">
-//             <IotIndicator
-//               v-if="widgetType == 'indicator'"
-//               :config="configIndicator"
-//             />
-//             <IotButton v-if="widgetType == 'button'" :config="configButton" />
-
-//             <IotSwitch v-if="widgetType == 'switch'" :config="configSwitch" />
-//             <Rtnumberchart
-//               v-if="widgetType == 'numberchart'"
-//               :config="configNumberChart"
-//             />
-//           </div>
-//         </div>
-
 //         <!-- Add Widget Button -->
 //         <div class="row pull-right">
 //           <div class="col-12">

@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import IotButton from "../widgets/IotButton";
-
+import Button from "@mui/material/Button";
 const colors = [
   { value: "success", label: "success" },
   { value: "error", label: "error" },
@@ -16,7 +16,7 @@ const colors = [
 
 const colSizes = [2, 3, 4, 6, 8, 12];
 
-export default function IotButtonForm() {
+export default function IotButtonForm({ addWidget }) {
   const [variableFullName, setVariableFullName] = useState("");
   const [icon, setIcon] = useState("");
   const [color, setColor] = useState("success");
@@ -123,6 +123,15 @@ export default function IotButtonForm() {
                   </MenuItem>
                 ))}
               </TextField>
+
+              {/* ADD BUTTON */}
+              <br />
+              <Button
+                onClick={() => addWidget(iotButtonConfig)}
+                variant="contained"
+              >
+                Add
+              </Button>
             </div>
           </Card>
         </Grid>

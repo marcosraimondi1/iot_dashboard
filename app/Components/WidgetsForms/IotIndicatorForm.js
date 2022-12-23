@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import IotIndicator from "../widgets/IotIndicator";
+import Button from "@mui/material/Button";
 
 const colors = [
   { value: "success", label: "success" },
@@ -16,7 +17,7 @@ const colors = [
 
 const colSizes = [2, 3, 4, 6, 8, 12];
 
-export default function IotIndicatorForm({ config, setConfig }) {
+export default function IotIndicatorForm({ addWidget }) {
   // <!-- Form Indicator Type -->
   const [variableFullName, setVariableFullName] = useState("");
   const [icon, setIcon] = useState("");
@@ -124,6 +125,13 @@ export default function IotIndicatorForm({ config, setConfig }) {
                   </MenuItem>
                 ))}
               </TextField>
+              <br />
+              <Button
+                onClick={() => addWidget(iotIndicatorConfig)}
+                variant="contained"
+              >
+                Add
+              </Button>
             </div>
           </Card>
         </Grid>
