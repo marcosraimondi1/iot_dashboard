@@ -30,7 +30,9 @@ export default function IotSwitchForm() {
           justifyContent: "space-evenly",
         }}
       >
+        {/* VAR NAME */}
         <TextField
+          required
           color="primary"
           value={variableFullName}
           onChange={(e) => {
@@ -40,7 +42,10 @@ export default function IotSwitchForm() {
           type="text"
         />
         <br />
+
+        {/* ICON */}
         <TextField
+          required
           value={icon}
           onChange={(e) => {
             setIcon(e.target.value);
@@ -49,7 +54,10 @@ export default function IotSwitchForm() {
           type="text"
         />
         <br />
+
+        {/* COLOR */}
         <TextField
+          required
           select
           value={color}
           color={color}
@@ -69,7 +77,10 @@ export default function IotSwitchForm() {
           ))}
         </TextField>
         <br />
+
+        {/* SIZE */}
         <TextField
+          required
           select
           label="Size"
           value={colSize}

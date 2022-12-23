@@ -23,7 +23,7 @@ export default function IotIndicatorForm({ config, setConfig }) {
   const [colSize, setColSize] = useState(6);
 
   return (
-    <Card title={"IoT Indicator"}>
+    <Card title="IoT Indicator">
       <div
         style={{
           display: "flex",
@@ -32,7 +32,9 @@ export default function IotIndicatorForm({ config, setConfig }) {
           justifyContent: "space-evenly",
         }}
       >
+        {/* VAR NAME */}
         <TextField
+          required
           color="primary"
           value={variableFullName}
           onChange={(e) => {
@@ -42,7 +44,10 @@ export default function IotIndicatorForm({ config, setConfig }) {
           type="text"
         />
         <br />
+
+        {/* ICON */}
         <TextField
+          required
           value={icon}
           onChange={(e) => {
             setIcon(e.target.value);
@@ -51,7 +56,10 @@ export default function IotIndicatorForm({ config, setConfig }) {
           type="text"
         />
         <br />
+
+        {/* SEND FREQ */}
         <TextField
+          required
           value={variableSendFreq}
           onChange={(e) => {
             setVariableSendFreq(e.target.value);
@@ -60,7 +68,10 @@ export default function IotIndicatorForm({ config, setConfig }) {
           type="number"
         />
         <br />
+
+        {/* COLOR */}
         <TextField
+          required
           select
           value={color}
           color={color}
@@ -80,7 +91,10 @@ export default function IotIndicatorForm({ config, setConfig }) {
           ))}
         </TextField>
         <br />
+
+        {/* SIZE */}
         <TextField
+          required
           select
           label="Size"
           value={colSize}
