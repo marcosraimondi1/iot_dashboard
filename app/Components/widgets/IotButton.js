@@ -7,14 +7,6 @@ import Button from "@mui/material/Button";
 export default function IotButton({ config }) {
   const [sending, setSending] = useState(false);
 
-  const getIconColorClass = () => {
-    if (!sending) {
-      return "text-dark";
-    }
-
-    return "text-" + config.class;
-  };
-
   const sendValue = () => {
     setSending(true);
 

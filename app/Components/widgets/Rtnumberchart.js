@@ -24,7 +24,7 @@ const data = [
   [1650059088668, 14],
   [1650059089668, 24],
 ];
-const chartOptions = {
+let chartOptionsInitial = {
   credits: {
     enabled: false,
   },
@@ -92,15 +92,26 @@ const chartOptions = {
     ],
   },
 };
+let chartColor = "#6d1b7b";
 
 export default function Rtnumberchart({ config }) {
   const [nowTime, setNowTime] = useState(0);
   const [time, setTime] = useState(0);
+  const [chartOptions, setChartOptions] = useState(chartOptionsInitial);
 
   useEffect(() => {
     setTime(Date.now());
     getNow();
-  }, [setNowTime]);
+    if (config.color === "success") chartColor = "#357a38";
+    else if (config.color === "warning") chartColor = "#b26a00";
+    else if (config.color === "error") chartColor = "#aa2e25";
+    else if (config.color === "info") chartColor = "#1c54b2";
+    else if (config.color === "primary") chartColor = "#6d1b7b";
+    else if (config.color === "secondary") chartColor = "#ff9100";
+    let newChartOptions = chartOptions;
+    newChartOptions.series[0].color = chartColor;
+    setChartOptions(newChartOptions);
+  }, [setNowTime, config.color, chartOptions, setChartOptions]);
 
   const getNow = () => {
     setNowTime(Date.now());
@@ -129,6 +140,7 @@ export default function Rtnumberchart({ config }) {
       return seconds.toFixed() + " day";
     }
   };
+  const value = 17.5354864; // CAMBIAR LINEA DESPUES
 
   const title = (
     <>
@@ -138,21 +150,23 @@ export default function Rtnumberchart({ config }) {
           alignItems: "center",
         }}
       >
-        <Icon sx={{ marginRight: "10px" }}>ac_unit</Icon>
+        <Icon sx={{ marginRight: "10px" }} color={config.color}>
+          {config.icon}
+        </Icon>
         <h4>
           {config?.selectedDevice.name + " - " + config?.variableFullName}
         </h4>
       </div>
       <p
         style={{
-          color: "#656463",
+          color: "#999999",
           marginLeft: "24px",
           marginTop: "-20px",
           marginBottom: "-15px",
         }}
       >
-        5 °C - {getTimeAgo((nowTime - time) / 1000)} ago
-        {/* {value.toFixed(config.decimalPlaces)} {config.unit} */}
+        {value.toFixed(config.decimalPlaces)} {config.unit} -{" "}
+        {getTimeAgo((nowTime - time) / 1000)} ago
       </p>
     </>
   );

@@ -24,25 +24,6 @@ export default function IotSwitch({ config }) {
     // $nuxt.$emit("mqtt-sender", toSend);
   };
 
-  const getIconColorClass = () => {
-    //para apagar el icono
-    if (!value) {
-      return "text-dark";
-    }
-    if (config.class == "success") {
-      return "text-success";
-    }
-    if (config.class == "primary") {
-      return "text-primary";
-    }
-    if (config.class == "warning") {
-      return "text-warning";
-    }
-    if (config.class == "danger") {
-      return "text-danger";
-    }
-  };
-
   return (
     <Card
       title={config?.selectedDevice.name + " - " + config?.variableFullName}
