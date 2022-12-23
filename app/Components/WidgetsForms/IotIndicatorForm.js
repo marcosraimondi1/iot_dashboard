@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Card from "../Card/Card";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
@@ -22,63 +23,77 @@ export default function IotIndicatorForm({ config, setConfig }) {
   const [colSize, setColSize] = useState(6);
 
   return (
-    <div>
-      <TextField
-        value={variableFullName}
-        onChange={(e) => {
-          setVariableFullName(e.target.value);
-        }}
-        label="Var Name"
-        type="text"
-      />
-      <TextField
-        value={icon}
-        onChange={(e) => {
-          setIcon(e.target.value);
-        }}
-        label="Icon"
-        type="text"
-      />
-      <TextField
-        value={variableSendFreq}
-        onChange={(e) => {
-          setVariableSendFreq(e.target.value);
-        }}
-        label="Variable Send Frequency (secs)"
-        type="number"
-      />
-      <TextField
-        select
-        value={color}
-        onChange={(e) => {
-          setColor(e.target.value);
-        }}
-        label="Color"
-      >
-        {colors.map((option) => (
-          <MenuItem
-            key={option.value}
-            value={option.value}
-            color={option.value}
-          >
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
-        select
-        label="Size"
-        value={colSize}
-        onChange={(e) => {
-          setColSize(e.target.value);
+    <Card title={"IoT Indicator"}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          padding: "20px",
+          justifyContent: "space-evenly",
         }}
       >
-        {colSizes.map((xs) => (
-          <MenuItem key={xs} value={xs}>
-            {xs}
-          </MenuItem>
-        ))}
-      </TextField>
-    </div>
+        <TextField
+          color="primary"
+          value={variableFullName}
+          onChange={(e) => {
+            setVariableFullName(e.target.value);
+          }}
+          label="Var Name"
+          type="text"
+        />
+        <br />
+        <TextField
+          value={icon}
+          onChange={(e) => {
+            setIcon(e.target.value);
+          }}
+          label="Icon"
+          type="text"
+        />
+        <br />
+        <TextField
+          value={variableSendFreq}
+          onChange={(e) => {
+            setVariableSendFreq(e.target.value);
+          }}
+          label="Variable Send Frequency (secs)"
+          type="number"
+        />
+        <br />
+        <TextField
+          select
+          value={color}
+          onChange={(e) => {
+            setColor(e.target.value);
+          }}
+          label="Color"
+        >
+          {colors.map((option) => (
+            <MenuItem
+              key={option.value}
+              value={option.value}
+              color={option.value}
+            >
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <br />
+        <TextField
+          select
+          label="Size"
+          value={colSize}
+          onChange={(e) => {
+            setColSize(e.target.value);
+          }}
+        >
+          {colSizes.map((xs) => (
+            <MenuItem key={xs} value={xs}>
+              {xs}
+            </MenuItem>
+          ))}
+        </TextField>
+      </div>
+    </Card>
   );
 }
