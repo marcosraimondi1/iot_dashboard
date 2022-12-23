@@ -4,7 +4,7 @@ import Icon from "@mui/material/Icon";
 export default function IotIndicator({ config }) {
   return (
     <Card
-      title={config?.selectedDevice.name + " - " + config?.variableFullName}
+      title={config?.selectedDevice?.name + " - " + config?.variableFullName}
     >
       <div
         style={{
@@ -14,8 +14,8 @@ export default function IotIndicator({ config }) {
           justifyContent: "space-between",
         }}
       >
-        <Icon style={{ fontSize: "48px" }} color="secondary">
-          shower
+        <Icon style={{ fontSize: "48px" }} color={config.color}>
+          {config.icon}
         </Icon>
       </div>
     </Card>
