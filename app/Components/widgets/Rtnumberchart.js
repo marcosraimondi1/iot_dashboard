@@ -1,5 +1,5 @@
 import Icon from "@mui/material/Icon";
-import WidgetCard from "../Components/WidgetCard/WidgetCard";
+import WidgetCard from "../WidgetCard/WidgetCard";
 import { useState, useEffect } from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";

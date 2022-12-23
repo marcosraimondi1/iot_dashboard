@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Switch from "@mui/material/Switch";
 import Icon from "@mui/material/Icon";
-import WidgetCard from "../Components/WidgetCard/WidgetCard";
+import WidgetCard from "../WidgetCard/WidgetCard";
 
 export default function IotSwitch({ config }) {
   const [value, setValue] = useState(false);

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import WidgetCard from "../Components/WidgetCard/WidgetCard";
+import WidgetCard from "../WidgetCard/WidgetCard";
 import Icon from "@mui/material/Icon";
 import Button from "@mui/material/Button";
 

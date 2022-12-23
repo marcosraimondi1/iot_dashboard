@@ -1,8 +1,8 @@
 "use client";
-import IotButton from "../widgets/IotButton";
-import IotIndicator from "../widgets/IotIndicator";
-import IotSwitch from "../widgets/IotSwitch";
-import Rtnumberchart from "../widgets/Rtnumberchart";
+import IotButton from "../Components/widgets/IotButton";
+import IotIndicator from "../Components/widgets/IotIndicator";
+import IotSwitch from "../Components/widgets/IotSwitch";
+import Rtnumberchart from "../Components/widgets/Rtnumberchart";
 import Grid from "@mui/material/Grid";
 
 export default function Dashboard() {
