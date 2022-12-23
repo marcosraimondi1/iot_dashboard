@@ -63,6 +63,7 @@ export default function IotIndicatorForm({ config, setConfig }) {
         <TextField
           select
           value={color}
+          color={color}
           onChange={(e) => {
             setColor(e.target.value);
           }}
@@ -72,7 +73,7 @@ export default function IotIndicatorForm({ config, setConfig }) {
             <MenuItem
               key={option.value}
               value={option.value}
-              color={option.value}
+              sx={{ color: option.value + ".main" }}
             >
               {option.label}
             </MenuItem>
