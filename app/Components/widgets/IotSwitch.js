@@ -55,10 +55,14 @@ export default function IotSwitch({ config }) {
           justifyContent: "space-between",
         }}
       >
-        <Icon style={{ fontSize: "48px" }} color={value ? "secondary" : "info"}>
-          lightbulb
+        <Icon
+          style={{ fontSize: "48px" }}
+          color={value ? config.color : ""}
+          sx={{ color: value ? config.color : "#999999" }}
+        >
+          {config.icon}
         </Icon>
-        <Switch color="secondary" checked={value} onChange={sendValue} />
+        <Switch color={config.color} checked={value} onChange={sendValue} />
       </div>
     </Card>
   );
