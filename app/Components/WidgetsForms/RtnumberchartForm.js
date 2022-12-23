@@ -1,82 +1,152 @@
+import { useState } from "react";
+import Card from "../Card/Card";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+
+const colors = [
+  { value: "success", label: "success" },
+  { value: "error", label: "error" },
+  { value: "warning", label: "warning" },
+  { value: "info", label: "info" },
+  { value: "primary", label: "primary" },
+  { value: "secondary", label: "secondary" },
+];
+
+const colSizes = [2, 3, 4, 6, 8, 12];
+
 export default function RtnumberchartForm() {
-  return <div>RtnumberchartForm</div>;
+  const [variableFullName, setVariableFullName] = useState("");
+  const [icon, setIcon] = useState("");
+  const [color, setColor] = useState("success");
+  const [colSize, setColSize] = useState(6);
+  const [unit, setUnit] = useState("");
+  const [chartTimeAgo, setChartTimeAgo] = useState();
+  const [variableSendFreq, setVariableSendFreq] = useState(30);
+  const [decimalPlaces, setDecimalPlaces] = useState(2);
+
+  return (
+    <Card title="Real Time Number Chart">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          padding: "20px",
+          justifyContent: "space-evenly",
+        }}
+      >
+        {/* VAR NAME */}
+        <TextField
+          required
+          color="primary"
+          value={variableFullName}
+          onChange={(e) => {
+            setVariableFullName(e.target.value);
+          }}
+          label="Var Name"
+          type="text"
+        />
+        <br />
+
+        {/* ICON */}
+        <TextField
+          required
+          value={icon}
+          onChange={(e) => {
+            setIcon(e.target.value);
+          }}
+          label="Icon"
+          type="text"
+        />
+        <br />
+
+        {/* UNIT */}
+        <TextField
+          required
+          value={unit}
+          onChange={(e) => {
+            setUnit(e.target.value);
+          }}
+          label="Unit"
+          type="text"
+        />
+        <br />
+
+        {/* DECIMAL PLACES */}
+        <TextField
+          required
+          value={decimalPlaces}
+          onChange={(e) => {
+            setDecimalPlaces(e.target.value);
+          }}
+          label="Decimal Places"
+          type="number"
+        />
+        <br />
+
+        {/* SEND FREQ */}
+        <TextField
+          required
+          value={variableSendFreq}
+          onChange={(e) => {
+            setVariableSendFreq(e.target.value);
+          }}
+          label="Variable Send Frequency (secs)"
+          type="number"
+        />
+        <br />
+
+        {/* CHART TIME AGO */}
+        <TextField
+          required
+          value={chartTimeAgo}
+          onChange={(e) => {
+            setChartTimeAgo(e.target.value);
+          }}
+          label="Chart Back Time (mins)"
+          type="number"
+        />
+        <br />
+
+        {/* COLOR */}
+        <TextField
+          required
+          select
+          value={color}
+          color={color}
+          onChange={(e) => {
+            setColor(e.target.value);
+          }}
+          label="Color"
+        >
+          {colors.map((option) => (
+            <MenuItem
+              key={option.value}
+              value={option.value}
+              sx={{ color: option.value + ".main" }}
+            >
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <br />
+
+        {/* SIZE */}
+        <TextField
+          required
+          select
+          label="Size"
+          value={colSize}
+          onChange={(e) => {
+            setColSize(e.target.value);
+          }}
+        >
+          {colSizes.map((xs) => (
+            <MenuItem key={xs} value={xs}>
+              {xs}
+            </MenuItem>
+          ))}
+        </TextField>
+      </div>
+    </Card>
+  );
 }
-
-//             <!-- Form Number Chart Type -->
-//             <div v-if="widgetType == 'numberchart'">
-//               <base-input
-//                 v-model="configNumberChart.variableFullName"
-//                 label="Var Name"
-//                 type="text"
-//               />
-//               <base-input
-//                 v-model="configNumberChart.unit"
-//                 label="Unit"
-//                 type="text"
-//               />
-//               <base-input
-//                 v-model="configNumberChart.decimalPlaces"
-//                 label="Decimal Places"
-//                 type="number"
-//               />
-//               <base-input
-//                 v-model="configNumberChart.icon"
-//                 label="Icon"
-//                 type="text"
-//               />
-//               <base-input
-//                 v-model="configNumberChart.variableSendFreq"
-//                 label="Variable Send Frequency (secs)"
-//                 type="number"
-//               />
-//               <base-input
-//                 v-model="configNumberChart.chartTimeAgo"
-//                 label="Chart Back Time (mins)"
-//                 type="number"
-//               />
-//               <el-select
-//                 v-model="configNumberChart.class"
-//                 class="select-success"
-//                 placeholder="Select Color"
-//                 style="width: 100%"
-//               >
-//                 <el-option
-//                   class="text-success"
-//                   value="success"
-//                   label="Success"
-//                 />
-
-//                 <el-option class="text-danger" value="danger" label="Danger" />
-
-//                 <el-option class="text-light" value="light" label="Light" />
-
-//                 <el-option
-//                   class="text-primary"
-//                   value="primary"
-//                   label="Primary"
-//                 />
-
-//                 <el-option
-//                   class="text-warning"
-//                   value="warning"
-//                   label="Warning"
-//                 />
-//               </el-select>
-
-//               <br />
-//               <br />
-
-//               <el-select
-//                 v-model="configNumberChart.column"
-//                 class="select-success"
-//                 default-first-option="col-6"
-//                 style="width: 100%"
-//               >
-//                 <el-option class="text-dark" value="col-2" label="col-2" />
-//                 <el-option class="text-dark" value="col-4" label="col-4" />
-//                 <el-option class="text-dark" value="col-6" label="col-6" />
-//                 <el-option class="text-dark" value="col-8" label="col-8" />
-//                 <el-option class="text-dark" value="col-10" label="col-10" />
-//                 <el-option class="text-dark" value="col-12" label="col-12" />
-//               </el-select>
-//             </div>
