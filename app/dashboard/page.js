@@ -6,9 +6,18 @@ import Rtnumberchart from "../Components/widgets/Rtnumberchart";
 import Grid from "@mui/material/Grid";
 
 export default function Dashboard() {
-  const config = {
-    selectedDevice: { name: "Horno" },
-    variableFullName: "Temp",
+  let config = {
+    variableFullName: "Temperature",
+    icon: "shower",
+    color: "primary",
+    colSize: 12,
+    unit: "°C",
+    chartTimeAgo: 10,
+    variableSendFreq: 10,
+    decimalPlaces: 2,
+    selectedDevice: {
+      name: "Home",
+    },
   };
   return (
     <Grid container spacing={2}>
