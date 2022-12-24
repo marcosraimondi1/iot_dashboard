@@ -127,7 +127,12 @@ export default function IotIndicatorForm({ addWidget }) {
               </TextField>
               <br />
               <Button
-                onClick={() => addWidget(iotIndicatorConfig)}
+                onClick={() =>
+                  addWidget({
+                    type: "IotIndicator",
+                    config: iotIndicatorConfig,
+                  })
+                }
                 variant="contained"
               >
                 Add

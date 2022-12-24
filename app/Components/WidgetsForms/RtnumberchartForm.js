@@ -169,7 +169,12 @@ export default function RtnumberchartForm({ addWidget }) {
               {/* ADD BUTTON */}
               <br />
               <Button
-                onClick={() => addWidget(rtnumberchartConfig)}
+                onClick={() =>
+                  addWidget({
+                    type: "Rtnumberchart",
+                    config: rtnumberchartConfig,
+                  })
+                }
                 variant="contained"
               >
                 Add

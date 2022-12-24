@@ -127,7 +127,9 @@ export default function IotButtonForm({ addWidget }) {
               {/* ADD BUTTON */}
               <br />
               <Button
-                onClick={() => addWidget(iotButtonConfig)}
+                onClick={() =>
+                  addWidget({ type: "IotButton", config: iotButtonConfig })
+                }
                 variant="contained"
               >
                 Add
