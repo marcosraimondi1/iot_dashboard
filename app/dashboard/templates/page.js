@@ -8,7 +8,8 @@ import Template from "../../Components/Template/Template";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Card from "../../Components/Card/Card";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
+import TemplatesList from "../../Components/Lists/TemplatesList";
 
 const widgetsOptions = [
   { value: "IotIndicator", label: "IoT Indicator" },
@@ -20,6 +21,7 @@ const widgetsOptions = [
 export default function Templates() {
   const [selectedWidget, setSelectedWidget] = useState("IotIndicator");
   const [widgets, setWidgets] = useState([]);
+  const [templates, setTemplates] = useState([]);
   const templateNameRef = useRef("");
 
   const addWidget = (newWidget) => {
@@ -32,13 +34,21 @@ export default function Templates() {
     setWidgets(newWidgets);
   };
 
+  const deleteTemplate = (delIndex) => {
+    // delete template from db
+    let newTemplates = templates.filter((_val, index) => index !== delIndex);
+    setTemplates(newTemplates);
+  };
+
   const saveTemplate = () => {
     // save template to db
     const templateConfig = {
       name: templateNameRef.current,
       widgets: widgets,
     };
-    console.log(templateConfig);
+    let newTemplates = templates.concat(templateConfig);
+    setTemplates(newTemplates);
+    setWidgets([]);
   };
 
   let widgetForm;
@@ -91,6 +101,9 @@ export default function Templates() {
           </Button>
         </div>
       </Card>
+      <div style={{ margin: "15px" }}>
+        <TemplatesList templates={templates} del={deleteTemplate} />
+      </div>
     </>
   );
 }
