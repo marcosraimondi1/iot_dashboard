@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import IotIndicatorForm from "../../Components/WidgetsForms/IotIndicatorForm";
 import IotSwitchForm from "../../Components/WidgetsForms/IotSwitchForm";
 import IotButtonForm from "../../Components/WidgetsForms/IotButtonForm";
@@ -7,6 +7,8 @@ import RtnumberchartForm from "../../Components/WidgetsForms/RtnumberchartForm";
 import Template from "../../Components/Template/Template";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import Card from "../../Components/Card/Card";
+import { Button } from "@mui/material";
 
 const widgetsOptions = [
   { value: "IotIndicator", label: "IoT Indicator" },
@@ -16,9 +18,9 @@ const widgetsOptions = [
 ];
 
 export default function Templates() {
-  const [templateConfig, setTemplateConfig] = useState({});
   const [selectedWidget, setSelectedWidget] = useState("IotIndicator");
   const [widgets, setWidgets] = useState([]);
+  const templateNameRef = useRef("");
 
   const addWidget = (newWidget) => {
     let newWidgets = widgets.concat(newWidget);
@@ -28,6 +30,15 @@ export default function Templates() {
   const deleteWidget = (delIndex) => {
     let newWidgets = widgets.filter((_val, index) => index !== delIndex);
     setWidgets(newWidgets);
+  };
+
+  const saveTemplate = () => {
+    // save template to db
+    const templateConfig = {
+      name: templateNameRef.current,
+      widgets: widgets,
+    };
+    console.log(templateConfig);
   };
 
   let widgetForm;
@@ -57,48 +68,34 @@ export default function Templates() {
       </TextField>
       {widgetForm}
       <Template widgets={widgets} deleteWidget={deleteWidget} />
+      <Card title="">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            padding: "10px",
+            marginTop: "50px",
+          }}
+        >
+          <TextField
+            required
+            label="Template Name"
+            onChange={(e) => {
+              templateNameRef.current = e.target.value;
+            }}
+            sx={{ width: "100%", margin: "5px" }}
+          ></TextField>
+          <Button variant="contained" onClick={saveTemplate}>
+            Save
+          </Button>
+        </div>
+      </Card>
     </>
   );
 }
 
 // <template>
-//         <!-- Add Widget Button -->
-//         <div class="row pull-right">
-//           <div class="col-12">
-//             <base-button
-//               native-type="submit"
-//               type="primary"
-//               class="mb-3"
-//               size="lg"
-//               @click="addNewWidget()"
-//             >
-//               Add Widget
-//             </base-button>
-//           </div>
-//         </div>
-//       </card>
-//     </div>
-
-//     <!-- Dashboard Preview -->
-//     <div class="row">
-//       <div
-//         v-for="(widget, index) of widgets"
-//         :class="[widget.column]"
-//         :key="index"
-//       >
-//         <i
-//           aria-hidden="true"
-//           class="fa fa-trash text-warning pull-right"
-//           @click="deleteWidget(index)"
-//           style="margin-bottom: 10px"
-//         />
-
-//         <IotIndicator v-if="widget.widget == 'indicator'" :config="widget" />
-//         <IotButton v-if="widget.widget == 'button'" :config="widget" />
-//         <IotSwitch v-if="widget.widget == 'switch'" :config="widget" />
-//         <Rtnumberchart v-if="widget.widget == 'numberchart'" :config="widget" />
-//       </div>
-//     </div>
 
 //     <!-- Save Template -->
 //     <div class="row">
