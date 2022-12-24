@@ -23,7 +23,11 @@ export default function Templates() {
   const addWidget = (newWidget) => {
     let newWidgets = widgets.concat(newWidget);
     setWidgets(newWidgets);
-    console.table(widgets);
+  };
+
+  const deleteWidget = (delIndex) => {
+    let newWidgets = widgets.filter((_val, index) => index !== delIndex);
+    setWidgets(newWidgets);
   };
 
   let widgetForm;
@@ -52,6 +56,7 @@ export default function Templates() {
         ))}
       </TextField>
       {widgetForm}
+      <Template widgets={widgets} deleteWidget={deleteWidget} />
     </>
   );
 }
