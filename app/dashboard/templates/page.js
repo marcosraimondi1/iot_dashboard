@@ -27,6 +27,7 @@ const demoTemplates = [
         type: "Rtnumberchart",
         config: {
           variableFullName: "Temperature",
+          variable: "variableId1",
           icon: "shower",
           color: "primary",
           colSize: 12,
@@ -49,6 +50,7 @@ const demoTemplates = [
         type: "Rtnumberchart",
         config: {
           variableFullName: "Temperature",
+          variable: "variableId2",
           icon: "shower",
           color: "primary",
           colSize: 12,
@@ -65,6 +67,7 @@ const demoTemplates = [
         type: "IotSwitch",
         config: {
           variableFullName: "Pump",
+          variable: "variableId3",
           icon: "shop",
           color: "error",
           colSize: 6,
@@ -77,6 +80,7 @@ const demoTemplates = [
         type: "IotIndicator",
         config: {
           variableFullName: "Pump",
+          variable: "variableId4",
           icon: "shop",
           color: "success",
           colSize: 6,
