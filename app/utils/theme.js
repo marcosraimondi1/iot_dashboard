@@ -1,21 +1,20 @@
-import { red } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
-// paleta de colores: #653924 #873614 #694336 #C6C0B7 #E86A0E
-
-// A custom theme for this app
-const theme = createTheme({
+const themeOptions = {
   palette: {
+    type: "light",
     primary: {
-      main: "#653924"
+      main: "#3f51b5",
     },
     secondary: {
-      main: "#E86A0E"
+      main: "#f50057",
     },
-    error: {
-      main: red.A400
-    }
-  }
-});
+  },
+};
+
+const theme = createTheme(themeOptions);
 
 export default theme;
+
+// https://bareynol.github.io/mui-theme-creator/
+// https://m2.material.io/inline-tools/color/
