@@ -19,7 +19,11 @@ export default function NavItems() {
   return (
     <>
       {navItems.map(({ label, route, icon }) => (
-        <Link href={route} key={route}>
+        <Link
+          href={route}
+          key={route}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <ListItemButton key={route}>
             <ListItemIcon>
               <Icon color="secondary">{icon}</Icon>

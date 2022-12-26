@@ -11,12 +11,11 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Button from "@mui/material/Button";
-// import Badge from "@mui/material/Badge";
-// import NotificationsIcon from "@mui/icons-material/Notifications";
+import Badge from "@mui/material/Badge";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import NavItems from "./NavItems";
 import Copyright from "../Copyright/Copyright";
 
@@ -72,7 +71,7 @@ DashboardContent.propTypes = {
   title: PropTypes.string,
 };
 function DashboardContent({ children, logout, title }) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -107,11 +106,14 @@ function DashboardContent({ children, logout, title }) {
           >
             {title}
           </Typography>
-          {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+          {/* ELEMENTOS DE HEADER BAR */}
+          {/* NOTIS */}
+          <IconButton color="inherit">
+            <Badge badgeContent={5} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          {/* USER - LOGOUT */}
           <Button
             sx={{ color: "white" }}
             onClick={() => {
