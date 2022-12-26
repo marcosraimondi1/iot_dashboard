@@ -18,10 +18,82 @@ const widgetsOptions = [
   { value: "Rtnumberchart", label: "IoT Real Time Number Chart" },
 ];
 
+const demoTemplates = [
+  {
+    name: "Template 1",
+    _id: 1,
+    widgets: [
+      {
+        type: "Rtnumberchart",
+        config: {
+          variableFullName: "Temperature",
+          icon: "shower",
+          color: "primary",
+          colSize: 12,
+          unit: "°C",
+          chartTimeAgo: 10,
+          variableSendFreq: 10,
+          decimalPlaces: 2,
+          selectedDevice: {
+            name: "Home",
+          },
+        },
+      },
+    ],
+  },
+  {
+    name: "Template 2",
+    _id: 2,
+    widgets: [
+      {
+        type: "Rtnumberchart",
+        config: {
+          variableFullName: "Temperature",
+          icon: "shower",
+          color: "primary",
+          colSize: 12,
+          unit: "°C",
+          chartTimeAgo: 10,
+          variableSendFreq: 10,
+          decimalPlaces: 2,
+          selectedDevice: {
+            name: "Home",
+          },
+        },
+      },
+      {
+        type: "IotSwitch",
+        config: {
+          variableFullName: "Pump",
+          icon: "shop",
+          color: "error",
+          colSize: 6,
+          selectedDevice: {
+            name: "Home",
+          },
+        },
+      },
+      {
+        type: "IotIndicator",
+        config: {
+          variableFullName: "Pump",
+          icon: "shop",
+          color: "success",
+          colSize: 6,
+          variableSendFreq: 10,
+          selectedDevice: {
+            name: "Home",
+          },
+        },
+      },
+    ],
+  },
+];
+
 export default function Templates() {
   const [selectedWidget, setSelectedWidget] = useState("IotIndicator");
   const [widgets, setWidgets] = useState([]);
-  const [templates, setTemplates] = useState([]);
+  const [templates, setTemplates] = useState(demoTemplates);
   const templateNameRef = useRef("");
 
   const addWidget = (newWidget) => {
