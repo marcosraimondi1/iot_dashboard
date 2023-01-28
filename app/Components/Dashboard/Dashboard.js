@@ -133,6 +133,15 @@ function DashboardContent({ children, logout, title }) {
             px: [1],
           }}
         >
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            sx={{ flexGrow: 2 }}
+          >
+            Menu
+          </Typography>
           <IconButton onClick={toggleDrawer}>
             <ChevronLeftIcon />
           </IconButton>
