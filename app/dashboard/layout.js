@@ -1,13 +1,15 @@
 "use client";
 import Dash from "../Components/Dashboard/Dashboard";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 
-export default function Dashboard({ children }) {
+export default withPageAuthRequired(function Dashboard({ children }) {
   const onLogout = () => {
-    // global.notify("Adios!", { variant: "success" });
+    document.location.href = "/api/auth/logout";
   };
+
   return (
     <Dash logout={onLogout} title="IOT CENTER">
       {children}
     </Dash>
   );
-}
+});

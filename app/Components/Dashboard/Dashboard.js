@@ -117,32 +117,7 @@ function DashboardContent({ children, logout, title }) {
           <Button
             sx={{ color: "white" }}
             onClick={() => {
-              // global.notify("Cerrar Sesion ?", {
-              //   variant: "info",
-              //   persist: true,
-              //   preventDuplicate: true,
-              //   action: (key) => {
-              //     return (
-              //       <>
-              //         <Button
-              //           sx={{ color: "white" }}
-              //           onClick={() => {
-              //             logout();
-              //             global.close(key);
-              //           }}
-              //         >
-              //           Si
-              //         </Button>
-              //         <Button
-              //           sx={{ color: "white" }}
-              //           onClick={() => global.close(key)}
-              //         >
-              //           No
-              //         </Button>
-              //       </>
-              //     );
-              //   },
-              // });
+              logout();
             }}
           >
             Cerrar Sesion

@@ -5,6 +5,7 @@ export default function App() {
     <>
       <h1>App</h1>
       <Link href="/dashboard">Dashboard</Link>
+      <a href="/api/auth/login">Login with AUTHO</a>
       <Link href="/auth/login">Login</Link>
     </>
   );
