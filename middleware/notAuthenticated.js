@@ -8,13 +8,12 @@ export default function notAuthenticated(WrappedComponent) {
   //     return redirect('/dashboard')
   // }
   return (props) => {
+    return <WrappedComponent {...props} />;
     props.authenticated = true;
     useEffect(() => {
       if (props.authenticated) {
         document.location.href = "/dashboard";
       }
     }, [props.authenticated]);
-
-    return <WrappedComponent {...props} />;
   };
 }

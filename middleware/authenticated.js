@@ -9,13 +9,12 @@ export default function authenticated(WrappedComponent) {
 
   // }
   return (props) => {
+    return <WrappedComponent {...props} />;
     props.authenticated = true;
     useEffect(() => {
       if (!props.authenticated) {
         document.location.href = "/auth/login";
       }
     }, [props.authenticated]);
-
-    return <WrappedComponent {...props} />;
   };
 }
