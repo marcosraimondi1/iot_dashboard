@@ -24,7 +24,8 @@ export default function App() {
       >
         <h1>IoT Dashboard</h1>
         <Link href="/dashboard">Dashboard</Link>
-        <a href="/api/auth/login">Login</a>
+        <Link href="/auth/login">Login</Link>
+        {/* <a href="/api/auth/login">Login</a> */}
       </div>
     </div>
   );
