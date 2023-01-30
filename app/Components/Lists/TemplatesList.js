@@ -40,7 +40,7 @@ export default function Lista({ templates, del }) {
               </TableCell>
               <TableCell align="right">{p.widgets.length}</TableCell>
               <TableCell align="right">
-                <IconButton onClick={() => del(index)}>
+                <IconButton onClick={() => del(p._id)}>
                   <DeleteForeverIcon sx={{ color: "red" }} />
                 </IconButton>
               </TableCell>
