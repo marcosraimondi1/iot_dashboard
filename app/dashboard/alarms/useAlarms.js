@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import randomString from "../../utils/randomString";
 import axios from "axios";
 const demoDevice = {
@@ -106,7 +107,7 @@ export default function useAlarms() {
   const [alarms, setAlarms] = useState(demoRules);
   const [selectedWidgetIndex, setSelectedWidgetIndex] = useState("");
   const [condition, setCondition] = useState("");
-
+  const token = useSelector((state) => state.auth.token);
   const valueRef = useRef("");
   const triggerTimeRef = useRef("");
 
@@ -117,7 +118,7 @@ export default function useAlarms() {
 
     const axiosHeaders = {
       headers: {
-        token: "gettoken", //this.$store.state.auth.token,
+        token: token, //this.$store.state.auth.token,
       },
     };
     const toSend = { rule: newRule };
@@ -158,7 +159,7 @@ export default function useAlarms() {
     // delete rule from db
     const axiosHeaders = {
       headers: {
-        token: "gettoken", //this.$store.state.auth.token,
+        token: token,
       },
       params: {
         emqxRuleId: rule.emqxRuleId,
@@ -212,7 +213,7 @@ export default function useAlarms() {
 
     const axiosHeaders = {
       headers: {
-        token: "gettoken", //this.$store.state.auth.token,
+        token: token,
       },
     };
 

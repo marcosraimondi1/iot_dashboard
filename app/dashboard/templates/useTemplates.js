@@ -1,6 +1,7 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { useState, useRef, useEffect } from "react";
 import IotIndicatorForm from "../../Components/WidgetsForms/IotIndicatorForm";
 import IotSwitchForm from "../../Components/WidgetsForms/IotSwitchForm";
 import IotButtonForm from "../../Components/WidgetsForms/IotButtonForm";
@@ -94,6 +95,7 @@ export default function useTemplates() {
   const [widgets, setWidgets] = useState([]);
   const [templates, setTemplates] = useState(demoTemplates);
   const templateNameRef = useRef("");
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     getTemplates();
@@ -113,7 +115,7 @@ export default function useTemplates() {
     // delete template from db
     const axiosHeaders = {
       headers: {
-        token: "gettoken", //this.$store.state.auth.token,
+        token: token, //this.$store.state.auth.token,
       },
       params: { templateId },
     };
@@ -163,7 +165,7 @@ export default function useTemplates() {
 
     const axiosHeaders = {
       headers: {
-        token: "gettoken", //this.$store.state.auth.token,
+        token: token, //this.$store.state.auth.token,
       },
     };
 
@@ -198,9 +200,11 @@ export default function useTemplates() {
   const getTemplates = async () => {
     const axiosHeaders = {
       headers: {
-        token: "gettoken", //this.$store.state.auth.token,
+        token: token, //this.$store.state.auth.token,
       },
     };
+
+    console.log(axiosHeaders);
 
     try {
       const res = await axios.get("/template", axiosHeaders);

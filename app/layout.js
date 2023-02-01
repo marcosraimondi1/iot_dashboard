@@ -7,19 +7,26 @@ axios.defaults.baseURL = process.env.NEXT_PUBLIC_AXIOS_BASE_URL;
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./utils/theme";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
+
+// Redux
+import { store, persistor } from "../store/store.js";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function RootLayout({ children }) {
   return (
     <html>
       <head />
       <body>
-        <UserProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {children}
-          </ThemeProvider>
-        </UserProvider>
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {children}
+            </ThemeProvider>
+          </PersistGate>
+        </Provider>
+        ,
       </body>
     </html>
   );

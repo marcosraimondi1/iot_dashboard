@@ -5,6 +5,12 @@
             "@/Components/*": [
                 "./app/Components/*"
             ],
+            "@/Slices/*": [
+                "./store/slices/*"
+            ],
+            "@/Helper/*": [
+                "./helper/*"
+            ]
         }
     }
 }

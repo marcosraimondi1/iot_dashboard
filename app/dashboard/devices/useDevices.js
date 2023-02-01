@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import randomString from "../../utils/randomString";
 import axios from "axios";
 
@@ -370,6 +371,7 @@ export default function useDevices() {
 
   const deviceNameRef = useRef("");
   const deviceIdRef = useRef("");
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     getTemplates();
@@ -393,7 +395,7 @@ export default function useDevices() {
 
     const axiosHeaders = {
       headers: {
-        token: "gettoken", //this.$store.state.auth.token,
+        token: token,
       },
     };
 
@@ -446,7 +448,7 @@ export default function useDevices() {
     // delete device from db
     const axiosHeaders = {
       headers: {
-        token: "gettoken", // this.$store.state.auth.accessToken,
+        token: token,
       },
       params: { dId },
     };
@@ -506,7 +508,7 @@ export default function useDevices() {
 
     const axiosHeaders = {
       headers: {
-        token: "gettoken", //this.$store.state.auth.token,
+        token: token,
       },
     };
 
@@ -547,7 +549,7 @@ export default function useDevices() {
   const getTemplates = async () => {
     const axiosHeaders = {
       headers: {
-        token: "gettoken", //this.$store.state.auth.token,
+        token: token,
       },
     };
 
