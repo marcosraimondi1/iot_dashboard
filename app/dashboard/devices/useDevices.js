@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import randomString from "../../utils/randomString";
+import axios from "axios";
 
 const demoTemplates = [
   {
@@ -370,6 +371,10 @@ export default function useDevices() {
   const deviceNameRef = useRef("");
   const deviceIdRef = useRef("");
 
+  useEffect(() => {
+    getTemplates();
+  }, []);
+
   const addDevice = () => {
     // add device to db
     const template = templates[deviceTemplateIndex];
@@ -377,7 +382,8 @@ export default function useDevices() {
     let newDevice = {
       name: deviceNameRef.current,
       dId: deviceIdRef.current,
-      template: template,
+      templateId: template._id,
+      templateName: template.name,
       password: "default",
       saverRule: {
         dId: deviceIdRef.current,
@@ -385,13 +391,92 @@ export default function useDevices() {
       },
     };
 
-    let newDevices = devices.concat(newDevice);
-    setDevices(newDevices);
-    console.log(devices);
+    const axiosHeaders = {
+      headers: {
+        token: "gettoken", //this.$store.state.auth.token,
+      },
+    };
+
+    const toSend = { newDevice };
+
+    axios
+      .post("/device", toSend, axiosHeaders)
+      .then((res) => {
+        if (res.data.status == "success") {
+          // this.$store.dispatch("getDevices");
+          deviceNameRef.current = "";
+          deviceIdRef.current = "";
+          setDeviceTemplateIndex("");
+
+          // this.$notify({
+          //   type: "success",
+          //   icon: "tim-icons icon-check-2",
+          //   message: "Success! Device was added",
+          // });
+          console.log("success");
+          return;
+        }
+      })
+      .catch((e) => {
+        if (
+          e.response.data.status == "error" &&
+          e.response.data.error.errors.dId.kind == "unique"
+        ) {
+          // this.$notify({
+          //   type: "warning",
+          //   icon: "tim-icons icon-alert-circle-exc",
+          //   message:
+          //     "The device is already registered in the system. Try another device",
+          // });
+          console.log("error");
+          return;
+        } else {
+          // this.showNotify("danger", "Error");
+          console.log("Error");
+          return;
+        }
+      });
+
+    // let newDevices = devices.concat(newDevice);
+    // setDevices(newDevices);
+    // console.log(devices);
   };
 
   const deleteDevice = (dId) => {
     // delete device from db
+    const axiosHeaders = {
+      headers: {
+        token: "gettoken", // this.$store.state.auth.accessToken,
+      },
+      params: { dId },
+    };
+
+    axios
+      .delete("/device", axiosHeaders)
+      .then((res) => {
+        if (res.data.status == "success") {
+          // this.$notify({
+          //   type: "success",
+          //   icon: "tim-icons icon-check-2",
+          //   message: device.name + " deleted!",
+          // });
+          console.log("success");
+        }
+
+        // $nuxt.$emit("time-to-get-devices");
+
+        return;
+      })
+      .catch((e) => {
+        console.log(e);
+        // this.$notify({
+        //   type: "danger",
+        //   icon: "tim-icons icon-alert-circle-exc",
+        //   message: " Error deleting " + device.name,
+        // });
+        return;
+      });
+
     let newDevices = devices.filter((device) => device.dId !== dId);
     setDevices(newDevices);
   };
@@ -414,12 +499,73 @@ export default function useDevices() {
     // update rule in db
     let newRule = JSON.parse(JSON.stringify(rule));
     newRule.status = !newRule.status;
+
+    const toSend = {
+      rule: newRule,
+    };
+
+    const axiosHeaders = {
+      headers: {
+        token: "gettoken", //this.$store.state.auth.token,
+      },
+    };
+
+    axios
+      .put("/saver-rule", toSend, axiosHeaders)
+      .then((res) => {
+        if (res.data.status == "success") {
+          // this.$store.dispatch("getDevices");
+
+          // this.$notify({
+          //   type: "success",
+          //   icon: "tim-icons icon-check-2",
+          //   message: " Device Saver Status Updated",
+          // });
+          console.log("success");
+        }
+
+        return;
+      })
+      .catch((e) => {
+        console.log(e);
+        // this.$notify({
+        //   type: "danger",
+        //   icon: "tim-icons icon-alert-circle-exc",
+        //   message: " Error updating saver rule status",
+        // });
+        return;
+      });
+
     let newDevices = devices.map((device) => {
       if (device.dId !== rule.dId) return device;
       device.saverRule = newRule;
       return device;
     });
     setDevices(newDevices);
+  };
+
+  const getTemplates = async () => {
+    const axiosHeaders = {
+      headers: {
+        token: "gettoken", //this.$store.state.auth.token,
+      },
+    };
+
+    try {
+      const res = await axios.get("/template", axiosHeaders);
+
+      if (res.data.status == "success") {
+        setTemplates(res.data.data);
+      }
+    } catch (error) {
+      // this.$notify({
+      //   type: "danger",
+      //   icon: "tim-icons icon-alert-circle-exc",
+      //   message: "Error getting templates...",
+      // });
+      console.log(error);
+      return;
+    }
   };
 
   return {
