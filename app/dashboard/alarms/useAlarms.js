@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import randomString from "../../utils/randomString";
-
+import axios from "axios";
 const demoDevice = {
   name: "Home",
   dId: "1",
@@ -114,16 +114,81 @@ export default function useAlarms() {
     // update rule status on db
     let newRule = JSON.parse(JSON.stringify(rule));
     newRule.status = !newRule.status;
+
+    const axiosHeaders = {
+      headers: {
+        token: "gettoken", //this.$store.state.auth.token,
+      },
+    };
+    const toSend = { rule: newRule };
+
+    axios
+      .put("/alarm-rule", toSend, axiosHeaders)
+      .then((res) => {
+        if (res.data.status == "success") {
+          // this.$notify({
+          //   type: "success",
+          //   icon: "tim-icons icon-check-2",
+          //   message: "Success! Alarm Rule was updated",
+          // });
+
+          // this.$store.dispatch("getDevices");
+          console.log("success");
+          return;
+        }
+      })
+      .catch((e) => {
+        // this.$notify({
+        //   type: "danger",
+        //   icon: "tim-icons icon-alert-circle-exc",
+        //   message: "Error",
+        // });
+        console.log(e);
+        return;
+      });
+
     let newRules = alarms.map((alarm) => {
       if (alarm._id !== rule._id) return alarm;
       return newRule;
     });
     setAlarms(newRules);
-    console.log(alarms);
   };
 
   const deleteRule = (rule) => {
     // delete rule from db
+    const axiosHeaders = {
+      headers: {
+        token: "gettoken", //this.$store.state.auth.token,
+      },
+      params: {
+        emqxRuleId: rule.emqxRuleId,
+      },
+    };
+
+    axios
+      .delete("/alarm-rule", axiosHeaders)
+      .then((res) => {
+        if (res.data.status == "success") {
+          // this.$notify({
+          //   type: "success",
+          //   icon: "tim-icons icon-check-2",
+          //   message: "Success! Alarm Rule was deleted",
+          // });
+          // this.$store.dispatch("getDevices");
+          console.log("success");
+          return;
+        }
+      })
+      .catch((e) => {
+        // this.$notify({
+        //   type: "danger",
+        //   icon: "tim-icons icon-alert-circle-exc",
+        //   message: "Error",
+        // });
+        console.log(e);
+        return;
+      });
+
     let newRules = alarms.filter((alarm) => alarm._id !== rule._id);
     setAlarms(newRules);
   };
@@ -144,6 +209,44 @@ export default function useAlarms() {
       triggerTime: triggerTimeRef.current,
       counter: 0,
     };
+
+    const axiosHeaders = {
+      headers: {
+        token: "gettoken", //this.$store.state.auth.token,
+      },
+    };
+
+    let toSend = { newRule };
+
+    axios
+      .post("/alarm-rule", toSend, axiosHeaders)
+      .then((res) => {
+        if (res.data.status == "success") {
+          setCondition("");
+          valueRef.current = "";
+          triggerTimeRef.current = "";
+          setSelectedWidgetIndex("");
+
+          // this.$notify({
+          //   type: "success",
+          //   icon: "tim-icons icon-check-2",
+          //   message: "Success! Alarm Rule was added",
+          // });
+
+          // this.$store.dispatch("getDevices");
+          console.log("success");
+          return;
+        }
+      })
+      .catch((e) => {
+        // this.$notify({
+        //   type: "danger",
+        //   icon: "tim-icons icon-alert-circle-exc",
+        //   message: "Error",
+        // });
+        console.log(e);
+        return;
+      });
     let newRules = alarms.concat(newRule);
     setAlarms(newRules);
   };
