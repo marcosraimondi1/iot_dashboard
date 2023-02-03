@@ -34,7 +34,12 @@ export const devicesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setNotifications, setDevices, setSelectedDevice } =
-  devicesSlice.actions;
+export const {
+  getNotifications,
+  deleteDevice,
+  setSelectedDevice,
+  getDevices,
+  logout,
+} = devicesSlice.actions;
 
 export default devicesSlice.reducer;
