@@ -1,14 +1,24 @@
 "use client";
 import Dash from "../Components/Dashboard/Dashboard";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { logout } from "@/Slices/authSlice";
+import { getDevices } from "@/Slices/devicesSlice";
 
 import authenticated from "../../middleware/authenticated";
 export default authenticated(function Dashboard({ children }) {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const onLogout = () => {
-    // router.push("/api/auth/logout");
+    dispatch(logout());
     router.push("/auth/login");
   };
+
+  useEffect(() => {
+    dispatch(getDevices());
+  }, [dispatch]);
 
   return (
     <Dash logout={onLogout} title="IOT CENTER">

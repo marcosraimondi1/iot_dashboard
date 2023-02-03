@@ -1,5 +1,5 @@
 import { login, register } from "@/Helper/authFunctions.js";
-
+import axios from "axios";
 const logger = (store) => (next) => (action) => {
   if (
     action.type === "persist/REHYDRATE" ||
@@ -69,7 +69,7 @@ const authentication = (store) => (next) => async (action) => {
 };
 
 const devices = (store) => (next) => async (action) => {
-  if (action.type === "devices/setDevices") {
+  if (action.type === "devices/getDevices") {
     // Make an API call to fetch turnos from the server
     const axiosHeader = {
       headers: {

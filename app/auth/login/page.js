@@ -10,7 +10,7 @@ export default notAuthenticated(function Login() {
   const router = useRouter();
   const onLogin = (user) => {
     dispatch(login(user));
-    router.push("/dashboard/templates");
+    router.push("/dashboard");
   };
 
   return <SignIn submit={onLogin} registerLink="/auth/register" />;
