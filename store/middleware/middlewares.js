@@ -52,7 +52,7 @@ const authentication = (store) => (next) => async (action) => {
   }
 
   if (
-    action.type === "devices /logout" ||
+    action.type === "devices/logout" ||
     action.type === "persist/REHYDRATE" ||
     action.type === "persist/PERSIST"
   ) {
