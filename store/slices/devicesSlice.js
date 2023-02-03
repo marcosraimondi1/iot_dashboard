@@ -9,20 +9,26 @@ export const devicesSlice = createSlice({
   },
   reducers: {
     // async logic handled in middlewares
-    setNotifications(state, action) {
+    getNotifications(state, action) {
       state.notifications = action.payload;
-    },
-
-    setDevices(state, action) {
-      state.devices = action.payload;
     },
 
     setSelectedDevice(state, action) {
       state.selectedDevice = action.payload;
     },
-    
+
     deleteDevice(state) {
       return state;
+    },
+
+    getDevices(state, action) {
+      state.devices = action.payload;
+    },
+
+    logout(state) {
+      state.devices = [];
+      state.selectedDevice = {};
+      state.notifications = [];
     },
   },
 });

@@ -51,8 +51,6 @@ const authentication = (store) => (next) => async (action) => {
     return next(action);
   }
 
-  return next(action);
-
   if (
     action.type === "devices /logout" ||
     action.type === "persist/REHYDRATE" ||
@@ -67,15 +65,47 @@ const authentication = (store) => (next) => async (action) => {
     // no token logout
     store.dispatch({ type: "auth/logout" });
   }
+  return next(action);
 };
 
 const devices = (store) => (next) => async (action) => {
   if (action.type === "devices/setDevices") {
     // Make an API call to fetch turnos from the server
-    const devices = await getDevices(store.getState().auth.token);
+    const axiosHeader = {
+      headers: {
+        token: store.getState().auth.token,
+      },
+    };
+    try {
+      const res = await axios.get("/device", axiosHeader);
 
-    // Send turnos into the payload
-    action.payload = devices;
+      const devices = res.data.data;
+      console.log(devices);
+
+      // get selected device
+      devices.forEach((device) => {
+        if (device.selected) {
+          store.dispatch({
+            type: "devices/setSelectedDevice",
+            payload: device,
+          });
+        }
+      });
+
+      //if all devices were removed
+      if (devices.length == 0) {
+        store.dispatch({
+          type: "devices/setSelectedDevice",
+          payload: {},
+        });
+      }
+      action.payload = devices;
+      return next(action);
+    } catch (error) {
+      console.log(error);
+    }
+    action.payload = null;
+    return next(action);
   }
 
   if (action.type === "devices/setSelectedDevice") {
@@ -83,13 +113,40 @@ const devices = (store) => (next) => async (action) => {
     return next(action);
   }
 
-  if (action.type === "devices/setNotifications") {
+  if (action.type === "devices/getNotifications") {
     // Make an API call to set notifications
+    const axiosHeader = {
+      headers: {
+        token: store.getState().auth.token,
+      },
+    };
+
+    try {
+      const res = await axios.get("/notifications", axiosHeader);
+      const notifications = res.data.data;
+      console.log(notifications);
+      action.payload = notifications;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   if (action.type === "devices/deleteDevice") {
     // Make an API call to delete device from the server
-    const token = store.getState().auth.token;
+    const axiosHeader = {
+      headers: {
+        token: store.getState().auth.token,
+      },
+      params: {
+        dId: action.payload,
+      },
+    };
+    try {
+      await axios.delete("/device", axiosHeader);
+      store.dispatch({ type: "devices/getDevices" });
+    } catch (error) {
+      console.log(error);
+    }
     return next(action);
   }
 
