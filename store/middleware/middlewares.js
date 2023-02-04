@@ -158,7 +158,7 @@ const devices = (store) => (next) => async (action) => {
     const toSend = { newDevice: action.payload };
 
     try {
-      const res = axios.post("/device", toSend, axiosHeaders);
+      const res = await axios.post("/device", toSend, axiosHeaders);
       if (res.data.status == "success") {
         store.dispatch({ type: "devices/getDevices" });
 
