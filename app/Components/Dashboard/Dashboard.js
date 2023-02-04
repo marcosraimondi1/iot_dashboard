@@ -67,10 +67,11 @@ const Drawer = styled(MuiDrawer, {
 
 DashboardContent.propTypes = {
   children: PropTypes.element,
+  header: PropTypes.element,
   logout: PropTypes.func,
   title: PropTypes.string,
 };
-function DashboardContent({ children, logout, title }) {
+function DashboardContent({ children, logout, title, header }) {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -107,6 +108,7 @@ function DashboardContent({ children, logout, title }) {
             {title}
           </Typography>
           {/* ELEMENTOS DE HEADER BAR */}
+          {header}
           {/* NOTIS */}
           <IconButton color="inherit">
             <Badge badgeContent={5} color="secondary">
@@ -180,9 +182,9 @@ Dashboard.propTypes = {
   logout: PropTypes.func,
 };
 
-export default function Dashboard({ children, logout, title }) {
+export default function Dashboard({ children, logout, title, header }) {
   return (
-    <DashboardContent title={title} logout={logout}>
+    <DashboardContent title={title} logout={logout} header={header}>
       {children}
     </DashboardContent>
   );

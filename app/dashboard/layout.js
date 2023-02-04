@@ -1,13 +1,20 @@
 "use client";
 import Dash from "../Components/Dashboard/Dashboard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/Slices/authSlice";
-import { getDevices } from "@/Slices/devicesSlice";
+import { getDevices, setSelectedDevice } from "@/Slices/devicesSlice";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
 import authenticated from "../../middleware/authenticated";
 export default authenticated(function Dashboard({ children }) {
+  const devices = useSelector((state) => state.devices.devices);
+  const selectedDevice = useSelector((state) => state.devices.selectedDevice);
+  const [selectedDId, setSelectedDId] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -18,10 +25,38 @@ export default authenticated(function Dashboard({ children }) {
 
   useEffect(() => {
     dispatch(getDevices());
-  }, [dispatch]);
+  }, [dispatch, setSelectedDId]);
+
+  const onSelect = (event) => {
+    if (event.target.value === "") return;
+    setSelectedDId(event.target.value);
+    dispatch(setSelectedDevice(selectedDId));
+  };
+
+  const devicesOptions = devices.map((device) => (
+    <MenuItem value={device.dId}>{device.name}</MenuItem>
+  ));
+
+  const header = (
+    <FormControl
+      sx={{ m: 1, minWidth: 120 }}
+      size="small"
+      onChange={(e) => onSelect(e)}
+      value={selectedDId}
+    >
+      <InputLabel>Device</InputLabel>
+      <Select label="Device">
+        {devices.length == 0 ? (
+          <MenuItem value={-1}>No Devices</MenuItem>
+        ) : (
+          devicesOptions
+        )}
+      </Select>
+    </FormControl>
+  );
 
   return (
-    <Dash logout={onLogout} title="IOT CENTER">
+    <Dash logout={onLogout} title="IOT CENTER" header={header}>
       {children}
     </Dash>
   );
