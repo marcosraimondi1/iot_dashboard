@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import randomString from "../../utils/randomString";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createDevice, deleteDevice } from "@/Slices/devicesSlice";
 const demoTemplates = [
   {
@@ -367,11 +366,14 @@ const demoDevices = [
 
 export default function useDevices() {
   const [templates, setTemplates] = useState(demoTemplates);
-  const [devices, setDevices] = useState(demoDevices);
+  // const [devices, setDevices] = useState(demoDevices);
+
   const [deviceTemplateIndex, setDeviceTemplateIndex] = useState("");
-  const dispatch = useDispatch();
   const deviceNameRef = useRef("");
   const deviceIdRef = useRef("");
+
+  const dispatch = useDispatch();
+  const devices = useSelector((state) => state.devices.devices);
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
@@ -400,7 +402,7 @@ export default function useDevices() {
     setDeviceTemplateIndex("");
   };
 
-  const deleteDevice = (dId) => {
+  const delDevice = (dId) => {
     // delete device from db
     dispatch(deleteDevice(dId));
   };
@@ -415,7 +417,7 @@ export default function useDevices() {
       device.password = randomString(4);
       return device;
     });
-    setDevices(newDevices);
+    // setDevices(newDevices);
     console.table(devices);
   };
 
@@ -465,7 +467,7 @@ export default function useDevices() {
       device.saverRule = newRule;
       return device;
     });
-    setDevices(newDevices);
+    // setDevices(newDevices);
   };
 
   const getTemplates = async () => {
@@ -500,7 +502,7 @@ export default function useDevices() {
     deviceNameRef,
     deviceIdRef,
     addDevice,
-    deleteDevice,
+    deleteDevice: delDevice,
     refreshPassword,
     updateSaverRuleStatus,
   };

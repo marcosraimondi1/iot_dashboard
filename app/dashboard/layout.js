@@ -13,10 +13,14 @@ import InputLabel from "@mui/material/InputLabel";
 import authenticated from "../../middleware/authenticated";
 export default authenticated(function Dashboard({ children }) {
   const devices = useSelector((state) => state.devices.devices);
-  const selectedDevice = useSelector((state) => state.devices.selectedDevice);
-  const [selectedDId, setSelectedDId] = useState("");
+  const selectedDID = useSelector((state) => state.devices.selectedDevice.dId);
+  
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const handleChange = (event) => {
+    dispatch(setSelectedDevice(event.target.value));
+  };
 
   const onLogout = () => {
     dispatch(logout());
@@ -25,32 +29,25 @@ export default authenticated(function Dashboard({ children }) {
 
   useEffect(() => {
     dispatch(getDevices());
-  }, [dispatch, setSelectedDId]);
-
-  const onSelect = (event) => {
-    if (event.target.value === "") return;
-    setSelectedDId(event.target.value);
-    dispatch(setSelectedDevice(selectedDId));
-  };
+  }, [dispatch]);
 
   const devicesOptions = devices.map((device) => (
-    <MenuItem value={device.dId}>{device.name}</MenuItem>
+    <MenuItem key={device.dId} value={device.dId}>
+      {device.name}
+    </MenuItem>
   ));
 
   const header = (
-    <FormControl
-      sx={{ m: 1, minWidth: 120 }}
-      size="small"
-      onChange={(e) => onSelect(e)}
-      value={selectedDId}
-    >
-      <InputLabel>Device</InputLabel>
-      <Select label="Device">
-        {devices.length == 0 ? (
-          <MenuItem value={-1}>No Devices</MenuItem>
-        ) : (
-          devicesOptions
-        )}
+    <FormControl size="small" sx={{ m: 1, minWidth: 120 }}>
+      <InputLabel id="select-label">Device</InputLabel>
+      <Select
+        labelId="select-label"
+        id="demo-simple-select"
+        value={selectedDID}
+        label="Device"
+        onChange={handleChange}
+      >
+        {devicesOptions}
       </Select>
     </FormControl>
   );

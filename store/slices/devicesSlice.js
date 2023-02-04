@@ -13,10 +13,10 @@ export const devicesSlice = createSlice({
       state.notifications = action.payload;
     },
 
-    setSelectedDevice(state, action) {
-      state.selectedDevice = action.payload;
+    setSelectedDevice() {
+      return;
     },
-    createDevice(state) {
+    createDevice() {
       return;
     },
     deleteDevice(state) {
@@ -26,17 +26,16 @@ export const devicesSlice = createSlice({
     getDevices(state, action) {
       const devices = action.payload;
       state.devices = devices;
-
       // get selected device
       devices.forEach((device) => {
         if (device.selected) {
           state.selectedDevice = device;
-          return;
         }
       });
 
       //if all devices were removed
-      state.selectedDevice = {};
+      if (devices.length === 0) state.selectedDevice = {};
+      return state;
     },
 
     logout(state) {

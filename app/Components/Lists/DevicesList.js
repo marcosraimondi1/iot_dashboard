@@ -87,11 +87,11 @@ export default function Lista({
                   }}
                 >
                   <StorageIcon
-                    color={device.saverRule.status ? "success" : "warning"}
+                    color={device.saverRule?.status ? "success" : "warning"}
                   />
                   <Switch
                     color="success"
-                    checked={device.saverRule.status}
+                    checked={device.saverRule?.status}
                     onChange={() => updateSaverRuleStatus(device.saverRule)}
                   />
                 </div>
