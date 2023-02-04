@@ -80,25 +80,7 @@ const devices = (store) => (next) => async (action) => {
       const res = await axios.get("/device", axiosHeader);
 
       const devices = res.data.data;
-      console.log(devices);
 
-      // get selected device
-      devices.forEach((device) => {
-        if (device.selected) {
-          store.dispatch({
-            type: "devices/setSelectedDevice",
-            payload: device,
-          });
-        }
-      });
-
-      //if all devices were removed
-      if (devices.length == 0) {
-        store.dispatch({
-          type: "devices/setSelectedDevice",
-          payload: {},
-        });
-      }
       action.payload = devices;
       return next(action);
     } catch (error) {
@@ -110,6 +92,22 @@ const devices = (store) => (next) => async (action) => {
 
   if (action.type === "devices/setSelectedDevice") {
     // Make an API call to update selected device
+    const dId = action.payload;
+
+    const axiosHeaders = {
+      headers: {
+        token: store.getState().auth.token,
+      },
+    };
+
+    const toSend = { dId: dId };
+
+    try {
+      await axios.put("/device", toSend, axiosHeaders);
+      store.dispatch({ type: "devices/getDevices" });
+    } catch (e) {
+      console.log(e);
+    }
     return next(action);
   }
 
@@ -148,6 +146,36 @@ const devices = (store) => (next) => async (action) => {
       console.log(error);
     }
     return next(action);
+  }
+
+  if (action.type === "devices/createDevice") {
+    const axiosHeaders = {
+      headers: {
+        token: store.getState().auth.token,
+      },
+    };
+
+    const toSend = { newDevice: action.payload };
+
+    try {
+      const res = axios.post("/device", toSend, axiosHeaders);
+      if (res.data.status == "success") {
+        store.dispatch({ type: "devices/getDevices" });
+
+        return next(action);
+      }
+    } catch (e) {
+      if (
+        e.response.data.status == "error" &&
+        e.response.data.error.errors.dId.kind == "unique"
+      ) {
+        console.log("error unique");
+        return;
+      } else {
+        console.log("Error");
+        return;
+      }
+    }
   }
 
   return next(action);

@@ -16,13 +16,27 @@ export const devicesSlice = createSlice({
     setSelectedDevice(state, action) {
       state.selectedDevice = action.payload;
     },
-
+    createDevice(state) {
+      return;
+    },
     deleteDevice(state) {
       return state;
     },
 
     getDevices(state, action) {
-      state.devices = action.payload;
+      const devices = action.payload;
+      state.devices = devices;
+
+      // get selected device
+      devices.forEach((device) => {
+        if (device.selected) {
+          state.selectedDevice = device;
+          return;
+        }
+      });
+
+      //if all devices were removed
+      state.selectedDevice = {};
     },
 
     logout(state) {
@@ -39,6 +53,7 @@ export const {
   deleteDevice,
   setSelectedDevice,
   getDevices,
+  createDevice,
   logout,
 } = devicesSlice.actions;
 

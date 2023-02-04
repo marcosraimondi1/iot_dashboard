@@ -2,7 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import randomString from "../../utils/randomString";
 import axios from "axios";
-
+import { useDispatch } from "react-redux";
+import { createDevice, deleteDevice } from "@/Slices/devicesSlice";
 const demoTemplates = [
   {
     name: "Template 1",
@@ -368,7 +369,7 @@ export default function useDevices() {
   const [templates, setTemplates] = useState(demoTemplates);
   const [devices, setDevices] = useState(demoDevices);
   const [deviceTemplateIndex, setDeviceTemplateIndex] = useState("");
-
+  const dispatch = useDispatch();
   const deviceNameRef = useRef("");
   const deviceIdRef = useRef("");
   const token = useSelector((state) => state.auth.token);
@@ -393,94 +394,15 @@ export default function useDevices() {
       },
     };
 
-    const axiosHeaders = {
-      headers: {
-        token: token,
-      },
-    };
-
-    const toSend = { newDevice };
-
-    axios
-      .post("/device", toSend, axiosHeaders)
-      .then((res) => {
-        if (res.data.status == "success") {
-          // this.$store.dispatch("getDevices");
-          deviceNameRef.current = "";
-          deviceIdRef.current = "";
-          setDeviceTemplateIndex("");
-
-          // this.$notify({
-          //   type: "success",
-          //   icon: "tim-icons icon-check-2",
-          //   message: "Success! Device was added",
-          // });
-          console.log("success");
-          return;
-        }
-      })
-      .catch((e) => {
-        if (
-          e.response.data.status == "error" &&
-          e.response.data.error.errors.dId.kind == "unique"
-        ) {
-          // this.$notify({
-          //   type: "warning",
-          //   icon: "tim-icons icon-alert-circle-exc",
-          //   message:
-          //     "The device is already registered in the system. Try another device",
-          // });
-          console.log("error");
-          return;
-        } else {
-          // this.showNotify("danger", "Error");
-          console.log("Error");
-          return;
-        }
-      });
-
-    // let newDevices = devices.concat(newDevice);
-    // setDevices(newDevices);
-    // console.log(devices);
+    dispatch(createDevice(newDevice));
+    deviceNameRef.current = "";
+    deviceIdRef.current = "";
+    setDeviceTemplateIndex("");
   };
 
   const deleteDevice = (dId) => {
     // delete device from db
-    const axiosHeaders = {
-      headers: {
-        token: token,
-      },
-      params: { dId },
-    };
-
-    axios
-      .delete("/device", axiosHeaders)
-      .then((res) => {
-        if (res.data.status == "success") {
-          // this.$notify({
-          //   type: "success",
-          //   icon: "tim-icons icon-check-2",
-          //   message: device.name + " deleted!",
-          // });
-          console.log("success");
-        }
-
-        // $nuxt.$emit("time-to-get-devices");
-
-        return;
-      })
-      .catch((e) => {
-        console.log(e);
-        // this.$notify({
-        //   type: "danger",
-        //   icon: "tim-icons icon-alert-circle-exc",
-        //   message: " Error deleting " + device.name,
-        // });
-        return;
-      });
-
-    let newDevices = devices.filter((device) => device.dId !== dId);
-    setDevices(newDevices);
+    dispatch(deleteDevice(dId));
   };
 
   const refreshPassword = (dId) => {
