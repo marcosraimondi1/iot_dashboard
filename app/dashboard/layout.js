@@ -1,6 +1,6 @@
 "use client";
 import Dash from "../Components/Dashboard/Dashboard";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/Slices/authSlice";
