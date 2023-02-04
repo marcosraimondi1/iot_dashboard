@@ -13,8 +13,10 @@ import InputLabel from "@mui/material/InputLabel";
 import authenticated from "../../middleware/authenticated";
 export default authenticated(function Dashboard({ children }) {
   const devices = useSelector((state) => state.devices.devices);
-  const selectedDID = useSelector((state) => state.devices.selectedDevice.dId);
-  
+  const selectedDID = useSelector((state) =>
+    state.devices.selectedDevice.dId ? state.devices.selectedDevice.dId : ""
+  );
+
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -38,8 +40,10 @@ export default authenticated(function Dashboard({ children }) {
   ));
 
   const header = (
-    <FormControl size="small" sx={{ m: 1, minWidth: 120 }}>
-      <InputLabel id="select-label">Device</InputLabel>
+    <FormControl size="small" sx={{ m: 1, minWidth: 130 }}>
+      <InputLabel id="select-label">
+        {devices.length > 0 ? "Device" : "No Devices"}
+      </InputLabel>
       <Select
         labelId="select-label"
         id="demo-simple-select"
@@ -47,7 +51,11 @@ export default authenticated(function Dashboard({ children }) {
         label="Device"
         onChange={handleChange}
       >
-        {devicesOptions}
+        {devices.length > 0 ? (
+          devicesOptions
+        ) : (
+          <MenuItem value="">Create New</MenuItem>
+        )}
       </Select>
     </FormControl>
   );

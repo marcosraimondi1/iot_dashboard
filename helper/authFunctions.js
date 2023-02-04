@@ -28,7 +28,7 @@ export const login = async (user) => {
 
 export const register = async (user) => {
   try {
-    const res = axios.post("/register", user);
+    const res = await axios.post("/register", user);
 
     //success! - Usuario creado.
     if (res.data.status == "success") {
@@ -36,9 +36,9 @@ export const register = async (user) => {
       return true;
     }
   } catch (e) {
-    console.log(e.response.data);
+    console.log(e);
 
-    if (e.response.data.error.errors.email.kind == "unique") {
+    if (e?.response?.data?.error?.errors?.email?.kind == "unique") {
       console.log("User already exists :(");
 
       return false;

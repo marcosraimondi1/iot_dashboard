@@ -26,28 +26,29 @@ export default function Dashboard() {
     }
   };
 
-  const dashItems = widgets.map((widget, index) => (
+  const dashItems = widgets?.map((widget, index) => (
     <Grid item key={index} xs={widget.config.colSize}>
       {selectWidget(widget)}
     </Grid>
   ));
 
-  let config = {
-    variableFullName: "Temperature",
-    icon: "shower",
-    color: "primary",
-    colSize: 12,
-    unit: "°C",
-    chartTimeAgo: 10,
-    variableSendFreq: 10,
-    decimalPlaces: 2,
-    selectedDevice: {
-      name: "Home",
-    },
-  };
   return (
     <Grid container spacing={2}>
-      {dashItems}
+      {widgets ? (
+        dashItems
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            height: "70vh",
+          }}
+        >
+          <h4>Select a Device</h4>
+        </div>
+      )}
     </Grid>
   );
 }
