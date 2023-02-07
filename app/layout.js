@@ -26,7 +26,6 @@ export default function RootLayout({ children }) {
             </ThemeProvider>
           </PersistGate>
         </Provider>
-        ,
       </body>
     </html>
   );
