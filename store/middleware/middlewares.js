@@ -1,5 +1,7 @@
 import { login, register } from "@/Helper/authFunctions.js";
+import mqtt from "mqtt";
 import axios from "axios";
+
 const logger = (store) => (next) => (action) => {
   if (
     action.type === "persist/REHYDRATE" ||
@@ -20,6 +22,7 @@ const authentication = (store) => (next) => async (action) => {
   // LOGOUT
   if (action.type === "auth/logout") {
     store.dispatch({ type: "devices/logout" }); // borra info guardada
+    store.dispatch({ type: "emqx/logout" }); // borra info guardada
     return next(action);
   }
 
@@ -53,6 +56,7 @@ const authentication = (store) => (next) => async (action) => {
 
   if (
     action.type === "devices/logout" ||
+    action.type === "emqx/logout" ||
     action.type === "persist/REHYDRATE" ||
     action.type === "persist/PERSIST"
   ) {
@@ -181,4 +185,199 @@ const devices = (store) => (next) => async (action) => {
   return next(action);
 };
 
-export const middlewares = [authentication, devices, logger];
+const emqx = (store) => (next) => async (action) => {
+  if (action.type === "emqx/startMqttClient") {
+    try {
+      await startMqttClient(store);
+    } catch (error) {
+      console.log("Error Starting Mqtt Client");
+      console.log(error);
+    }
+    return next(action);
+  }
+  if (action.type === "emqx/mqttSender") {
+    // send mqtt messages
+    try {
+      const toSend = action.payload;
+      console.log(toSend);
+      global.CLIENT.publish(toSend.topic, JSON.stringify(toSend.msg));
+    } catch (error) {
+      console.log("Error Sending Message");
+      console.log(error);
+    }
+    return next(action);
+  }
+  return next(action);
+};
+
+export const middlewares = [authentication, devices, emqx]; //, logger];
+
+const getMqttCredentials = async (store) => {
+  try {
+    const axiosHeaders = {
+      headers: {
+        token: store.getState().auth.token,
+      },
+    };
+
+    const credentials = await axios.post(
+      "/getmqttcredentials",
+      null,
+      axiosHeaders
+    );
+    console.log("credentials");
+    console.log(credentials.data);
+
+    // update options state
+
+    if (credentials.data.status == "success") {
+      global.OPTIONS.username = credentials.data.username;
+      global.OPTIONS.password = credentials.data.password;
+
+      const clientId =
+        "web_" +
+        store.getState().auth.userData.name +
+        "_" +
+        Math.floor(Math.random() * 1000000 + 1);
+
+      global.OPTIONS.clientId = clientId;
+    }
+  } catch (error) {
+    console.log(error);
+
+    if (error.response.status == 401) {
+      console.log("NO VALID TOKEN");
+      localStorage.clear();
+      store.dispatch({ type: "auth/logout" });
+    }
+  }
+};
+
+const getMqttCredentialsForReconnection = async (store) => {
+  try {
+    const axiosHeaders = {
+      headers: {
+        token: store.getState().auth.token,
+      },
+    };
+
+    const credentials = await axios.post(
+      "/getmqttcredentialsforreconnection",
+      null,
+      axiosHeaders
+    );
+    console.log(credentials.data);
+
+    if (credentials.data.status == "success") {
+      global.CLIENT.options.username = credentials.data.username;
+      global.CLIENT.options.password = credentials.data.password;
+      const newCredentials = {
+        username: credentials.data.username,
+        password: credentials.data.password,
+      };
+      store.dispatch({ type: "emqx/setClient", payload: newCredentials });
+    }
+  } catch (error) {
+    console.log(error);
+
+    if (error.response.status == 401) {
+      console.log("NO VALID TOKEN");
+      localStorage.clear();
+      store.dispatch({ type: "auth/logout" });
+    }
+  }
+};
+
+const startMqttClient = async (store) => {
+  console.log("CLIENT");
+  console.log(global.CLIENT);
+  if (global.CLIENT !== null) return;
+  console.log("STARTING CLIENT");
+  global.CLIENT = 1;
+  await getMqttCredentials(store);
+
+  //ex topic: "userid/did/variableId/sdata"
+  const deviceSubscribeTopic =
+    store.getState().auth.userData._id + "/+/+/sdata";
+
+  const notifSubscribeTopic = store.getState().auth.userData._id + "/+/+/notif";
+
+  const connectUrl =
+    process.env.NEXT_PUBLIC_MQTT_PREFIX +
+    global.OPTIONS.host +
+    ":" +
+    global.OPTIONS.port +
+    global.OPTIONS.endpoint;
+
+  console.log("connecting to " + connectUrl);
+  try {
+    global.CLIENT = mqtt.connect(connectUrl, global.OPTIONS);
+  } catch (error) {
+    console.log("ERROR CONNECTING TO MQTT");
+    console.log(error);
+  }
+
+  //MQTT CONNECTION SUCCESS
+  global.CLIENT.on("connect", () => {
+    console.log(global.CLIENT);
+
+    console.log("Connection succeeded!");
+
+    //SDATA SUBSCRIBE
+    global.CLIENT.subscribe(deviceSubscribeTopic, { qos: 0 }, (err) => {
+      if (err) {
+        console.log("Error in DeviceSubscription");
+        return;
+      }
+      console.log("Device subscription Success");
+      console.log(deviceSubscribeTopic);
+    });
+
+    //NOTIF SUBSCRIBE
+    global.CLIENT.subscribe(notifSubscribeTopic, { qos: 0 }, (err) => {
+      if (err) {
+        console.log("Error in NotifSubscription");
+        return;
+      }
+      console.log("Notif subscription Success");
+      console.log(notifSubscribeTopic);
+    });
+  });
+
+  global.CLIENT.on("error", (error) => {
+    console.log("Connection failed", error);
+  });
+
+  global.CLIENT.on("reconnect", (error) => {
+    console.log("reconnecting:");
+    getMqttCredentialsForReconnection(store);
+  });
+
+  global.CLIENT.on("disconnect", (error) => {
+    console.log("MQTT disconnect EVENT FIRED:", error);
+    global.CLIENT = null;
+  });
+
+  global.CLIENT.on("message", (topic, message) => {
+    console.log("Message from topic " + topic + " -> ");
+    console.log(message.toString());
+
+    try {
+      const splittedTopic = topic.split("/");
+      const msgType = splittedTopic[3];
+
+      if (msgType == "notif") {
+        store.dispatch("getNotifications");
+        return;
+      } else if (msgType == "sdata") {
+        // $nuxt.$emit(topic, JSON.parse(message.toString()));
+        console.log(
+          "msg topic " + topic + " | msg: " + JSON.parse(message.toString())
+        );
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+};

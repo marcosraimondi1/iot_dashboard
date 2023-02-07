@@ -19,10 +19,12 @@ import { middlewares } from "./middleware/middlewares.js";
 // Reducers
 import authReducer from "./slices/authSlice.js";
 import devicesReducer from "./slices/devicesSlice.js";
+import emqxReducer from "./slices/emqxSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   devices: devicesReducer,
+  emqx: emqxReducer,
 });
 
 const persistConfig = {
