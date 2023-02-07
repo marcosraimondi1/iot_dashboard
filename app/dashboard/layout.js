@@ -36,7 +36,6 @@ export default authenticated(function Dashboard({ children }) {
   };
 
   useEffect(() => {
-    console.log("component mounting");
     dispatch(getDevices());
     dispatch(getNotifications());
     dispatch(startMqttClient());

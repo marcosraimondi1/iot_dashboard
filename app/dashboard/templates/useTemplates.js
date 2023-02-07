@@ -204,8 +204,6 @@ export default function useTemplates() {
       },
     };
 
-    console.log(axiosHeaders);
-
     try {
       const res = await axios.get("/template", axiosHeaders);
 

@@ -418,7 +418,6 @@ export default function useDevices() {
       return device;
     });
     // setDevices(newDevices);
-    console.table(devices);
   };
 
   const updateSaverRuleStatus = (rule) => {

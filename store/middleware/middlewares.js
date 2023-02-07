@@ -126,7 +126,6 @@ const devices = (store) => (next) => async (action) => {
     try {
       const res = await axios.get("/notifications", axiosHeader);
       const notifications = res.data.data;
-      console.log(notifications);
       action.payload = notifications;
     } catch (error) {
       console.log(error);
@@ -225,8 +224,6 @@ const getMqttCredentials = async (store) => {
       null,
       axiosHeaders
     );
-    console.log("credentials");
-    console.log(credentials.data);
 
     // update options state
 
@@ -266,7 +263,6 @@ const getMqttCredentialsForReconnection = async (store) => {
       null,
       axiosHeaders
     );
-    console.log(credentials.data);
 
     if (credentials.data.status == "success") {
       global.CLIENT.options.username = credentials.data.username;
@@ -289,10 +285,7 @@ const getMqttCredentialsForReconnection = async (store) => {
 };
 
 const startMqttClient = async (store) => {
-  console.log("CLIENT");
-  console.log(global.CLIENT);
   if (global.CLIENT !== null) return;
-  console.log("STARTING CLIENT");
   global.CLIENT = 1;
   await getMqttCredentials(store);
 
@@ -309,7 +302,6 @@ const startMqttClient = async (store) => {
     global.OPTIONS.port +
     global.OPTIONS.endpoint;
 
-  console.log("connecting to " + connectUrl);
   try {
     global.CLIENT = mqtt.connect(connectUrl, global.OPTIONS);
   } catch (error) {
@@ -319,8 +311,6 @@ const startMqttClient = async (store) => {
 
   //MQTT CONNECTION SUCCESS
   global.CLIENT.on("connect", () => {
-    console.log(global.CLIENT);
-
     console.log("Connection succeeded!");
 
     //SDATA SUBSCRIBE
@@ -371,9 +361,6 @@ const startMqttClient = async (store) => {
         return;
       } else if (msgType == "sdata") {
         // $nuxt.$emit(topic, JSON.parse(message.toString()));
-        console.log(
-          "msg topic " + topic + " | msg: " + JSON.parse(message.toString())
-        );
         return;
       }
     } catch (error) {
