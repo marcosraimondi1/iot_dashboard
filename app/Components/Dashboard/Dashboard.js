@@ -14,8 +14,7 @@ import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Button from "@mui/material/Button";
-import Badge from "@mui/material/Badge";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+
 import NavItems from "./NavItems";
 import Copyright from "../Copyright/Copyright";
 
@@ -109,12 +108,7 @@ function DashboardContent({ children, logout, title, header }) {
           </Typography>
           {/* ELEMENTOS DE HEADER BAR */}
           {header}
-          {/* NOTIS */}
-          <IconButton color="inherit">
-            <Badge badgeContent={5} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+
           {/* USER - LOGOUT */}
           <Button
             sx={{ color: "white" }}

@@ -319,7 +319,7 @@ const startMqttClient = async (store) => {
         return;
       }
       console.log("Device subscription Success");
-      console.log(deviceSubscribeTopic);
+      // console.log(deviceSubscribeTopic);
     });
 
     //NOTIF SUBSCRIBE
@@ -329,7 +329,7 @@ const startMqttClient = async (store) => {
         return;
       }
       console.log("Notif subscription Success");
-      console.log(notifSubscribeTopic);
+      // console.log(notifSubscribeTopic);
     });
   });
 
