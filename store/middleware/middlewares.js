@@ -356,7 +356,8 @@ const startMqttClient = async (store) => {
       const msgType = splittedTopic[3];
 
       if (msgType == "notif") {
-        store.dispatch("getNotifications");
+        alert(message.toString());
+        store.dispatch({ type: "devices/getNotifications" });
         return;
       } else if (msgType == "sdata") {
         const customEvent = new CustomEvent(topic, {
