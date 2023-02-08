@@ -3,10 +3,6 @@
 import { useEffect } from "react";
 import { store } from "../store/store";
 export default function notAuthenticated(WrappedComponent) {
-  // store.dispatch('readToken');
-  // if (store.state.auth) {
-  //     return redirect('/dashboard')
-  // }
   const token = store.getState().auth.token;
   return (props) => {
     useEffect(() => {
