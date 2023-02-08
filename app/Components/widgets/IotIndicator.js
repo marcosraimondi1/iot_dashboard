@@ -15,13 +15,13 @@ export default function IotIndicator({ config }) {
     "/" +
     config.variable +
     "/sdata";
-
   const processReceivedData = (data) => {
     data.value ? setValue(data.value) : setValue(false);
   };
 
   useEffect(() => {
     if (config.demo) return;
+    console.log("Indicator Topic: " + topic);
     window.addEventListener(topic, (event) => {
       processReceivedData(event.detail);
     });

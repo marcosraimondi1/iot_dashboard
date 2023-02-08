@@ -25,13 +25,18 @@ export const devicesSlice = createSlice({
 
     getDevices(state, action) {
       const devices = action.payload;
-      state.devices = devices;
       // get selected device
-      devices.forEach((device) => {
-        if (device.selected) {
-          state.selectedDevice = device;
-        }
-      });
+      try {
+        state.devices = devices;
+        devices.forEach((device) => {
+          if (device.selected) {
+            state.selectedDevice = device;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        state.devices = [];
+      }
 
       //if all devices were removed
       if (devices.length === 0) state.selectedDevice = {};

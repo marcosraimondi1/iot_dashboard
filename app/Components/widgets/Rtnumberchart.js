@@ -222,6 +222,7 @@ export default function Rtnumberchart({ config }) {
     setTime(Date.now());
 
     if (config.demo) return;
+    console.log("Chart Topic: " + topic);
 
     setValue(0);
     getLastData();
