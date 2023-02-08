@@ -253,17 +253,10 @@ async function getDeviceMqttCredentials(dId, userId) {
       }
     );
 
-    // update response example
-    //{ n: 1, nModified: 1, ok: 1 }
-
-    if (result.n == 1 && result.ok == 1) {
-      return {
-        username: newUserName,
-        password: newPassword,
-      };
-    } else {
-      return false;
-    }
+    return {
+      username: newUserName,
+      password: newPassword,
+    };
   } catch (error) {
     console.log(error);
     return false;
