@@ -212,6 +212,28 @@ router.put("/saver-rule", checkAuth, async (req, res) => {
   }
 });
 
+// UPDATE DEVICE PASSWORD
+router.put("/device-password", checkAuth, async (req, res) => {
+  try {
+    const dId = req.body.dId;
+    const userId = req.userData._id;
+    const password = makeid(10);
+    const result = await Device.updateOne(
+      { userId, dId },
+      { $set: { password } }
+    );
+
+    const toSend = {
+      status: "success",
+    };
+
+    return res.json(toSend);
+  } catch (err) {
+    console.log("Error Updating Device Password");
+    console.log(err);
+  }
+});
+
 //**********************
 //**** FUNCTIONS *******
 //**********************

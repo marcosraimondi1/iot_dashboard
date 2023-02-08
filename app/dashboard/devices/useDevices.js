@@ -63,12 +63,26 @@ export default function useDevices() {
     const toSend = {
       dId,
     };
-    let newDevices = devices.map((device) => {
-      if (device.dId !== dId) return device;
-      device.password = randomString(4);
-      return device;
-    });
-    // setDevices(newDevices);
+
+    const axiosHeaders = {
+      headers: {
+        token: token,
+      },
+    };
+
+    axios
+      .put("/device-password", toSend, axiosHeaders)
+      .then((res) => {
+        if (res.data.status == "success") {
+          console.log("success");
+          dispatch(getDevices());
+        }
+        return;
+      })
+      .catch((e) => {
+        console.log(e);
+        return;
+      });
   };
 
   const updateSaverRuleStatus = (rule) => {
