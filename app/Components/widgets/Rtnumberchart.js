@@ -1,28 +1,19 @@
+import axios from "axios";
 import Icon from "@mui/material/Icon";
 import Card from "../Card/Card";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 
-const data = [
-  [1650059071668, 22],
-  [1650059072668, 27],
-  [1650059073668, 32],
-  [1650059074668, 7],
-  [1650059075668, 10],
-  [1650059076668, 12],
-  [1650059077668, 15],
-  [1650059078668, 14],
-  [1650059079668, 24],
-  [1650059081668, 22],
-  [1650059082668, 27],
-  [1650059083668, 32],
-  [1650059084668, 7],
-  [1650059085668, 10],
-  [1650059086668, 12],
-  [1650059087668, 15],
-  [1650059088668, 14],
-  [1650059089668, 24],
+const demoData = [
+  [1675856329611, 10],
+  [1675856371272, 12],
+  [1675856390977, 12.58],
+  [1675856401438, 14.5898],
+  [1675856412839, 15],
+  [1675856501380, 13],
+  [1675856601095, 15],
 ];
 let chartOptionsInitial = {
   credits: {
@@ -66,7 +57,7 @@ let chartOptionsInitial = {
   series: [
     {
       name: "",
-      data: data,
+      data: demoData,
       color: "#e14eca",
     },
   ],
@@ -92,16 +83,77 @@ let chartOptionsInitial = {
     ],
   },
 };
+
 let chartColor = "#6d1b7b";
 
 export default function Rtnumberchart({ config }) {
+  const [value, setValue] = useState(17.5846);
   const [nowTime, setNowTime] = useState(0);
   const [time, setTime] = useState(0);
   const [chartOptions, setChartOptions] = useState(chartOptionsInitial);
 
-  useEffect(() => {
-    setTime(Date.now());
-    getNow();
+  const token = useSelector((state) => state.auth.token);
+  const topic =
+    config.userId +
+    "/" +
+    config.selectedDevice.dId +
+    "/" +
+    config.variable +
+    "/sdata";
+
+  const getChartData = () => {
+    // request data from api
+    const axiosHeaders = {
+      headers: { token },
+      params: {
+        dId: config.selectedDevice.dId,
+        variable: config.variable,
+        chartTimeAgo: config.chartTimeAgo,
+      },
+    };
+
+    axios
+      .get("/get-small-charts-data", axiosHeaders)
+      .then((res) => {
+        const data = res.data.data;
+        let newDataSeries = [];
+
+        // format data for chart options series
+        data.forEach((element) => {
+          var aux = [];
+
+          aux.push(element.time); // + new Date().getTimezoneOffset() * 60 * 1000 * -1
+          aux.push(element.value);
+
+          newDataSeries.push(aux);
+        });
+        let newOptions = chartOptions;
+        newOptions.series[0].data = newDataSeries;
+        setChartOptions(newOptions);
+        return;
+      })
+      .catch((e) => {
+        console.log(e);
+        return;
+      });
+  };
+
+  const processReceivedData = (data) => {
+    try {
+      setTime(Date.now());
+      setValue(data.value);
+
+      setTimeout(() => {
+        if (data.save == 1) {
+          getChartData();
+        }
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateColor = () => {
     if (config.color === "success") chartColor = "#357a38";
     else if (config.color === "warning") chartColor = "#b26a00";
     else if (config.color === "error") chartColor = "#aa2e25";
@@ -111,7 +163,7 @@ export default function Rtnumberchart({ config }) {
     let newChartOptions = chartOptions;
     newChartOptions.series[0].color = chartColor;
     setChartOptions(newChartOptions);
-  }, [setNowTime, config.color, chartOptions, setChartOptions]);
+  };
 
   const getNow = () => {
     setNowTime(Date.now());
@@ -140,7 +192,57 @@ export default function Rtnumberchart({ config }) {
       return seconds.toFixed() + " day";
     }
   };
-  const value = 17.5354864; // CAMBIAR LINEA DESPUES
+
+  const getLastData = () => {
+    const axiosHeaders = {
+      headers: { token },
+      params: {
+        dId: config.selectedDevice.dId,
+        variable: config.variable,
+        chartTimeAgo: config.chartTimeAgo,
+      },
+    };
+    axios
+      .get("/get-last-data", axiosHeaders)
+      .then((res) => {
+        if (res.data.status == "success") {
+          if (res.data.data.length == 0) return;
+          const data = res.data.data[0];
+          // data.time + new Date().getTimezoneOffset() * 60 * 1000 * -1;
+          setTime(data.time);
+          setValue(data.value);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    updateColor();
+    getNow();
+    setTime(Date.now());
+
+    if (config.demo) return;
+
+    setValue(0);
+    getLastData();
+    // mqtt message listener
+    window.addEventListener(topic, (event) => {
+      processReceivedData(event.detail);
+    });
+
+    // erase data
+    let newOptions = chartOptions;
+    newOptions.series[0].data = [];
+    newOptions.series[0].name = config.variableFullName + " " + config.unit;
+    setChartOptions(newOptions);
+
+    // get saved data from api
+    getChartData();
+
+    return () => {
+      window.removeEventListener(topic, () => {});
+    };
+  }, []);
 
   const title = (
     <>
@@ -176,6 +278,9 @@ export default function Rtnumberchart({ config }) {
       <HighchartsReact
         highcharts={Highcharts}
         constructorType={"stockChart"}
+        allowChartUpdate={true}
+        immutable={false}
+        updateArgs={[true, true, true]}
         options={chartOptions}
       />
     </Card>
@@ -185,88 +290,3 @@ export default function Rtnumberchart({ config }) {
 // HIGHCHARTS DOCS
 // https://api.highcharts.com/highcharts/
 // https://www.npmjs.com/package/highcharts-react-official#options-details
-
-/*
-getChartData() {
-
-                if (this.config.demo) {
-                    this.chartOptions.series[0].data = [[1606659071668, 22], [1606659072668, 27], [1606659073668, 32], [1606659074668, 7]];
-                    this.isMounted = true;
-                    return;
-                }
-
- 
-                const axiosHeaders = {
-                    headers: {
-                        token: $nuxt.$store.state.auth.token,
-                    },
-                    params: { dId: this.config.selectedDevice.dId, variable: this.config.variable, chartTimeAgo: this.config.chartTimeAgo }
-                }
-
-                this.$axios.get("/get-small-charts-data", axiosHeaders)
-                    .then(res => {
-                        
-                        this.chartOptions.series[0].data = [];
-                        const data = res.data.data;
-                        console.log(res.data)
-
-                        data.forEach(element => {
-                            var aux = []
-
-                            aux.push(element.time + (new Date().getTimezoneOffset() * 60 * 1000 * -1));
-                            aux.push(element.value);
-
-                            this.chartOptions.series[0].data.push(aux);
-                        });
-
-                        this.isMounted = true;
-
-
-                        return;
-
-                    })
-                    .catch(e => {
-
-                        console.log(e)
-                        return;
-
-                    });
-
-            }
-
-procesReceivedData(data) {
-
-                try {
-                    this.time = Date.now();
-                    this.value = data.value;
-
-                    setTimeout(() => {
-                        if(data.save==1){
-                            this.getChartData();
-                        }  
-                    }, 1000);
-                } catch (error) {
-                    console.log(error);
-                }
-
-               
-            }
-
-
-            onMount(this.value = 0;
-
-                        this.$nuxt.$off(this.topic + "/sdata");
-
-                        this.topic = this.config.userId + '/' + this.config.selectedDevice.dId + '/' + this.config.variable;
-                        this.$nuxt.$on(this.topic + "/sdata", this.procesReceivedData);
-
-                        this.chartOptions.series[0].data = [];
-
-                        this.getChartData();
-
-
-                        this.chartOptions.series[0].name = this.config.variableFullName + " " + this.config.unit;
-                        this.updateColorClass();
-                        window.dispatchEvent(new Event('resize'));)
-
-*/
