@@ -18,8 +18,10 @@ export default function Alarms() {
     updateStatusRule,
     deleteRule,
     addRule,
-    valueRef,
-    triggerTimeRef,
+    value,
+    setValue,
+    triggerTime,
+    setTriggerTime,
   } = useAlarms();
 
   return (
@@ -77,9 +79,8 @@ export default function Alarms() {
               required
               type="number"
               label="Value"
-              onChange={(e) => {
-                valueRef.current = e.target.value;
-              }}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
               sx={{ width: "100%", margin: "10px" }}
             />
           </Grid>
@@ -90,9 +91,8 @@ export default function Alarms() {
               required
               label="Trigger Time (mins)"
               type="number"
-              onChange={(e) => {
-                triggerTimeRef.current = e.target.value;
-              }}
+              value={triggerTime}
+              onChange={(e) => setTriggerTime(e.target.value)}
               sx={{ width: "80%", margin: "10px" }}
             />
           </Grid>
