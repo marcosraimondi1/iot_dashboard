@@ -310,7 +310,7 @@ const startMqttClient = async (store) => {
 
   //MQTT CONNECTION SUCCESS
   global.CLIENT.on("connect", () => {
-    console.log("Connection succeeded!");
+    console.log("✅✅ Mqtt connected ✅✅");
 
     //SDATA SUBSCRIBE
     global.CLIENT.subscribe(deviceSubscribeTopic, { qos: 0 }, (err) => {
@@ -338,7 +338,7 @@ const startMqttClient = async (store) => {
   });
 
   global.CLIENT.on("reconnect", (error) => {
-    console.log("reconnecting:");
+    console.log("reconnecting 🔜");
     getMqttCredentialsForReconnection(store);
   });
 
@@ -348,9 +348,6 @@ const startMqttClient = async (store) => {
   });
 
   global.CLIENT.on("message", (topic, message) => {
-    console.log("Message from topic " + topic + " -> ");
-    console.log(message.toString());
-
     try {
       const splittedTopic = topic.split("/");
       const msgType = splittedTopic[3];
