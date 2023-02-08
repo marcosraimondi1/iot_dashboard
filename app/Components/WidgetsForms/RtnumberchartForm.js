@@ -23,7 +23,7 @@ export default function RtnumberchartForm({ addWidget }) {
   const [color, setColor] = useState("success");
   const [colSize, setColSize] = useState(6);
   const [unit, setUnit] = useState("");
-  const [chartTimeAgo, setChartTimeAgo] = useState();
+  const [chartTimeAgo, setChartTimeAgo] = useState(30);
   const [variableSendFreq, setVariableSendFreq] = useState(30);
   const [decimalPlaces, setDecimalPlaces] = useState(2);
 
@@ -169,12 +169,28 @@ export default function RtnumberchartForm({ addWidget }) {
               {/* ADD BUTTON */}
               <br />
               <Button
-                onClick={() =>
+                onClick={() => {
+                  if (icon === "") {
+                    alert("Missing Icon Field");
+                    return;
+                  }
+                  if (variableFullName === "") {
+                    alert("Missing Variable Name");
+                    return;
+                  }
+                  if (unit === "") {
+                    alert("Missing Unit Field");
+                    return;
+                  }
+
                   addWidget({
                     type: "Rtnumberchart",
                     config: rtnumberchartConfig,
-                  })
-                }
+                  });
+                  setIcon("");
+                  setVariableFullName("");
+                  setUnit("");
+                }}
                 variant="contained"
               >
                 Add

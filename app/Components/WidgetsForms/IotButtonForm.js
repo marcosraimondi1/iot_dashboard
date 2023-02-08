@@ -127,9 +127,24 @@ export default function IotButtonForm({ addWidget }) {
               {/* ADD BUTTON */}
               <br />
               <Button
-                onClick={() =>
-                  addWidget({ type: "IotButton", config: iotButtonConfig })
-                }
+                onClick={() => {
+                  if (icon === "") {
+                    alert("Missing Icon Field");
+                    return;
+                  }
+                  if (variableFullName === "") {
+                    alert("Missing Variable Name Field");
+                    return;
+                  }
+                  if (message === "") {
+                    alert("Missing Message Field");
+                    return;
+                  }
+                  addWidget({ type: "IotButton", config: iotButtonConfig });
+                  setIcon("");
+                  setVariableFullName("");
+                  setMessage("");
+                }}
                 variant="contained"
               >
                 Add

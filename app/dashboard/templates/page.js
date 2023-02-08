@@ -13,7 +13,8 @@ export default function Templates() {
     setSelectedWidget,
     templates,
     widgets,
-    templateNameRef,
+    templateName,
+    setTemplateName,
     deleteWidget,
     deleteTemplate,
     saveTemplate,
@@ -52,9 +53,8 @@ export default function Templates() {
           <TextField
             required
             label="Template Name"
-            onChange={(e) => {
-              templateNameRef.current = e.target.value;
-            }}
+            value={templateName}
+            onChange={(e) => setTemplateName(e.target.value)}
             sx={{ width: "100%", margin: "5px" }}
           ></TextField>
           <Button variant="contained" onClick={saveTemplate}>

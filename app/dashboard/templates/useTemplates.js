@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import IotIndicatorForm from "../../Components/WidgetsForms/IotIndicatorForm";
 import IotSwitchForm from "../../Components/WidgetsForms/IotSwitchForm";
 import IotButtonForm from "../../Components/WidgetsForms/IotButtonForm";
@@ -14,87 +14,11 @@ const widgetsOptions = [
   { value: "Rtnumberchart", label: "IoT Real Time Number Chart" },
 ];
 
-const demoTemplates = [
-  {
-    name: "Template 1",
-    _id: 1,
-    widgets: [
-      {
-        type: "Rtnumberchart",
-        config: {
-          variableFullName: "Temperature",
-          variable: "variableId1",
-          icon: "shower",
-          color: "primary",
-          colSize: 12,
-          unit: "°C",
-          chartTimeAgo: 10,
-          variableSendFreq: 10,
-          decimalPlaces: 2,
-          selectedDevice: {
-            name: "Home",
-          },
-        },
-      },
-    ],
-  },
-  {
-    name: "Template 2",
-    _id: 2,
-    widgets: [
-      {
-        type: "Rtnumberchart",
-        config: {
-          variableFullName: "Temperature",
-          variable: "variableId2",
-          icon: "shower",
-          color: "primary",
-          colSize: 12,
-          unit: "°C",
-          chartTimeAgo: 10,
-          variableSendFreq: 10,
-          decimalPlaces: 2,
-          selectedDevice: {
-            name: "Home",
-          },
-        },
-      },
-      {
-        type: "IotSwitch",
-        config: {
-          variableFullName: "Pump",
-          variable: "variableId3",
-          icon: "shop",
-          color: "error",
-          colSize: 6,
-          selectedDevice: {
-            name: "Home",
-          },
-        },
-      },
-      {
-        type: "IotIndicator",
-        config: {
-          variableFullName: "Pump",
-          variable: "variableId4",
-          icon: "shop",
-          color: "success",
-          colSize: 6,
-          variableSendFreq: 10,
-          selectedDevice: {
-            name: "Home",
-          },
-        },
-      },
-    ],
-  },
-];
-
 export default function useTemplates() {
   const [selectedWidget, setSelectedWidget] = useState("IotIndicator");
   const [widgets, setWidgets] = useState([]);
-  const [templates, setTemplates] = useState(demoTemplates);
-  const templateNameRef = useRef("");
+  const [templates, setTemplates] = useState([]);
+  const [templateName, setTemplateName] = useState("");
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
@@ -103,7 +27,6 @@ export default function useTemplates() {
 
   const addWidget = (newWidget) => {
     newWidget.config.variable = makeid(10);
-    console.log(newWidget);
     let newWidgets = widgets.concat(newWidget);
     setWidgets(newWidgets);
   };
@@ -159,15 +82,19 @@ export default function useTemplates() {
 
   const saveTemplate = async () => {
     // save template to db
+    if (templateName === "") {
+      alert("Missing Template Name Field");
+      return;
+    }
     const templateConfig = {
-      name: templateNameRef.current,
+      name: templateName,
       widgets: widgets,
       description: "",
     };
 
     const axiosHeaders = {
       headers: {
-        token: token, //this.$store.state.auth.token,
+        token: token,
       },
     };
 
@@ -179,21 +106,11 @@ export default function useTemplates() {
       const res = await axios.post("/template", toSend, axiosHeaders);
 
       if (res.data.status == "success") {
-        // this.$notify({
-        //   type: "success",
-        //   icon: "tim-icons icon-alert-circle-exc",
-        //   message: "Template created!",
-        // });
+        setTemplateName("");
         getTemplates();
-
         setWidgets([]);
       }
     } catch (error) {
-      // this.$notify({
-      //   type: "danger",
-      //   icon: "tim-icons icon-alert-circle-exc",
-      //   message: "Error creating template...",
-      // });
       console.log(error);
       return;
     }
@@ -237,7 +154,8 @@ export default function useTemplates() {
     setSelectedWidget,
     templates,
     widgets,
-    templateNameRef,
+    templateName,
+    setTemplateName,
     deleteWidget,
     deleteTemplate,
     saveTemplate,

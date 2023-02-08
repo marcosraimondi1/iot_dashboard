@@ -127,12 +127,23 @@ export default function IotIndicatorForm({ addWidget }) {
               </TextField>
               <br />
               <Button
-                onClick={() =>
+                onClick={() => {
+                  if (icon === "") {
+                    alert("Missing Icon Field");
+                    return;
+                  }
+                  if (variableFullName == "") {
+                    alert("Missing Variable Name");
+                    return;
+                  }
+
                   addWidget({
                     type: "IotIndicator",
                     config: iotIndicatorConfig,
-                  })
-                }
+                  });
+                  setVariableFullName("");
+                  setIcon("");
+                }}
                 variant="contained"
               >
                 Add
