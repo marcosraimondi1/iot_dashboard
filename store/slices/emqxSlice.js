@@ -19,7 +19,6 @@ export const emqxSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setOptions, setClient, startMqttClient, mqttSender, logout } =
-  emqxSlice.actions;
+export const { startMqttClient, mqttSender, logout } = emqxSlice.actions;
 
 export default emqxSlice.reducer;

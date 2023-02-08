@@ -1,27 +1,30 @@
 "use client";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { mqttSender } from "@/Slices/emqxSlice";
 import Switch from "@mui/material/Switch";
 import Icon from "@mui/material/Icon";
 import Card from "../Card/Card";
 
 export default function IotSwitch({ config }) {
   const [value, setValue] = useState(false);
-
+  const dispatch = useDispatch();
+  const topic =
+    config.userId +
+    "/" +
+    config.selectedDevice.dId +
+    "/" +
+    config.variable +
+    "/actdata";
   const sendValue = () => {
-    setValue(!value);
     const toSend = {
-      topic:
-        config.userId +
-        "/" +
-        config.selectedDevice.dId +
-        "/" +
-        config.variable +
-        "/actdata",
+      topic: topic,
       msg: {
-        value: value,
+        value: !value,
       },
     };
-    // $nuxt.$emit("mqtt-sender", toSend);
+    setValue(!value);
+    dispatch(mqttSender(toSend));
   };
 
   return (

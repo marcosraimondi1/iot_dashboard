@@ -102,6 +102,8 @@ export default function useTemplates() {
   }, []);
 
   const addWidget = (newWidget) => {
+    newWidget.config.variable = makeid(10);
+    console.log(newWidget);
     let newWidgets = widgets.concat(newWidget);
     setWidgets(newWidgets);
   };
@@ -242,4 +244,15 @@ export default function useTemplates() {
     widgetForm,
     widgetsOptions,
   };
+}
+
+function makeid(length) {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }

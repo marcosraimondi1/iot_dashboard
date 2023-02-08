@@ -11,16 +11,24 @@ export default function Dashboard() {
 
   const widgets = selectedDevice?.template?.widgets;
 
+  const fixWidget = (widget) => {
+    let widgetCopy = JSON.parse(JSON.stringify(widget));
+    widgetCopy.selectedDevice.dId = selectedDevice.dId;
+    widgetCopy.selectedDevice.name = selectedDevice.name;
+    widgetCopy.userId = selectedDevice.userId;
+
+    return widgetCopy;
+  };
   const selectWidget = (widget) => {
     switch (widget.type) {
       case "Rtnumberchart":
-        return <Rtnumberchart config={widget.config} />;
+        return <Rtnumberchart config={fixWidget(widget.config)} />;
       case "IotButton":
-        return <IotButton config={widget.config} />;
+        return <IotButton config={fixWidget(widget.config)} />;
       case "IotSwitch":
-        return <IotSwitch config={widget.config} />;
+        return <IotSwitch config={fixWidget(widget.config)} />;
       case "IotIndicator":
-        return <IotIndicator config={widget.config} />;
+        return <IotIndicator config={fixWidget(widget.config)} />;
       default:
         return <></>;
     }

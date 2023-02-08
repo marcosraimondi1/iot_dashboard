@@ -198,7 +198,6 @@ const emqx = (store) => (next) => async (action) => {
     // send mqtt messages
     try {
       const toSend = action.payload;
-      console.log(toSend);
       global.CLIENT.publish(toSend.topic, JSON.stringify(toSend.msg));
     } catch (error) {
       console.log("Error Sending Message");
@@ -360,7 +359,10 @@ const startMqttClient = async (store) => {
         store.dispatch("getNotifications");
         return;
       } else if (msgType == "sdata") {
-        // $nuxt.$emit(topic, JSON.parse(message.toString()));
+        const customEvent = new CustomEvent(topic, {
+          detail: JSON.parse(message.toString()),
+        });
+        window.dispatchEvent(customEvent);
         return;
       }
     } catch (error) {

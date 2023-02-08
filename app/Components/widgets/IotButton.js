@@ -1,15 +1,16 @@
 "use client";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { mqttSender } from "@/Slices/emqxSlice";
 import Card from "../Card/Card";
 import Icon from "@mui/material/Icon";
 import Button from "@mui/material/Button";
 
 export default function IotButton({ config }) {
   const [sending, setSending] = useState(false);
-
+  const dispatch = useDispatch();
   const sendValue = () => {
     setSending(true);
-
     setTimeout(() => {
       setSending(false);
     }, 500);
@@ -26,8 +27,7 @@ export default function IotButton({ config }) {
         value: config?.message,
       },
     };
-
-    // this.$nuxt.$emit("mqtt-sender", toSend);
+    dispatch(mqttSender(toSend));
   };
 
   return (

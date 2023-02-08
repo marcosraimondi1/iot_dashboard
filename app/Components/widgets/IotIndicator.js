@@ -1,7 +1,32 @@
 import Card from "../Card/Card";
 import Icon from "@mui/material/Icon";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 export default function IotIndicator({ config }) {
+  const [value, setValue] = useState(false);
+
+  const topic =
+    config.userId +
+    "/" +
+    config.selectedDevice.dId +
+    "/" +
+    config.variable +
+    "/sdata";
+
+  const processReceivedData = (data) => {
+    data.value ? setValue(data.value) : setValue(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener(topic, (event) => {
+      processReceivedData(event.detail);
+    });
+    return () => {
+      window.removeEventListener(topic, () => {});
+    };
+  }, []);
+
   return (
     <Card
       title={config?.selectedDevice?.name + " - " + config?.variableFullName}
@@ -14,85 +39,13 @@ export default function IotIndicator({ config }) {
           justifyContent: "space-between",
         }}
       >
-        <Icon style={{ fontSize: "48px" }} color={config.color}>
+        <Icon
+          style={{ fontSize: "48px" }}
+          color={value ? config.color : "action"}
+        >
           {config.icon}
         </Icon>
       </div>
     </Card>
   );
-}
-
-{
-  /*
-<script>
-export default {
-  props: ["config"],
-  data() {
-    return {
-      value: false,
-      topic: "",
-    };
-  },
-
-  watch: {
-    config: {
-      immediate: true,
-      deep: true,
-      handler() {
-        setTimeout(() => {
-          // para cuando se cambia de dispositivo no se muestren los mismos datos
-          this.value = false;
-          
-          // Desuscribe from topic
-          this.$nuxt.$off(this.topic);
-
-          // Subscribe again
-          this.topic =
-            this.config.userId +
-            "/" +
-            this.config.selectedDevice.dId +
-            "/" +
-            this.config.variable + "/sdata";
-
-          this.$nuxt.$on(this.topic, this.processReceivedData);
-
-        }, 300);
-      },
-    },
-  },
-
-  mounted() {
-    // Nuxt Messages to handle incoming mqtt messages
-    this.topic =
-            this.config.userId +
-            "/" +
-            this.config.selectedDevice.dId +
-            "/" +
-            this.config.variable + "/sdata";
-
-    this.$nuxt.$on(this.topic, this.processReceivedData);
-  },
-
-  beforeDestroy() {
-    // Desuscribe from topic
-    this.$nuxt.$off(this.topic);
-  },
-
-  methods: {
-    processReceivedData(data) {
-      try {
-        this.value = data.value;
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    getIconColorClass() {
-      if (!this.value) {
-        return "text-dark";
-      }
-      return "text-" + this.config.class;
-    },
-  },
-};
-</script> */
 }

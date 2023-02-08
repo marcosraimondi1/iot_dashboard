@@ -185,3 +185,88 @@ export default function Rtnumberchart({ config }) {
 // HIGHCHARTS DOCS
 // https://api.highcharts.com/highcharts/
 // https://www.npmjs.com/package/highcharts-react-official#options-details
+
+/*
+getChartData() {
+
+                if (this.config.demo) {
+                    this.chartOptions.series[0].data = [[1606659071668, 22], [1606659072668, 27], [1606659073668, 32], [1606659074668, 7]];
+                    this.isMounted = true;
+                    return;
+                }
+
+ 
+                const axiosHeaders = {
+                    headers: {
+                        token: $nuxt.$store.state.auth.token,
+                    },
+                    params: { dId: this.config.selectedDevice.dId, variable: this.config.variable, chartTimeAgo: this.config.chartTimeAgo }
+                }
+
+                this.$axios.get("/get-small-charts-data", axiosHeaders)
+                    .then(res => {
+                        
+                        this.chartOptions.series[0].data = [];
+                        const data = res.data.data;
+                        console.log(res.data)
+
+                        data.forEach(element => {
+                            var aux = []
+
+                            aux.push(element.time + (new Date().getTimezoneOffset() * 60 * 1000 * -1));
+                            aux.push(element.value);
+
+                            this.chartOptions.series[0].data.push(aux);
+                        });
+
+                        this.isMounted = true;
+
+
+                        return;
+
+                    })
+                    .catch(e => {
+
+                        console.log(e)
+                        return;
+
+                    });
+
+            }
+
+procesReceivedData(data) {
+
+                try {
+                    this.time = Date.now();
+                    this.value = data.value;
+
+                    setTimeout(() => {
+                        if(data.save==1){
+                            this.getChartData();
+                        }  
+                    }, 1000);
+                } catch (error) {
+                    console.log(error);
+                }
+
+               
+            }
+
+
+            onMount(this.value = 0;
+
+                        this.$nuxt.$off(this.topic + "/sdata");
+
+                        this.topic = this.config.userId + '/' + this.config.selectedDevice.dId + '/' + this.config.variable;
+                        this.$nuxt.$on(this.topic + "/sdata", this.procesReceivedData);
+
+                        this.chartOptions.series[0].data = [];
+
+                        this.getChartData();
+
+
+                        this.chartOptions.series[0].name = this.config.variableFullName + " " + this.config.unit;
+                        this.updateColorClass();
+                        window.dispatchEvent(new Event('resize'));)
+
+*/
