@@ -366,11 +366,10 @@ const demoDevices = [
 
 export default function useDevices() {
   const [templates, setTemplates] = useState(demoTemplates);
-  // const [devices, setDevices] = useState(demoDevices);
 
   const [deviceTemplateIndex, setDeviceTemplateIndex] = useState("");
-  const deviceNameRef = useRef("");
-  const deviceIdRef = useRef("");
+  const [deviceName, setDeviceName] = useState("");
+  const [dId, setDId] = useState("");
 
   const dispatch = useDispatch();
   const devices = useSelector((state) => state.devices.devices);
@@ -382,23 +381,36 @@ export default function useDevices() {
 
   const addDevice = () => {
     // add device to db
+    if (deviceTemplateIndex === "") {
+      alert("Missing Template Field");
+      return;
+    }
+    if (deviceName === "") {
+      alert("Missing Name Field");
+      return;
+    }
+    if (dId === "") {
+      alert("Missing Id Field");
+      return;
+    }
+
     const template = templates[deviceTemplateIndex];
 
     let newDevice = {
-      name: deviceNameRef.current,
-      dId: deviceIdRef.current,
+      name: deviceName,
+      dId: dId,
       templateId: template._id,
       templateName: template.name,
       password: "default",
       saverRule: {
-        dId: deviceIdRef.current,
+        dId: dId,
         status: true,
       },
     };
 
     dispatch(createDevice(newDevice));
-    deviceNameRef.current = "";
-    deviceIdRef.current = "";
+    setDeviceName("");
+    setDId("");
     setDeviceTemplateIndex("");
   };
 
@@ -498,8 +510,10 @@ export default function useDevices() {
     devices,
     deviceTemplateIndex,
     setDeviceTemplateIndex,
-    deviceNameRef,
-    deviceIdRef,
+    deviceName,
+    setDeviceName,
+    dId,
+    setDId,
     addDevice,
     deleteDevice: delDevice,
     refreshPassword,

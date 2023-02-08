@@ -13,8 +13,10 @@ export default function Devices() {
     devices,
     deviceTemplateIndex,
     setDeviceTemplateIndex,
-    deviceNameRef,
-    deviceIdRef,
+    deviceName,
+    setDeviceName,
+    dId,
+    setDId,
     addDevice,
     deleteDevice,
     refreshPassword,
@@ -33,7 +35,8 @@ export default function Devices() {
           <Grid item xs={6}>
             <TextField
               required
-              onChange={(e) => (deviceNameRef.current = e.target.value)}
+              value={deviceName}
+              onChange={(e) => setDeviceName(e.target.value)}
               label="Device Name"
               sx={{ width: "100%", margin: "10px" }}
             />
@@ -41,7 +44,8 @@ export default function Devices() {
           <Grid item xs={6}>
             <TextField
               required
-              onChange={(e) => (deviceIdRef.current = e.target.value)}
+              value={dId}
+              onChange={(e) => setDId(e.target.value)}
               label="Device Id"
               sx={{ width: "80%", margin: "10px" }}
             />
