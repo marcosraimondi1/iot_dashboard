@@ -16,7 +16,6 @@ export default function Dashboard() {
     widgetCopy.selectedDevice.dId = selectedDevice.dId;
     widgetCopy.selectedDevice.name = selectedDevice.name;
     widgetCopy.userId = selectedDevice.userId;
-
     return widgetCopy;
   };
   const selectWidget = (widget) => {

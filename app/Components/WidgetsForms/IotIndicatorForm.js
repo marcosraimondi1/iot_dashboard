@@ -34,6 +34,7 @@ export default function IotIndicatorForm({ addWidget }) {
     selectedDevice: {
       name: "Home",
     },
+    demo: true,
   };
 
   return (

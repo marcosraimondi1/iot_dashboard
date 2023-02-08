@@ -1,10 +1,12 @@
 import Card from "../Card/Card";
 import Icon from "@mui/material/Icon";
-import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 export default function IotIndicator({ config }) {
   const [value, setValue] = useState(false);
+
+  if (config.demo) {
+  }
 
   const topic =
     config.userId +
@@ -19,6 +21,7 @@ export default function IotIndicator({ config }) {
   };
 
   useEffect(() => {
+    if (config.demo) return;
     window.addEventListener(topic, (event) => {
       processReceivedData(event.detail);
     });

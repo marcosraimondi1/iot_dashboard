@@ -32,6 +32,7 @@ export default function IotButtonForm({ addWidget }) {
     selectedDevice: {
       name: "Home",
     },
+    demo: true,
   };
 
   return (

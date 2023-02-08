@@ -39,6 +39,7 @@ export default function RtnumberchartForm({ addWidget }) {
     selectedDevice: {
       name: "Home",
     },
+    demo: true,
   };
 
   return (

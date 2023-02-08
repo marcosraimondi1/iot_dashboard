@@ -16,6 +16,7 @@ export default function IotSwitch({ config }) {
     "/" +
     config.variable +
     "/actdata";
+
   const sendValue = () => {
     const toSend = {
       topic: topic,
@@ -24,6 +25,7 @@ export default function IotSwitch({ config }) {
       },
     };
     setValue(!value);
+    if (config.demo) return;
     dispatch(mqttSender(toSend));
   };
 

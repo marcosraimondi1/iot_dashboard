@@ -27,6 +27,7 @@ export default function IotButton({ config }) {
         value: config?.message,
       },
     };
+    if (config.demo) return;
     dispatch(mqttSender(toSend));
   };
 

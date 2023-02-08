@@ -31,6 +31,7 @@ export default function IotSwitchForm({ addWidget }) {
     selectedDevice: {
       name: "Home",
     },
+    demo: true,
   };
 
   return (

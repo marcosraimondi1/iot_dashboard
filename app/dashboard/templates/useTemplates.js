@@ -86,9 +86,16 @@ export default function useTemplates() {
       alert("Missing Template Name Field");
       return;
     }
+    if (widgets.length == 0) {
+      alert("Templates must have at least 1 widget");
+      return;
+    }
     const templateConfig = {
       name: templateName,
-      widgets: widgets,
+      widgets: widgets.map((widget) => {
+        widget.config.demo = false;
+        return widget;
+      }),
       description: "",
     };
 
