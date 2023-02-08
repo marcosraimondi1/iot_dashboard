@@ -310,6 +310,8 @@ async function createSaverRule(userId, dId, status) {
 
       return true;
     } else {
+      console.log("failed to create saver rule");
+      console.log(res.data);
       return false;
     }
   } catch (error) {

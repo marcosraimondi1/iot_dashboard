@@ -13,9 +13,6 @@ router.get("/template", checkAuth, async (req, res) => {
 
     const templates = await Template.find({ userId: userId });
 
-    console.log(userId);
-    console.log(templates);
-
     const response = {
       status: "success",
       data: templates,
