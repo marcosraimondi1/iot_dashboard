@@ -11,7 +11,7 @@ export default function useAlarms() {
   const [triggerTime, setTriggerTime] = useState("");
 
   const device = useSelector((state) => state.devices.selectedDevice);
-  const alarms = device.alarmRules;
+  const alarms = device?.alarmRules ? device.alarmRules : [];
   const token = useSelector((state) => state.auth.token);
 
   const dispatch = useDispatch();

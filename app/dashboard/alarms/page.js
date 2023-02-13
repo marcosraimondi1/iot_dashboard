@@ -46,7 +46,7 @@ export default function Alarms() {
               }}
               sx={{ width: "100%", margin: "10px" }}
             >
-              {device.template.widgets.map((w, index) => (
+              {device?.template?.widgets?.map((w, index) => (
                 <MenuItem key={index} value={index}>
                   {w.config.variableFullName}
                 </MenuItem>
