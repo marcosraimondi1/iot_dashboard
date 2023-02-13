@@ -50,8 +50,8 @@ router.post("/getdevicecredentials", async (req, res) => {
         variableFullName,
         variableType,
         variableSendFreq,
-      }))(widget);
-
+      }))(widget.config);
+      
       variables.push(v);
     });
 
@@ -61,7 +61,6 @@ router.post("/getdevicecredentials", async (req, res) => {
       topic: userId + "/" + dId + "/",
       variables: variables,
     };
-
     res.json(response);
 
     setTimeout(() => {
