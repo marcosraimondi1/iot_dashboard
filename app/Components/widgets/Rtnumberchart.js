@@ -84,13 +84,13 @@ let chartOptionsInitial = {
   },
 };
 
-let chartColor = "#6d1b7b";
-
 export default function Rtnumberchart({ config }) {
   const [value, setValue] = useState(17.5846);
   const [nowTime, setNowTime] = useState(0);
   const [time, setTime] = useState(0);
-  const [chartOptions, setChartOptions] = useState(chartOptionsInitial);
+  const [chartOptions, setChartOptions] = useState(
+    JSON.parse(JSON.stringify(chartOptionsInitial))
+  );
 
   const token = useSelector((state) => state.auth.token);
   const topic =
@@ -154,12 +154,31 @@ export default function Rtnumberchart({ config }) {
   };
 
   const updateColor = () => {
-    if (config.color === "success") chartColor = "#357a38";
-    else if (config.color === "warning") chartColor = "#b26a00";
-    else if (config.color === "error") chartColor = "#aa2e25";
-    else if (config.color === "info") chartColor = "#1c54b2";
-    else if (config.color === "primary") chartColor = "#6d1b7b";
-    else if (config.color === "secondary") chartColor = "#ff9100";
+    let chartColor = "#6d1b7b";
+    switch (config.color) {
+      case "success":
+        chartColor = "#357a38";
+        break;
+      case "warning":
+        chartColor = "#b26a00";
+        break;
+      case "error":
+        chartColor = "#aa2e25";
+        break;
+      case "info":
+        chartColor = "#1c54b2";
+        break;
+      case "primary":
+        chartColor = "#6d1b7b";
+        break;
+      case "secondary":
+        chartColor = "#ff9100";
+        break;
+
+      default:
+        chartColor = "#6d1b7b";
+        break;
+    }
     let newChartOptions = chartOptions;
     newChartOptions.series[0].color = chartColor;
     setChartOptions(newChartOptions);
