@@ -23,7 +23,9 @@ const authentication = (store) => (next) => async (action) => {
   if (action.type === "auth/logout") {
     store.dispatch({ type: "devices/logout" }); // borra info guardada
     store.dispatch({ type: "emqx/logout" }); // borra info guardada
-    return next(action);
+    next(action);
+    window.location.href = "/auth/login";
+    return;
   }
 
   // LOGIN
@@ -34,6 +36,9 @@ const authentication = (store) => (next) => async (action) => {
 
     if (auth) {
       action.payload = auth;
+      next(action);
+      window.location.href = "/dashboard";
+      return;
     } else {
       action.payload = null;
       console.log("FAILED TO LOG IN");
@@ -48,6 +53,9 @@ const authentication = (store) => (next) => async (action) => {
     const registered = await register(user);
     if (registered) {
       // success - redirect to login
+      next(action);
+      window.location.href = "/auth/login";
+      return;
     } else {
       console.log("failed to register");
     }

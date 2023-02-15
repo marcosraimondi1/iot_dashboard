@@ -11,7 +11,6 @@ export default notAuthenticated(function Register() {
   const router = useRouter();
   const onRegister = (user) => {
     dispatch(register(user));
-    router.push("/auth/login");
   };
   return <SignUp submit={onRegister} loginLink="/auth/login" />;
 });

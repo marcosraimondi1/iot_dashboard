@@ -45,7 +45,6 @@ export default authenticated(function Dashboard({ children }) {
 
   const onLogout = () => {
     dispatch(logout());
-    router.push("/auth/login");
   };
 
   const readNotification = (notifId) => {
