@@ -5,7 +5,7 @@ export const devicesSlice = createSlice({
   initialState: {
     devices: [],
     selectedDevice: {},
-    notifications: [],
+    notifications: []
   },
   reducers: {
     // async logic handled in middlewares
@@ -47,8 +47,8 @@ export const devicesSlice = createSlice({
       state.devices = [];
       state.selectedDevice = {};
       state.notifications = [];
-    },
-  },
+    }
+  }
 });
 
 // Action creators are generated for each case reducer function
@@ -58,7 +58,7 @@ export const {
   setSelectedDevice,
   getDevices,
   createDevice,
-  logout,
+  logout
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

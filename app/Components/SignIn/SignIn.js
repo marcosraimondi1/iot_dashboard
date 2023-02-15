@@ -14,7 +14,7 @@ import Copyright from "../Copyright/Copyright";
 
 SignIn.propTypes = {
   submit: PropTypes.func.isRequired,
-  registerLink: PropTypes.string.isRequired,
+  registerLink: PropTypes.string.isRequired
 };
 
 export default function SignIn({ submit, registerLink }) {
@@ -35,7 +35,7 @@ export default function SignIn({ submit, registerLink }) {
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          alignItems: "center"
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -65,12 +65,7 @@ export default function SignIn({ submit, registerLink }) {
             id="password"
             autoComplete="current-password"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Sign In
           </Button>
           <Grid container justifyContent="flex-end">
@@ -80,7 +75,7 @@ export default function SignIn({ submit, registerLink }) {
               </Link>
             </Grid> */}
             <Grid item>
-              Don't have an account?<Link href={registerLink}>Sign Up</Link>
+              Not signed in?<Link href={registerLink}>Sign Up</Link>
             </Grid>
           </Grid>
         </Box>

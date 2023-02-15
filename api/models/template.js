@@ -7,7 +7,7 @@ const templateSchema = new Schema({
   name: { type: String, required: [true] },
   description: { type: String },
   createdTime: { type: Number, required: [true] },
-  widgets: { type: Array, default: [] },
+  widgets: { type: Array, default: [] }
 });
 
 // Schema to model.

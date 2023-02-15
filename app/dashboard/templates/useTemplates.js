@@ -11,7 +11,7 @@ const widgetsOptions = [
   { value: "IotIndicator", label: "IoT Indicator" },
   { value: "IotSwitch", label: "IoT Switch" },
   { value: "IotButton", label: "IoT Button" },
-  { value: "Rtnumberchart", label: "IoT Real Time Number Chart" },
+  { value: "Rtnumberchart", label: "IoT Real Time Number Chart" }
 ];
 
 export default function useTemplates() {
@@ -22,8 +22,8 @@ export default function useTemplates() {
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
-    getTemplates();
-  }, []);
+    async () => setTemplates(await fetchTemplates(token))();
+  }, [token]);
 
   const addWidget = (newWidget) => {
     newWidget.config.variable = makeid(10);
@@ -40,9 +40,9 @@ export default function useTemplates() {
     // delete template from db
     const axiosHeaders = {
       headers: {
-        token: token, //this.$store.state.auth.token,
+        token: token //this.$store.state.auth.token,
       },
-      params: { templateId },
+      params: { templateId }
     };
 
     try {
@@ -96,17 +96,17 @@ export default function useTemplates() {
         widget.config.demo = false;
         return widget;
       }),
-      description: "",
+      description: ""
     };
 
     const axiosHeaders = {
       headers: {
-        token: token,
-      },
+        token: token
+      }
     };
 
     const toSend = {
-      template: templateConfig,
+      template: templateConfig
     };
 
     try {
@@ -126,8 +126,8 @@ export default function useTemplates() {
   const getTemplates = async () => {
     const axiosHeaders = {
       headers: {
-        token: token, //this.$store.state.auth.token,
-      },
+        token: token //this.$store.state.auth.token,
+      }
     };
 
     try {
@@ -148,12 +148,9 @@ export default function useTemplates() {
   };
 
   let widgetForm;
-  if (selectedWidget == "IotIndicator")
-    widgetForm = <IotIndicatorForm addWidget={addWidget} />;
-  else if (selectedWidget == "IotSwitch")
-    widgetForm = <IotSwitchForm addWidget={addWidget} />;
-  else if (selectedWidget == "IotButton")
-    widgetForm = <IotButtonForm addWidget={addWidget} />;
+  if (selectedWidget == "IotIndicator") widgetForm = <IotIndicatorForm addWidget={addWidget} />;
+  else if (selectedWidget == "IotSwitch") widgetForm = <IotSwitchForm addWidget={addWidget} />;
+  else if (selectedWidget == "IotButton") widgetForm = <IotButtonForm addWidget={addWidget} />;
   else widgetForm = <RtnumberchartForm addWidget={addWidget} />;
 
   return {
@@ -167,17 +164,38 @@ export default function useTemplates() {
     deleteTemplate,
     saveTemplate,
     widgetForm,
-    widgetsOptions,
+    widgetsOptions
   };
 }
 
 function makeid(length) {
   var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var charactersLength = characters.length;
   for (var i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
 }
+
+const fetchTemplates = async (token) => {
+  const axiosHeaders = {
+    headers: { token }
+  };
+
+  try {
+    const res = await axios.get("/template", axiosHeaders);
+
+    if (res.data.status == "success") {
+      return res.data.data;
+    }
+  } catch (error) {
+    // this.$notify({
+    //   type: "danger",
+    //   icon: "tim-icons icon-alert-circle-exc",
+    //   message: "Error getting templates...",
+    // });
+    console.log(error);
+  }
+  return [];
+};

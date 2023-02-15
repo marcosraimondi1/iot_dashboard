@@ -1,19 +1,11 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/Components/*": [
-                "./app/Components/*"
-            ],
-            "@/Slices/*": [
-                "./store/slices/*"
-            ],
-            "@/Helper/*": [
-                "./helper/*"
-            ],
-            "@/Store/*": [
-                "./store/*"
-            ]
-        }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/Components/*": ["./app/Components/*"],
+      "@/Slices/*": ["./store/slices/*"],
+      "@/Helper/*": ["./helper/*"],
+      "@/Store/*": ["./store/*"]
     }
+  }
 }

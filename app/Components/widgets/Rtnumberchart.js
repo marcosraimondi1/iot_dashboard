@@ -1,7 +1,7 @@
 import axios from "axios";
 import Icon from "@mui/material/Icon";
 import Card from "../Card/Card";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
@@ -13,103 +13,95 @@ const demoData = [
   [1675856401438, 14.5898],
   [1675856412839, 15],
   [1675856501380, 13],
-  [1675856601095, 15],
+  [1675856601095, 15]
 ];
 let chartOptionsInitial = {
   credits: {
-    enabled: false,
+    enabled: false
   },
   chart: {
     renderTo: "container",
     defaultSeriesType: "line",
-    backgroundColor: "rgba(0,0,0,0)",
+    backgroundColor: "rgba(0,0,0,0)"
   },
   title: {
-    text: "",
+    text: ""
   },
   xAxis: {
     type: "datetime",
     labels: {
       style: {
-        color: "#d4d2d2",
-      },
-    },
+        color: "#d4d2d2"
+      }
+    }
   },
   yAxis: {
     title: {
-      text: "",
+      text: ""
     },
     labels: {
       style: {
         color: "#d4d2d2",
-        font: "11px Trebuchet MS, Verdana, sans-serif",
-      },
-    },
+        font: "11px Trebuchet MS, Verdana, sans-serif"
+      }
+    }
   },
   plotOptions: {
     series: {
       label: {
-        connectorAllowed: false,
+        connectorAllowed: false
       },
-      pointStart: 2010,
-    },
+      pointStart: 2010
+    }
   },
   series: [
     {
       name: "",
       data: demoData,
-      color: "#e14eca",
-    },
+      color: "#e14eca"
+    }
   ],
   legend: {
     itemStyle: {
-      color: "#d4d2d2",
-    },
+      color: "#d4d2d2"
+    }
   },
   responsive: {
     rules: [
       {
         condition: {
-          maxWidth: 500,
+          maxWidth: 500
         },
         chartOptions: {
           legend: {
             layout: "horizontal",
             align: "center",
-            verticalAlign: "bottom",
-          },
-        },
-      },
-    ],
-  },
+            verticalAlign: "bottom"
+          }
+        }
+      }
+    ]
+  }
 };
 
 export default function Rtnumberchart({ config }) {
   const [value, setValue] = useState(17.5846);
   const [nowTime, setNowTime] = useState(0);
   const [time, setTime] = useState(0);
-  const [chartOptions, setChartOptions] = useState(
-    JSON.parse(JSON.stringify(chartOptionsInitial))
-  );
+  const [chartOptions, setChartOptions] = useState(JSON.parse(JSON.stringify(chartOptionsInitial)));
 
   const token = useSelector((state) => state.auth.token);
-  const topic =
-    config.userId +
-    "/" +
-    config.selectedDevice.dId +
-    "/" +
-    config.variable +
-    "/sdata";
+  const topic = config.userId + "/" + config.selectedDevice.dId + "/" + config.variable + "/sdata";
 
-  const getChartData = () => {
+  const getChartData = useCallback(() => {
     // request data from api
     const axiosHeaders = {
       headers: { token },
       params: {
         dId: config.selectedDevice.dId,
         variable: config.variable,
-        chartTimeAgo: config.chartTimeAgo,
-      },
+        chartTimeAgo: config.chartTimeAgo
+      }
     };
 
     axios
@@ -136,24 +128,27 @@ export default function Rtnumberchart({ config }) {
         console.log(e);
         return;
       });
-  };
+  }, [chartOptions, config.chartTimeAgo, config.selectedDevice.dId, config.variable, token]);
 
-  const processReceivedData = (data) => {
-    try {
-      setTime(Date.now());
-      setValue(data.value);
+  const processReceivedData = useCallback(
+    (data) => {
+      try {
+        setTime(Date.now());
+        setValue(data.value);
 
-      setTimeout(() => {
-        if (data.save == 1) {
-          getChartData();
-        }
-      }, 1000);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        setTimeout(() => {
+          if (data.save == 1) {
+            getChartData();
+          }
+        }, 1000);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [getChartData]
+  );
 
-  const updateColor = () => {
+  const updateColor = useCallback(() => {
     let chartColor = "#6d1b7b";
     switch (config.color) {
       case "success":
@@ -182,14 +177,14 @@ export default function Rtnumberchart({ config }) {
     let newChartOptions = chartOptions;
     newChartOptions.series[0].color = chartColor;
     setChartOptions(newChartOptions);
-  };
+  }, [chartOptions, config.color]);
 
-  const getNow = () => {
+  const getNow = useCallback(() => {
     setNowTime(Date.now());
     setTimeout(() => {
       getNow();
     }, 1000);
-  };
+  }, []);
 
   const getTimeAgo = (seconds) => {
     if (seconds < 0) {
@@ -212,14 +207,14 @@ export default function Rtnumberchart({ config }) {
     }
   };
 
-  const getLastData = () => {
+  const getLastData = useCallback(() => {
     const axiosHeaders = {
       headers: { token },
       params: {
         dId: config.selectedDevice.dId,
         variable: config.variable,
-        chartTimeAgo: config.chartTimeAgo,
-      },
+        chartTimeAgo: config.chartTimeAgo
+      }
     };
     axios
       .get("/get-last-data", axiosHeaders)
@@ -233,7 +228,7 @@ export default function Rtnumberchart({ config }) {
         }
       })
       .catch((err) => console.log(err));
-  };
+  }, [config.chartTimeAgo, config.selectedDevice.dId, config.variable, token]);
 
   useEffect(() => {
     updateColor();
@@ -262,33 +257,42 @@ export default function Rtnumberchart({ config }) {
     return () => {
       window.removeEventListener(topic, () => {});
     };
-  }, []);
+  }, [
+    chartOptions,
+    config.demo,
+    config.unit,
+    config.variableFullName,
+    topic,
+    getChartData,
+    getLastData,
+    getNow,
+    processReceivedData,
+    updateColor
+  ]);
 
   const title = (
     <>
       <div
         style={{
           display: "flex",
-          alignItems: "center",
+          alignItems: "center"
         }}
       >
         <Icon sx={{ marginRight: "10px" }} color={config.color}>
           {config.icon}
         </Icon>
-        <h4>
-          {config?.selectedDevice.name + " - " + config?.variableFullName}
-        </h4>
+        <h4>{config?.selectedDevice.name + " - " + config?.variableFullName}</h4>
       </div>
       <p
         style={{
           color: "#999999",
           marginLeft: "24px",
           marginTop: "-20px",
-          marginBottom: "-15px",
+          marginBottom: "-15px"
         }}
       >
-        {value.toFixed(config.decimalPlaces)} {config.unit} -{" "}
-        {getTimeAgo((nowTime - time) / 1000)} ago
+        {value.toFixed(config.decimalPlaces)} {config.unit} - {getTimeAgo((nowTime - time) / 1000)}{" "}
+        ago
       </p>
     </>
   );

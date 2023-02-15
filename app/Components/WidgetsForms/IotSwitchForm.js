@@ -12,7 +12,7 @@ const colors = [
   { value: "warning", label: "warning" },
   { value: "info", label: "info" },
   { value: "primary", label: "primary" },
-  { value: "secondary", label: "secondary" },
+  { value: "secondary", label: "secondary" }
 ];
 
 const colSizes = [2, 3, 4, 6, 8, 12];
@@ -29,10 +29,10 @@ export default function IotSwitchForm({ addWidget }) {
     color,
     colSize,
     selectedDevice: {
-      name: "Home",
+      name: "Home"
     },
     variableType: "output",
-    demo: true,
+    demo: true
   };
 
   return (
@@ -45,7 +45,7 @@ export default function IotSwitchForm({ addWidget }) {
                 display: "flex",
                 flexDirection: "column",
                 padding: "20px",
-                justifyContent: "space-evenly",
+                justifyContent: "space-evenly"
               }}
             >
               {/* VAR NAME */}

@@ -15,23 +15,14 @@ export default function Template({ widgets, deleteWidget }) {
         if (type === "IotIndicator") element = <IotIndicator config={config} />;
         else if (type === "IotSwitch") element = <IotSwitch config={config} />;
         else if (type === "IotButton") element = <IotButton config={config} />;
-        else if (type === "Rtnumberchart")
-          element = <Rtnumberchart config={config} />;
+        else if (type === "Rtnumberchart") element = <Rtnumberchart config={config} />;
         return (
-          <Grid
-            item
-            xs={config.colSize}
-            key={index}
-            sx={{ flexDirection: "row" }}
-          >
+          <Grid item xs={config.colSize} key={index} sx={{ flexDirection: "row" }}>
             <Grid item xs={12}>
               {element}
             </Grid>
             <Grid item xs={1}>
-              <IconButton
-                aria-label="delete"
-                onClick={() => deleteWidget(index)}
-              >
+              <IconButton aria-label="delete" onClick={() => deleteWidget(index)}>
                 <DeleteIcon color="error" />
               </IconButton>
             </Grid>

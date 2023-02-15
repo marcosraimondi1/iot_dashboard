@@ -12,12 +12,12 @@ const deviceSchema = new Schema({
   selected: { type: Boolean, required: [true], default: false },
   templateId: { type: String, required: [true] },
   templateName: { type: String, required: [true] },
-  createdTime: { type: Number },
+  createdTime: { type: Number }
 });
 
 // Validator
 deviceSchema.plugin(uniqueValidator, {
-  message: "Error, device already exists.",
+  message: "Error, device already exists."
 });
 
 // Schema to model.

@@ -21,25 +21,25 @@ import Copyright from "../Copyright/Copyright";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== "open"
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
+      duration: theme.transitions.duration.enteringScreen
+    })
+  })
 }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== "open"
 })(({ theme, open }) => ({
   "& .MuiDrawer-paper": {
     position: "relative",
@@ -47,28 +47,28 @@ const Drawer = styled(MuiDrawer, {
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen
     }),
     boxSizing: "border-box",
     ...(!open && {
       overflowX: "hidden",
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: theme.transitions.duration.leavingScreen
       }),
       width: theme.spacing(7),
       [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9),
-      },
-    }),
-  },
+        width: theme.spacing(9)
+      }
+    })
+  }
 }));
 
 DashboardContent.propTypes = {
   children: PropTypes.element,
   header: PropTypes.element,
   logout: PropTypes.func,
-  title: PropTypes.string,
+  title: PropTypes.string
 };
 function DashboardContent({ children, logout, title, header }) {
   const [open, setOpen] = React.useState(false);
@@ -82,7 +82,7 @@ function DashboardContent({ children, logout, title, header }) {
       <AppBar position="absolute" open={open}>
         <Toolbar
           sx={{
-            pr: "24px", // keep right padding when drawer closed
+            pr: "24px" // keep right padding when drawer closed
           }}
         >
           <IconButton
@@ -92,18 +92,12 @@ function DashboardContent({ children, logout, title, header }) {
             onClick={toggleDrawer}
             sx={{
               marginRight: "36px",
-              ...(open && { display: "none" }),
+              ...(open && { display: "none" })
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}
-          >
+          <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
           {/* ELEMENTOS DE HEADER BAR */}
@@ -126,16 +120,10 @@ function DashboardContent({ children, logout, title, header }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-end",
-            px: [1],
+            px: [1]
           }}
         >
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 2 }}
-          >
+          <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 2 }}>
             Menu
           </Typography>
           <IconButton onClick={toggleDrawer}>
@@ -151,12 +139,10 @@ function DashboardContent({ children, logout, title, header }) {
         component="main"
         sx={{
           backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
+            theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[900],
           flexGrow: 1,
           height: "100vh",
-          overflow: "auto",
+          overflow: "auto"
         }}
       >
         <Toolbar />
@@ -173,7 +159,7 @@ function DashboardContent({ children, logout, title, header }) {
 Dashboard.propTypes = {
   children: PropTypes.element,
   title: PropTypes.string,
-  logout: PropTypes.func,
+  logout: PropTypes.func
 };
 
 export default function Dashboard({ children, logout, title, header }) {

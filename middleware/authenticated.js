@@ -5,10 +5,11 @@ import { store } from "../store/store";
 //si el usuario no tiene token lo enviamos a login
 export default function authenticated(WrappedComponent) {
   const token = store.getState().auth.token;
-  return (props) => {
+  const Wrapped = (props) => {
     useEffect(() => {
       if (!token) document.location.href = "/auth/login";
-    }, [token]);
+    }, []);
     return <WrappedComponent {...props} />;
   };
+  return Wrapped;
 }

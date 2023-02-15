@@ -1,14 +1,9 @@
 "use client";
 import Dash from "../Components/Dashboard/Dashboard";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/Slices/authSlice";
-import {
-  getDevices,
-  setSelectedDevice,
-  getNotifications,
-} from "@/Slices/devicesSlice";
+import { getDevices, setSelectedDevice, getNotifications } from "@/Slices/devicesSlice";
 import { startMqttClient } from "@/Slices/emqxSlice";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -36,7 +31,6 @@ export default authenticated(function Dashboard({ children }) {
   );
   const notifications = useSelector((state) => state.devices.notifications);
   const token = useSelector((state) => state.auth.token);
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
@@ -49,7 +43,7 @@ export default authenticated(function Dashboard({ children }) {
 
   const readNotification = (notifId) => {
     const axiosHeaders = {
-      headers: { token },
+      headers: { token }
     };
     const toSend = { notifId };
     axios
@@ -64,7 +58,7 @@ export default authenticated(function Dashboard({ children }) {
     dispatch(getDevices());
     dispatch(getNotifications());
     dispatch(startMqttClient());
-  }, []);
+  }, [dispatch]);
 
   const devicesOptions = devices?.map((device) => (
     <MenuItem key={device.dId} value={device.dId}>
@@ -76,9 +70,7 @@ export default authenticated(function Dashboard({ children }) {
     <>
       {/* DEVICE SELECTOR */}
       <FormControl size="small" sx={{ m: 1, minWidth: 130 }}>
-        <InputLabel id="select-label">
-          {devices.length > 0 ? "Device" : "No Devices"}
-        </InputLabel>
+        <InputLabel id="select-label">{devices.length > 0 ? "Device" : "No Devices"}</InputLabel>
         <Select
           labelId="select-label"
           id="demo-simple-select"
@@ -86,11 +78,7 @@ export default authenticated(function Dashboard({ children }) {
           label="Device"
           onChange={handleChange}
         >
-          {devices.length > 0 ? (
-            devicesOptions
-          ) : (
-            <MenuItem value="">Create New</MenuItem>
-          )}
+          {devices.length > 0 ? devicesOptions : <MenuItem value="">Create New</MenuItem>}
         </Select>
       </FormControl>
 
@@ -108,36 +96,25 @@ export default authenticated(function Dashboard({ children }) {
       >
         <DialogTitle id="scroll-dialog-title">Notifications</DialogTitle>
         <DialogContent>
-          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-          >
+          <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
             {notifications?.map((notification, index) => (
               <ListItem key={index} alignItems="flex-start">
                 <ListItemText
                   primary={
                     <>
-                      <b>
-                        {notification.variableFullName +
-                          " = " +
-                          notification.payload.value}
-                      </b>
+                      <b>{notification.variableFullName + " = " + notification.payload.value}</b>
                       <IconButton
                         onClick={() => {
                           readNotification(notification._id);
                         }}
                       >
-                        <CheckCircleOutlineIcon
-                          color="primary"
-                          fontSize="small"
-                        />
+                        <CheckCircleOutlineIcon color="primary" fontSize="small" />
                       </IconButton>
                     </>
                   }
                   secondary={
                     <div style={{ marginLeft: "20px" }}>
-                      <b style={{ color: "salmon" }}>
-                        {unixToDate(notification.time)}
-                      </b>
+                      <b style={{ color: "salmon" }}>{unixToDate(notification.time)}</b>
                       <br />
                       <span>
                         {notification.variableFullName +

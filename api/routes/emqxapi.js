@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const colors = require("colors");
+require("colors");
 
 const EmqxAuthRule = require("../models/emqx_auth.js");
 
 const auth = {
   auth: {
     username: "admin",
-    password: process.env.EMQX_DEFAULT_APPLICATION_SECRET,
-  },
+    password: process.env.EMQX_DEFAULT_APPLICATION_SECRET
+  }
 };
 
 global.saverResource = null;
@@ -34,8 +34,7 @@ Para borrar manualmente los recursos y reiniciemos node */
 //list resources
 async function listResources() {
   try {
-    const url =
-      "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/resources/";
+    const url = "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/resources/";
 
     const res = await axios.get(url, auth);
 
@@ -78,16 +77,6 @@ async function listResources() {
           return;
         }
       } else {
-        function printWarning() {
-          console.log(
-            "DELETE ALL WEBHOOK EMQX RESOURCES AND RESTART NODE - youremqxdomain:8085/#/resources"
-              .red
-          );
-          setTimeout(() => {
-            printWarning();
-          }, 1000);
-        }
-
         printWarning();
       }
     } else {
@@ -102,19 +91,18 @@ async function listResources() {
 //create resources
 async function createResources() {
   try {
-    const url =
-      "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/resources";
+    const url = "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/resources";
 
     const data1 = {
       type: "web_hook",
       config: {
         url: "http://" + process.env.WEBHOOKS_HOST + ":3001/api/saver-webhook",
         headers: {
-          token: process.env.EMQX_API_TOKEN,
+          token: process.env.EMQX_API_TOKEN
         },
-        method: "POST",
+        method: "POST"
       },
-      description: "saver-webhook",
+      description: "saver-webhook"
     };
 
     const data2 = {
@@ -122,11 +110,11 @@ async function createResources() {
       config: {
         url: "http://" + process.env.WEBHOOKS_HOST + ":3001/api/alarm-webhook",
         headers: {
-          token: process.env.EMQX_API_TOKEN,
+          token: process.env.EMQX_API_TOKEN
         },
-        method: "POST",
+        method: "POST"
       },
-      description: "alarm-webhook",
+      description: "alarm-webhook"
     };
 
     const res1 = await axios.post(url, data1, auth);
@@ -167,7 +155,7 @@ global.check_mqtt_superuser = async function checkMqttSuperUser() {
         password: process.env.EMQX_NODE_SUPERUSER_PASSWORD,
         type: "superuser",
         time: Date.now(),
-        updatedTime: Date.now(),
+        updatedTime: Date.now()
       });
 
       console.log("Mqtt super user created");
@@ -185,11 +173,7 @@ setTimeout(() => {
 
 async function checkResourceStatus(resourceId) {
   // checks resources are alive
-  const url =
-    "http://" +
-    process.env.EMQX_API_HOST +
-    ":8085/api/v4/resources/" +
-    resourceId;
+  const url = "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/resources/" + resourceId;
   try {
     const res = await axios.get(url, auth);
     if (res.status == 200) {
@@ -224,4 +208,14 @@ async function deleteResources() {
     console.log(error);
   }
 }
+
+function printWarning() {
+  console.log(
+    "DELETE ALL WEBHOOK EMQX RESOURCES AND RESTART NODE - youremqxdomain:8085/#/resources".red
+  );
+  setTimeout(() => {
+    printWarning();
+  }, 1000);
+}
+
 module.exports = router;

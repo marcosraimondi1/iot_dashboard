@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 const morgan = require("morgan");
 const cors = require("cors");
-const colors = require("colors");
+require("colors");
 require("dotenv").config();
 
 //instances
@@ -15,7 +15,7 @@ app.use(morgan("tiny"));
 app.use(express.json());
 app.use(
   express.urlencoded({
-    extended: true,
+    extended: true
   })
 );
 app.use(cors());
@@ -71,10 +71,9 @@ var uri =
 console.log(uri);
 
 const options = {
-  useNewUrlParser: true,
   useUnifiedTopology: true,
   useNewUrlParser: true,
-  authSource: "admin",
+  authSource: "admin"
 };
 
 mongoose.connect(uri, options).then(

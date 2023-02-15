@@ -23,8 +23,8 @@ export default function useAlarms() {
 
     const axiosHeaders = {
       headers: {
-        token: token,
-      },
+        token: token
+      }
     };
     const toSend = { rule: newRule };
 
@@ -47,11 +47,11 @@ export default function useAlarms() {
     // delete rule from db
     const axiosHeaders = {
       headers: {
-        token: token,
+        token: token
       },
       params: {
-        emqxRuleId: rule.emqxRuleId,
-      },
+        emqxRuleId: rule.emqxRuleId
+      }
     };
 
     axios
@@ -87,8 +87,7 @@ export default function useAlarms() {
       alert("Missing TriggerTime Field");
       return;
     }
-    const { variable, variableFullName } =
-      device.template.widgets[selectedWidgetIndex].config;
+    const { variable, variableFullName } = device.template.widgets[selectedWidgetIndex].config;
     let newRule = {
       _id: randomString(10),
       dId: device.dId,
@@ -99,13 +98,13 @@ export default function useAlarms() {
       value: value,
       condition,
       triggerTime: triggerTime,
-      counter: 0,
+      counter: 0
     };
 
     const axiosHeaders = {
       headers: {
-        token: token,
-      },
+        token: token
+      }
     };
 
     let toSend = { newRule };
@@ -143,6 +142,6 @@ export default function useAlarms() {
     value,
     setValue,
     triggerTime,
-    setTriggerTime,
+    setTriggerTime
   };
 }

@@ -50,7 +50,7 @@ export default function Dashboard() {
             alignItems: "center",
             justifyContent: "center",
             width: "100%",
-            height: "70vh",
+            height: "70vh"
           }}
         >
           <h4>Select a Device</h4>

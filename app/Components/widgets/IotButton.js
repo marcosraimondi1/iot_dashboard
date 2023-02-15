@@ -17,30 +17,23 @@ export default function IotButton({ config }) {
 
     const toSend = {
       topic:
-        config?.userId +
-        "/" +
-        config?.selectedDevice?.dId +
-        "/" +
-        config?.variable +
-        "/actdata",
+        config?.userId + "/" + config?.selectedDevice?.dId + "/" + config?.variable + "/actdata",
       msg: {
-        value: config?.message,
-      },
+        value: config?.message
+      }
     };
     if (config.demo) return;
     dispatch(mqttSender(toSend));
   };
 
   return (
-    <Card
-      title={config?.selectedDevice?.name + " - " + config?.variableFullName}
-    >
+    <Card title={config?.selectedDevice?.name + " - " + config?.variableFullName}>
       <div
         style={{
           display: "flex",
           margin: "5px",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "space-between"
         }}
       >
         <Icon style={{ fontSize: "48px" }} color={config.color}>

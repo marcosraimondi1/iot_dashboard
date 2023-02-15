@@ -10,19 +10,14 @@ export default function IotSwitch({ config }) {
   const [value, setValue] = useState(false);
   const dispatch = useDispatch();
   const topic =
-    config.userId +
-    "/" +
-    config.selectedDevice.dId +
-    "/" +
-    config.variable +
-    "/actdata";
+    config.userId + "/" + config.selectedDevice.dId + "/" + config.variable + "/actdata";
 
   const sendValue = () => {
     const toSend = {
       topic: topic,
       msg: {
-        value: !value,
-      },
+        value: !value
+      }
     };
     setValue(!value);
     if (config.demo) return;
@@ -30,15 +25,13 @@ export default function IotSwitch({ config }) {
   };
 
   return (
-    <Card
-      title={config?.selectedDevice.name + " - " + config?.variableFullName}
-    >
+    <Card title={config?.selectedDevice.name + " - " + config?.variableFullName}>
       <div
         style={{
           display: "flex",
           margin: "5px",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "space-between"
         }}
       >
         <Icon

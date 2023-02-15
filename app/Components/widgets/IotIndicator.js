@@ -5,16 +5,10 @@ import { useEffect, useState } from "react";
 export default function IotIndicator({ config }) {
   const [value, setValue] = useState(false);
 
-  if (config.demo) {
-  }
+  // if (config.demo) {
+  // }
 
-  const topic =
-    config.userId +
-    "/" +
-    config.selectedDevice.dId +
-    "/" +
-    config.variable +
-    "/sdata";
+  const topic = config.userId + "/" + config.selectedDevice.dId + "/" + config.variable + "/sdata";
   const processReceivedData = (data) => {
     data.value ? setValue(data.value) : setValue(false);
   };
@@ -28,24 +22,19 @@ export default function IotIndicator({ config }) {
     return () => {
       window.removeEventListener(topic, () => {});
     };
-  }, []);
+  }, [config.demo, topic]);
 
   return (
-    <Card
-      title={config?.selectedDevice?.name + " - " + config?.variableFullName}
-    >
+    <Card title={config?.selectedDevice?.name + " - " + config?.variableFullName}>
       <div
         style={{
           display: "flex",
           margin: "5px",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "space-between"
         }}
       >
-        <Icon
-          style={{ fontSize: "48px" }}
-          color={value ? config.color : "action"}
-        >
+        <Icon style={{ fontSize: "48px" }} color={value ? config.color : "action"}>
           {config.icon}
         </Icon>
       </div>

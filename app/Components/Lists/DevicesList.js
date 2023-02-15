@@ -16,15 +16,10 @@ Lista.propTypes = {
   devices: PropTypes.arrayOf(PropTypes.object),
   refreshPassword: PropTypes.func,
   updateSaverRuleStatus: PropTypes.func,
-  del: PropTypes.func,
+  del: PropTypes.func
 };
 
-export default function Lista({
-  devices,
-  refreshPassword,
-  updateSaverRuleStatus,
-  del,
-}) {
+export default function Lista({ devices, refreshPassword, updateSaverRuleStatus, del }) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -41,10 +36,7 @@ export default function Lista({
         </TableHead>
         <TableBody>
           {devices.map((device, index) => (
-            <TableRow
-              key={index}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
+            <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell component="th" align="left" scope="row">
                 {index}
               </TableCell>
@@ -61,7 +53,7 @@ export default function Lista({
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
-                    justifyContent: "space-evenly",
+                    justifyContent: "space-evenly"
                   }}
                 >
                   <p>{device.password}</p>
@@ -83,12 +75,10 @@ export default function Lista({
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
-                    justifyContent: "space-evenly",
+                    justifyContent: "space-evenly"
                   }}
                 >
-                  <StorageIcon
-                    color={device.saverRule?.status ? "success" : "warning"}
-                  />
+                  <StorageIcon color={device.saverRule?.status ? "success" : "warning"} />
                   <Switch
                     color="success"
                     checked={device.saverRule?.status}

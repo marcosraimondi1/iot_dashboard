@@ -20,7 +20,7 @@ export default function Devices() {
     addDevice,
     deleteDevice,
     refreshPassword,
-    updateSaverRuleStatus,
+    updateSaverRuleStatus
   } = useDevices();
 
   return (
@@ -73,7 +73,7 @@ export default function Devices() {
               style={{
                 display: "flex",
                 margin: "10px",
-                alignItems: "center",
+                alignItems: "center"
               }}
             >
               <Button variant="contained" onClick={addDevice}>

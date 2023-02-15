@@ -15,7 +15,7 @@ global.OPTIONS = {
   // Certification Information
   clientId: "",
   username: "",
-  password: "",
+  password: ""
 };
 
 // THEME

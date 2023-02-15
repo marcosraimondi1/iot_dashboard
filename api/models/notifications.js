@@ -14,7 +14,7 @@ const notificationSchema = new Schema({
   variable: { type: String, required: [true] },
   variableFullName: { type: String, required: [true] },
   readed: { type: Boolean, required: [true] },
-  time: { type: Number, required: [true] },
+  time: { type: Number, required: [true] }
 });
 
 const Notification = mongoose.model("Notification", notificationSchema);

@@ -19,7 +19,7 @@ export default function Templates() {
     deleteTemplate,
     saveTemplate,
     widgetForm,
-    widgetsOptions,
+    widgetsOptions
   } = useTemplates();
 
   return (
@@ -47,7 +47,7 @@ export default function Templates() {
             alignItems: "center",
             justifyContent: "space-evenly",
             padding: "10px",
-            marginTop: "50px",
+            marginTop: "50px"
           }}
         >
           <TextField

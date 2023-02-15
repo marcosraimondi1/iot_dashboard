@@ -14,7 +14,7 @@ import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 Lista.propTypes = {
   alarms: PropTypes.arrayOf(PropTypes.object),
   updateStatusRule: PropTypes.func,
-  del: PropTypes.func,
+  del: PropTypes.func
 };
 
 export default function Lista({ alarms, updateStatusRule, del }) {
@@ -35,10 +35,7 @@ export default function Lista({ alarms, updateStatusRule, del }) {
         </TableHead>
         <TableBody>
           {alarms.map((alarm, index) => (
-            <TableRow
-              key={index}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
+            <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell component="th" align="left" scope="row">
                 {index}
               </TableCell>
@@ -58,12 +55,10 @@ export default function Lista({ alarms, updateStatusRule, del }) {
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
-                    justifyContent: "space-evenly",
+                    justifyContent: "space-evenly"
                   }}
                 >
-                  <NotificationsActiveIcon
-                    color={alarm.status ? "success" : "warning"}
-                  />
+                  <NotificationsActiveIcon color={alarm.status ? "success" : "warning"} />
                   <Switch
                     color="success"
                     checked={alarm.status}

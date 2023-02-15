@@ -21,7 +21,7 @@ export default function Alarms() {
     value,
     setValue,
     triggerTime,
-    setTriggerTime,
+    setTriggerTime
   } = useAlarms();
 
   return (
@@ -103,7 +103,7 @@ export default function Alarms() {
               style={{
                 display: "flex",
                 margin: "10px",
-                alignItems: "center",
+                alignItems: "center"
               }}
             >
               <Button variant="contained" onClick={addRule}>
@@ -114,11 +114,7 @@ export default function Alarms() {
         </Grid>
       </Card>
       <br />
-      <AlarmsList
-        alarms={alarms}
-        updateStatusRule={updateStatusRule}
-        del={deleteRule}
-      />
+      <AlarmsList alarms={alarms} updateStatusRule={updateStatusRule} del={deleteRule} />
     </>
   );
 }

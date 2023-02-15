@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import randomString from "../../utils/randomString";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { createDevice, deleteDevice, getDevices } from "@/Slices/devicesSlice";
@@ -15,8 +14,8 @@ export default function useDevices() {
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
-    getTemplates();
-  }, []);
+    async () => setTemplates(await fetchTemplates(token))();
+  }, [token]);
 
   const addDevice = () => {
     // add device to db
@@ -43,8 +42,8 @@ export default function useDevices() {
       password: "default",
       saverRule: {
         dId: dId,
-        status: true,
-      },
+        status: true
+      }
     };
 
     dispatch(createDevice(newDevice));
@@ -61,13 +60,13 @@ export default function useDevices() {
   const refreshPassword = (dId) => {
     // refresh password in db
     const toSend = {
-      dId,
+      dId
     };
 
     const axiosHeaders = {
       headers: {
-        token: token,
-      },
+        token: token
+      }
     };
 
     axios
@@ -91,13 +90,13 @@ export default function useDevices() {
     newRule.status = !newRule.status;
 
     const toSend = {
-      rule: newRule,
+      rule: newRule
     };
 
     const axiosHeaders = {
       headers: {
-        token: token,
-      },
+        token: token
+      }
     };
 
     axios
@@ -116,30 +115,6 @@ export default function useDevices() {
       });
   };
 
-  const getTemplates = async () => {
-    const axiosHeaders = {
-      headers: {
-        token: token,
-      },
-    };
-
-    try {
-      const res = await axios.get("/template", axiosHeaders);
-
-      if (res.data.status == "success") {
-        setTemplates(res.data.data);
-      }
-    } catch (error) {
-      // this.$notify({
-      //   type: "danger",
-      //   icon: "tim-icons icon-alert-circle-exc",
-      //   message: "Error getting templates...",
-      // });
-      console.log(error);
-      return;
-    }
-  };
-
   return {
     templates,
     devices,
@@ -152,6 +127,28 @@ export default function useDevices() {
     addDevice,
     deleteDevice: delDevice,
     refreshPassword,
-    updateSaverRuleStatus,
+    updateSaverRuleStatus
   };
 }
+
+const fetchTemplates = async (token) => {
+  const axiosHeaders = {
+    headers: { token }
+  };
+
+  try {
+    const res = await axios.get("/template", axiosHeaders);
+
+    if (res.data.status == "success") {
+      return res.data.data;
+    }
+  } catch (error) {
+    // this.$notify({
+    //   type: "danger",
+    //   icon: "tim-icons icon-alert-circle-exc",
+    //   message: "Error getting templates...",
+    // });
+    console.log(error);
+  }
+  return [];
+};

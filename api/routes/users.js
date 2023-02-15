@@ -27,7 +27,7 @@ router.post("/login", async (req, res) => {
     if (!user) {
       const response = {
         status: "error",
-        error: "Invalid Credentials",
+        error: "Invalid Credentials"
       };
       return res.status(401).json(response);
     }
@@ -37,20 +37,20 @@ router.post("/login", async (req, res) => {
       user.set("password", undefined, { strict: false });
 
       const token = jwt.sign({ userData: user }, "securePasswordHere", {
-        expiresIn: 60 * 60 * 24 * 30,
+        expiresIn: 60 * 60 * 24 * 30
       });
 
       const response = {
         status: "success",
         token: token,
-        userData: user,
+        userData: user
       };
 
       return res.json(response);
     } else {
       const response = {
         status: "error",
-        error: "Invalid Credentials",
+        error: "Invalid Credentials"
       };
       return res.status(401).json(response);
     }
@@ -70,13 +70,13 @@ router.post("/register", async (req, res) => {
     const newUser = {
       name: name,
       email: email,
-      password: encryptedPassword,
+      password: encryptedPassword
     };
 
-    var user = await User.create(newUser);
+    await User.create(newUser);
 
     const response = {
-      status: "success",
+      status: "success"
     };
 
     res.status(200).json(response);
@@ -86,7 +86,7 @@ router.post("/register", async (req, res) => {
 
     const response = {
       status: "error",
-      error: error,
+      error: error
     };
 
     console.log(response);
@@ -105,7 +105,7 @@ router.post("/getmqttcredentials", checkAuth, async (req, res) => {
     const response = {
       status: "success",
       username: credentials.username,
-      password: credentials.password,
+      password: credentials.password
     };
 
     console.log(response);
@@ -121,7 +121,7 @@ router.post("/getmqttcredentials", checkAuth, async (req, res) => {
     console.log(error);
 
     const response = {
-      status: "error",
+      status: "error"
     };
 
     return res.status(500).json(response);
@@ -129,33 +129,27 @@ router.post("/getmqttcredentials", checkAuth, async (req, res) => {
 });
 
 //GET MQTT CREDENTIALS FOR RECONNECTION
-router.post(
-  "/getmqttcredentialsforreconnection",
-  checkAuth,
-  async (req, res) => {
-    try {
-      const userId = req.userData._id;
-      const credentials = await getWebUserMqttCredentialsForReconnection(
-        userId
-      );
+router.post("/getmqttcredentialsforreconnection", checkAuth, async (req, res) => {
+  try {
+    const userId = req.userData._id;
+    const credentials = await getWebUserMqttCredentialsForReconnection(userId);
 
-      const response = {
-        status: "success",
-        username: credentials.username,
-        password: credentials.password,
-      };
+    const response = {
+      status: "success",
+      username: credentials.username,
+      password: credentials.password
+    };
 
-      console.log(response);
-      res.json(response);
+    console.log(response);
+    res.json(response);
 
-      setTimeout(() => {
-        getWebUserMqttCredentials(userId);
-      }, 15000);
-    } catch (error) {
-      console.log(error);
-    }
+    setTimeout(() => {
+      getWebUserMqttCredentials(userId);
+    }, 15000);
+  } catch (error) {
+    console.log(error);
   }
-);
+});
 
 //**********************
 //**** FUNCTIONS *******
@@ -175,14 +169,14 @@ async function getWebUserMqttCredentials(userId) {
         subscribe: [userId + "/#"],
         type: "user",
         time: Date.now(),
-        updatedTime: Date.now(),
+        updatedTime: Date.now()
       };
 
       const result = await EmqxAuthRule.create(newRule);
 
       const toReturn = {
         username: result.username,
-        password: result.password,
+        password: result.password
       };
 
       return toReturn;
@@ -191,14 +185,14 @@ async function getWebUserMqttCredentials(userId) {
     const newUserName = makeid(10);
     const newPassword = makeid(10);
 
-    const result = await EmqxAuthRule.updateOne(
+    await EmqxAuthRule.updateOne(
       { type: "user", userId: userId },
       {
         $set: {
           username: newUserName,
           password: newPassword,
-          updatedTime: Date.now(),
-        },
+          updatedTime: Date.now()
+        }
       }
     );
 
@@ -206,7 +200,7 @@ async function getWebUserMqttCredentials(userId) {
     //{ n: 1, nModified: 1, ok: 1 }
     return {
       username: newUserName,
-      password: newPassword,
+      password: newPassword
     };
   } catch (error) {
     console.log(error);
@@ -221,7 +215,7 @@ async function getWebUserMqttCredentialsForReconnection(userId) {
     if (rule.length == 1) {
       const toReturn = {
         username: rule[0].username,
-        password: rule[0].password,
+        password: rule[0].password
       };
       return toReturn;
     }
@@ -233,8 +227,7 @@ async function getWebUserMqttCredentialsForReconnection(userId) {
 
 function makeid(length) {
   var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var charactersLength = characters.length;
   for (var i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));

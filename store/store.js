@@ -8,7 +8,7 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER,
+  REGISTER
 } from "redux-persist";
 
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
@@ -24,12 +24,12 @@ import emqxReducer from "./slices/emqxSlice";
 const rootReducer = combineReducers({
   auth: authReducer,
   devices: devicesReducer,
-  emqx: emqxReducer,
+  emqx: emqxReducer
 });
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer); // enhanced reducer to persist
@@ -41,10 +41,10 @@ let store = configureStore({
     // docs: https://redux-toolkit.js.org/usage/usage-guide#use-with-redux-persist
     return getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      }
     }).concat(middlewares); // adding custom middlewares
-  },
+  }
 });
 
 let persistor = persistStore(store);

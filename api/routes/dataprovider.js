@@ -14,14 +14,14 @@ router.get("/get-last-data", checkAuth, async (req, res) => {
     const data = await Data.find({
       userId: userId,
       dId: dId,
-      variable: variable,
+      variable: variable
     })
       .sort({ time: -1 })
       .limit(1);
 
     const response = {
       status: "success",
-      data: data,
+      data: data
     };
 
     return res.json(response);
@@ -30,7 +30,7 @@ router.get("/get-last-data", checkAuth, async (req, res) => {
 
     const response = {
       status: "error",
-      error: error,
+      error: error
     };
 
     return res.json(response);
@@ -50,12 +50,12 @@ router.get("/get-small-charts-data", checkAuth, async (req, res) => {
       userId: userId,
       dId: dId,
       variable: variable,
-      time: { $gt: timeAgoMs },
+      time: { $gt: timeAgoMs }
     }).sort({ time: 1 });
 
     const response = {
       status: "success",
-      data: data,
+      data: data
     };
 
     return res.json(response);
@@ -64,7 +64,7 @@ router.get("/get-small-charts-data", checkAuth, async (req, res) => {
 
     const response = {
       status: "error",
-      error: error,
+      error: error
     };
 
     return res.json(response);

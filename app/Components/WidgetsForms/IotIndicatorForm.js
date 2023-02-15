@@ -12,7 +12,7 @@ const colors = [
   { value: "warning", label: "warning" },
   { value: "info", label: "info" },
   { value: "primary", label: "primary" },
-  { value: "secondary", label: "secondary" },
+  { value: "secondary", label: "secondary" }
 ];
 
 const colSizes = [2, 3, 4, 6, 8, 12];
@@ -32,10 +32,10 @@ export default function IotIndicatorForm({ addWidget }) {
     color,
     colSize,
     selectedDevice: {
-      name: "Home",
+      name: "Home"
     },
     variableType: "input",
-    demo: true,
+    demo: true
   };
 
   return (
@@ -48,7 +48,7 @@ export default function IotIndicatorForm({ addWidget }) {
                 display: "flex",
                 flexDirection: "column",
                 padding: "20px",
-                justifyContent: "space-evenly",
+                justifyContent: "space-evenly"
               }}
             >
               {/* VAR NAME */}
@@ -141,7 +141,7 @@ export default function IotIndicatorForm({ addWidget }) {
 
                   addWidget({
                     type: "IotIndicator",
-                    config: iotIndicatorConfig,
+                    config: iotIndicatorConfig
                   });
                   setVariableFullName("");
                   setIcon("");

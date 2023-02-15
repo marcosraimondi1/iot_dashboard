@@ -15,7 +15,7 @@ router.get("/template", checkAuth, async (req, res) => {
 
     const response = {
       status: "success",
-      data: templates,
+      data: templates
     };
 
     return res.json(response);
@@ -24,7 +24,7 @@ router.get("/template", checkAuth, async (req, res) => {
 
     const response = {
       status: "error",
-      error: error,
+      error: error
     };
 
     return res.status(500).json(response);
@@ -41,10 +41,10 @@ router.post("/template", checkAuth, async (req, res) => {
     newTemplate.userId = userId;
     newTemplate.createdTime = Date.now();
 
-    const r = await Template.create(newTemplate);
+    await Template.create(newTemplate);
 
     const response = {
-      status: "success",
+      status: "success"
     };
 
     return res.json(response);
@@ -53,7 +53,7 @@ router.post("/template", checkAuth, async (req, res) => {
 
     const response = {
       status: "error",
-      error: error,
+      error: error
     };
 
     return res.status(500).json(response);
@@ -68,22 +68,22 @@ router.delete("/template", checkAuth, async (req, res) => {
 
     const devices = await Device.find({
       userId: userId,
-      templateId: templateId,
+      templateId: templateId
     });
 
     if (devices.length > 0) {
       const response = {
         status: "fail",
-        error: "template in use",
+        error: "template in use"
       };
 
       return res.json(response);
     }
 
-    const r = await Template.deleteOne({ userId: userId, _id: templateId });
+    await Template.deleteOne({ userId: userId, _id: templateId });
 
     const response = {
-      status: "success",
+      status: "success"
     };
 
     return res.json(response);
@@ -92,7 +92,7 @@ router.delete("/template", checkAuth, async (req, res) => {
 
     const response = {
       status: "error",
-      error: error,
+      error: error
     };
 
     return res.status(500).json(response);

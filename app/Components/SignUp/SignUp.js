@@ -5,7 +5,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import LinkMui from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -15,7 +14,7 @@ import Copyright from "../Copyright/Copyright";
 
 SignUp.propTypes = {
   submit: PropTypes.func.isRequired,
-  loginLink: PropTypes.string.isRequired,
+  loginLink: PropTypes.string.isRequired
 };
 export default function SignUp({ submit, loginLink }) {
   /**
@@ -29,7 +28,7 @@ export default function SignUp({ submit, loginLink }) {
       password: data.get("password"),
       name: data.get("firstName"),
       lastName: data.get("lastName"),
-      phone_number: data.get("phone_number"),
+      phone_number: data.get("phone_number")
     };
 
     // validacion de inputs
@@ -56,7 +55,7 @@ export default function SignUp({ submit, loginLink }) {
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          alignItems: "center"
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -123,15 +122,9 @@ export default function SignUp({ submit, loginLink }) {
             </Grid>
           </Grid>
           <Typography component="p">
-            Tus datos se enviarán al administrador del sitio para validar tu
-            identidad.
+            Tus datos se enviarán al administrador del sitio para validar tu identidad.
           </Typography>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Sign Up
           </Button>
           <Grid container justifyContent="flex-end">

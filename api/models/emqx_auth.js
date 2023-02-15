@@ -11,7 +11,7 @@ const emqxAuthRuleSchema = new Schema({
   subscribe: { type: Array },
   type: { type: String, required: [true] },
   time: { type: Number },
-  updatedTime: { type: Number },
+  updatedTime: { type: Number }
 });
 
 const EmqxAuthRule = mongoose.model("EmqxAuthRule", emqxAuthRuleSchema);

@@ -4,7 +4,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     token: null,
-    userData: {},
+    userData: {}
   },
   reducers: {
     // async logic handled in middlewares
@@ -18,8 +18,8 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.token = null;
       state.userData = {};
-    },
-  },
+    }
+  }
 });
 
 // Action creators are generated for each case reducer function

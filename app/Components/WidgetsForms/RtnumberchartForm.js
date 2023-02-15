@@ -12,7 +12,7 @@ const colors = [
   { value: "warning", label: "warning" },
   { value: "info", label: "info" },
   { value: "primary", label: "primary" },
-  { value: "secondary", label: "secondary" },
+  { value: "secondary", label: "secondary" }
 ];
 
 const colSizes = [2, 3, 4, 6, 8, 12];
@@ -37,10 +37,10 @@ export default function RtnumberchartForm({ addWidget }) {
     variableSendFreq,
     decimalPlaces,
     selectedDevice: {
-      name: "Home",
+      name: "Home"
     },
     variableType: "input",
-    demo: true,
+    demo: true
   };
 
   return (
@@ -53,7 +53,7 @@ export default function RtnumberchartForm({ addWidget }) {
                 display: "flex",
                 flexDirection: "column",
                 padding: "20px",
-                justifyContent: "space-evenly",
+                justifyContent: "space-evenly"
               }}
             >
               {/* VAR NAME */}
@@ -187,7 +187,7 @@ export default function RtnumberchartForm({ addWidget }) {
 
                   addWidget({
                     type: "Rtnumberchart",
-                    config: rtnumberchartConfig,
+                    config: rtnumberchartConfig
                   });
                   setIcon("");
                   setVariableFullName("");

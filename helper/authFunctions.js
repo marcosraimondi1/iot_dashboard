@@ -8,7 +8,7 @@ export const login = async (user) => {
       //token to de store - token a la tienda
       const auth = {
         token: res.data.token,
-        userData: res.data.userData,
+        userData: res.data.userData
       };
 
       //set auth object in localStorage - Grabamos el token en localStorage

@@ -8,7 +8,7 @@ export default function App() {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        flexDirection: "column",
+        flexDirection: "column"
       }}
     >
       <div
@@ -19,7 +19,7 @@ export default function App() {
           alignItems: "center",
           justifyContent: "center",
           flexDirection: "column",
-          padding: "20px",
+          padding: "20px"
         }}
       >
         <h1>IoT Dashboard</h1>

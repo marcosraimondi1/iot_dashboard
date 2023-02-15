@@ -11,7 +11,7 @@ const colors = [
   { value: "warning", label: "warning" },
   { value: "info", label: "info" },
   { value: "primary", label: "primary" },
-  { value: "secondary", label: "secondary" },
+  { value: "secondary", label: "secondary" }
 ];
 
 const colSizes = [2, 3, 4, 6, 8, 12];
@@ -30,10 +30,10 @@ export default function IotButtonForm({ addWidget }) {
     colSize,
     message,
     selectedDevice: {
-      name: "Home",
+      name: "Home"
     },
     variableType: "output",
-    demo: true,
+    demo: true
   };
 
   return (
@@ -46,7 +46,7 @@ export default function IotButtonForm({ addWidget }) {
                 display: "flex",
                 flexDirection: "column",
                 padding: "20px",
-                justifyContent: "space-evenly",
+                justifyContent: "space-evenly"
               }}
             >
               {/* VAR NAME */}

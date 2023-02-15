@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 
 Lista.propTypes = {
   templates: PropTypes.arrayOf(PropTypes.object),
-  del: PropTypes.func,
+  del: PropTypes.func
 };
 
 export default function Lista({ templates, del }) {
@@ -28,10 +28,7 @@ export default function Lista({ templates, del }) {
         </TableHead>
         <TableBody>
           {templates.map((p, index) => (
-            <TableRow
-              key={index}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
+            <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {index}
               </TableCell>

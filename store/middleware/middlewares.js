@@ -2,19 +2,17 @@ import { login, register } from "@/Helper/authFunctions.js";
 import mqtt from "mqtt";
 import axios from "axios";
 
-const logger = (store) => (next) => (action) => {
-  if (
-    action.type === "persist/REHYDRATE" ||
-    action.type === "persist/PERSIST"
-  ) {
-    // no logs
-    return next(action);
-  }
-  console.log("dispatching", action);
-  let result = next(action);
-  console.log("next state", store.getState());
-  return result;
-};
+const logger = // eslint-disable-line no-unused-vars
+  (store) => (next) => (action) => {
+    if (action.type === "persist/REHYDRATE" || action.type === "persist/PERSIST") {
+      // no logs
+      return next(action);
+    }
+    console.log("dispatching", action);
+    let result = next(action);
+    console.log("next state", store.getState());
+    return result;
+  };
 
 // se ejecuta en rutas protegidas donde el usurario tiene que estar loguedado
 // si el usuario no tiene token, lo enviamos al login
@@ -85,8 +83,8 @@ const devices = (store) => (next) => async (action) => {
     // Make an API call to fetch turnos from the server
     const axiosHeader = {
       headers: {
-        token: store.getState().auth.token,
-      },
+        token: store.getState().auth.token
+      }
     };
     try {
       const res = await axios.get("/device", axiosHeader);
@@ -108,8 +106,8 @@ const devices = (store) => (next) => async (action) => {
 
     const axiosHeaders = {
       headers: {
-        token: store.getState().auth.token,
-      },
+        token: store.getState().auth.token
+      }
     };
 
     const toSend = { dId: dId };
@@ -127,8 +125,8 @@ const devices = (store) => (next) => async (action) => {
     // Make an API call to set notifications
     const axiosHeader = {
       headers: {
-        token: store.getState().auth.token,
-      },
+        token: store.getState().auth.token
+      }
     };
 
     try {
@@ -144,11 +142,11 @@ const devices = (store) => (next) => async (action) => {
     // Make an API call to delete device from the server
     const axiosHeader = {
       headers: {
-        token: store.getState().auth.token,
+        token: store.getState().auth.token
       },
       params: {
-        dId: action.payload,
-      },
+        dId: action.payload
+      }
     };
     try {
       await axios.delete("/device", axiosHeader);
@@ -162,8 +160,8 @@ const devices = (store) => (next) => async (action) => {
   if (action.type === "devices/createDevice") {
     const axiosHeaders = {
       headers: {
-        token: store.getState().auth.token,
-      },
+        token: store.getState().auth.token
+      }
     };
 
     const toSend = { newDevice: action.payload };
@@ -176,10 +174,7 @@ const devices = (store) => (next) => async (action) => {
         return next(action);
       }
     } catch (e) {
-      if (
-        e.response.data.status == "error" &&
-        e.response.data.error.errors.dId.kind == "unique"
-      ) {
+      if (e.response.data.status == "error" && e.response.data.error.errors.dId.kind == "unique") {
         console.log("error unique");
         return;
       } else {
@@ -222,15 +217,11 @@ const getMqttCredentials = async (store) => {
   try {
     const axiosHeaders = {
       headers: {
-        token: store.getState().auth.token,
-      },
+        token: store.getState().auth.token
+      }
     };
 
-    const credentials = await axios.post(
-      "/getmqttcredentials",
-      null,
-      axiosHeaders
-    );
+    const credentials = await axios.post("/getmqttcredentials", null, axiosHeaders);
 
     // update options state
 
@@ -261,22 +252,18 @@ const getMqttCredentialsForReconnection = async (store) => {
   try {
     const axiosHeaders = {
       headers: {
-        token: store.getState().auth.token,
-      },
+        token: store.getState().auth.token
+      }
     };
 
-    const credentials = await axios.post(
-      "/getmqttcredentialsforreconnection",
-      null,
-      axiosHeaders
-    );
+    const credentials = await axios.post("/getmqttcredentialsforreconnection", null, axiosHeaders);
 
     if (credentials.data.status == "success") {
       global.CLIENT.options.username = credentials.data.username;
       global.CLIENT.options.password = credentials.data.password;
       const newCredentials = {
         username: credentials.data.username,
-        password: credentials.data.password,
+        password: credentials.data.password
       };
       store.dispatch({ type: "emqx/setClient", payload: newCredentials });
     }
@@ -297,8 +284,7 @@ const startMqttClient = async (store) => {
   await getMqttCredentials(store);
 
   //ex topic: "userid/did/variableId/sdata"
-  const deviceSubscribeTopic =
-    store.getState().auth.userData._id + "/+/+/sdata";
+  const deviceSubscribeTopic = store.getState().auth.userData._id + "/+/+/sdata";
 
   const notifSubscribeTopic = store.getState().auth.userData._id + "/+/+/notif";
 
@@ -345,7 +331,7 @@ const startMqttClient = async (store) => {
     console.log("Connection failed", error);
   });
 
-  global.CLIENT.on("reconnect", (error) => {
+  global.CLIENT.on("reconnect", () => {
     console.log("reconnecting 🔜");
     getMqttCredentialsForReconnection(store);
   });
@@ -366,7 +352,7 @@ const startMqttClient = async (store) => {
         return;
       } else if (msgType == "sdata") {
         const customEvent = new CustomEvent(topic, {
-          detail: JSON.parse(message.toString()),
+          detail: JSON.parse(message.toString())
         });
         window.dispatchEvent(customEvent);
         return;
