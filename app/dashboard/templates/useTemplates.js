@@ -55,6 +55,7 @@ export default function useTemplates() {
       }
 
       if (res.data.status == "success") {
+        global.notify("Success", { variant: "success" });
         setTemplates(await fetchTemplates(token));
       }
     } catch (error) {
@@ -96,6 +97,7 @@ export default function useTemplates() {
       const res = await axios.post("/template", toSend, axiosHeaders);
 
       if (res.data.status == "success") {
+        global.notify("Success", { variant: "success" });
         setTemplateName("");
         setWidgets([]);
         setTemplates(await fetchTemplates(token));

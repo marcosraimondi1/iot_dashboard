@@ -33,11 +33,11 @@ export default function useAlarms() {
       .then((res) => {
         if (res.data.status == "success") {
           dispatch(getDevices());
-          console.log("success");
           return;
         }
       })
       .catch((e) => {
+        global.notify("Action failed", { variant: "error" });
         console.log(e);
         return;
       });
@@ -58,12 +58,14 @@ export default function useAlarms() {
       .delete("/alarm-rule", axiosHeaders)
       .then((res) => {
         if (res.data.status == "success") {
+          global.notify("Success", { variant: "success" });
           dispatch(getDevices());
           console.log("success");
           return;
         }
       })
       .catch((e) => {
+        global.notify("Action failed", { variant: "error" });
         console.log(e);
         return;
       });
@@ -113,18 +115,19 @@ export default function useAlarms() {
       .post("/alarm-rule", toSend, axiosHeaders)
       .then((res) => {
         if (res.data.status == "success") {
+          global.notify("Success", { variant: "success" });
           setCondition("");
           setValue("");
           setTriggerTime("");
           setSelectedWidgetIndex("");
 
           dispatch(getDevices());
-          console.log("success");
           return;
         }
       })
       .catch((e) => {
         console.log(e);
+        global.notify("Action failed", { variant: "error" });
         return;
       });
   };

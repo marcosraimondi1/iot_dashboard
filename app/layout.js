@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_AXIOS_BASE_URL;
 
 // MQTT GLOBAL VARIABLES
@@ -50,8 +51,7 @@ export default function RootLayout({ children }) {
           preventDuplicate={true}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           action={(snackbarKey) => (
-            <Button
-              variant="text"
+            <IconButton
               size="small"
               onClick={() => {
                 // function to trigger event for closing notifications
@@ -61,8 +61,8 @@ export default function RootLayout({ children }) {
                 window.dispatchEvent(customEvent);
               }}
             >
-              Close
-            </Button>
+              <CloseIcon />
+            </IconButton>
           )}
         >
           <Provider store={store}>

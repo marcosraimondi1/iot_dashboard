@@ -19,6 +19,7 @@ const logger = // eslint-disable-line no-unused-vars
 const authentication = (store) => (next) => async (action) => {
   // LOGOUT
   if (action.type === "auth/logout") {
+    global.notify("See you later", { variant: "success" });
     store.dispatch({ type: "devices/logout" }); // borra info guardada
     store.dispatch({ type: "emqx/logout" }); // borra info guardada
     next(action);
@@ -33,11 +34,13 @@ const authentication = (store) => (next) => async (action) => {
     const auth = await login(user);
 
     if (auth) {
+      global.notify("Welcome!", { variant: "success" });
       action.payload = auth;
       next(action);
       window.location.href = "/dashboard";
       return;
     } else {
+      global.notify("Failed to login");
       action.payload = null;
       console.log("FAILED TO LOG IN");
     }
@@ -51,11 +54,12 @@ const authentication = (store) => (next) => async (action) => {
     const registered = await register(user);
     if (registered) {
       // success - redirect to login
+      global.notify("Success!", { variant: "success" });
       next(action);
       window.location.href = "/auth/login";
       return;
     } else {
-      console.log("failed to register");
+      global.notify("Failed to register", { variant: "error" });
     }
     return next(action);
   }
@@ -96,6 +100,7 @@ const devices = (store) => (next) => async (action) => {
     } catch (error) {
       console.log(error);
     }
+    global.notify("Failed to get devices", { variant: "error" });
     action.payload = null;
     return next(action);
   }
@@ -115,9 +120,11 @@ const devices = (store) => (next) => async (action) => {
     try {
       await axios.put("/device", toSend, axiosHeaders);
       store.dispatch({ type: "devices/getDevices" });
+      return next(action);
     } catch (e) {
       console.log(e);
     }
+    global.notify("Action failed", { variant: "error" });
     return next(action);
   }
 
@@ -151,9 +158,12 @@ const devices = (store) => (next) => async (action) => {
     try {
       await axios.delete("/device", axiosHeader);
       store.dispatch({ type: "devices/getDevices" });
+      global.notify("Device deleted", { variant: "success" });
+      return next(action);
     } catch (error) {
       console.log(error);
     }
+    global.notify("Action failed", { variant: "error" });
     return next(action);
   }
 
@@ -170,18 +180,18 @@ const devices = (store) => (next) => async (action) => {
       const res = await axios.post("/device", toSend, axiosHeaders);
       if (res.data.status == "success") {
         store.dispatch({ type: "devices/getDevices" });
-
+        global.notify("Device created", { variant: "success" });
         return next(action);
       }
     } catch (e) {
       if (e.response.data.status == "error" && e.response.data.error.errors.dId.kind == "unique") {
         console.log("error unique");
-        return;
+        global.notify("Id must be unique", { variant: "error" });
       } else {
         console.log("Error");
-        return;
       }
     }
+    return next(action);
   }
 
   return next(action);
@@ -203,6 +213,7 @@ const emqx = (store) => (next) => async (action) => {
       const toSend = action.payload;
       global.CLIENT.publish(toSend.topic, JSON.stringify(toSend.msg));
     } catch (error) {
+      global.notify("Error Sending Message", { variant: "error" });
       console.log("Error Sending Message");
       console.log(error);
     }
@@ -304,8 +315,7 @@ const startMqttClient = async (store) => {
 
   //MQTT CONNECTION SUCCESS
   global.CLIENT.on("connect", () => {
-    console.log("✅✅ Mqtt connected ✅✅");
-
+    global.notify("Mqtt Connected", { variant: "success" });
     //SDATA SUBSCRIBE
     global.CLIENT.subscribe(deviceSubscribeTopic, { qos: 0 }, (err) => {
       if (err) {
@@ -329,6 +339,7 @@ const startMqttClient = async (store) => {
 
   global.CLIENT.on("error", (error) => {
     console.log("Connection failed", error);
+    global.notify("Mqtt Connection failed", { variant: "error" });
   });
 
   global.CLIENT.on("reconnect", () => {
@@ -347,7 +358,10 @@ const startMqttClient = async (store) => {
       const msgType = splittedTopic[3];
 
       if (msgType == "notif") {
-        global.notify(message.toString(), { variant: "info" });
+        global.notify(message.toString(), {
+          variant: "info",
+          anchorOrigin: { horizontal: "right", vertical: "bottom" }
+        });
         store.dispatch({ type: "devices/getNotifications" });
         return;
       } else if (msgType == "sdata") {
