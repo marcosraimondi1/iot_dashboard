@@ -57,7 +57,7 @@ let chartOptionsInitial = {
   series: [
     {
       name: "",
-      data: demoData,
+      data: [],
       color: "#e14eca"
     }
   ],
@@ -235,7 +235,14 @@ export default function Rtnumberchart({ config }) {
     getNow();
     setTime(Date.now());
 
-    if (config.demo) return;
+    if (config.demo) {
+      // set demo data
+      let newOptions = chartOptions;
+      newOptions.series[0].data = demoData;
+      newOptions.series[0].name = config.variableFullName + " " + config.unit;
+      setChartOptions(newOptions);
+      return;
+    }
     console.log("Chart Topic: " + topic);
 
     setValue(0);
@@ -244,12 +251,6 @@ export default function Rtnumberchart({ config }) {
     window.addEventListener(topic, (event) => {
       processReceivedData(event.detail);
     });
-
-    // erase data
-    let newOptions = chartOptions;
-    newOptions.series[0].data = [];
-    newOptions.series[0].name = config.variableFullName + " " + config.unit;
-    setChartOptions(newOptions);
 
     // get saved data from api
     getChartData();
