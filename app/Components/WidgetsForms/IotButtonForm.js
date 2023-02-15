@@ -131,15 +131,15 @@ export default function IotButtonForm({ addWidget }) {
               <Button
                 onClick={() => {
                   if (icon === "") {
-                    alert("Missing Icon Field");
+                    global.notify("Missing Icon Field", { variant: "warning" });
                     return;
                   }
                   if (variableFullName === "") {
-                    alert("Missing Variable Name Field");
+                    global.notify("Missing Variable Name Field", { variant: "warning" });
                     return;
                   }
                   if (message === "") {
-                    alert("Missing Message Field");
+                    global.notify("Missing Message Field", { variant: "warning" });
                     return;
                   }
                   addWidget({ type: "IotButton", config: iotButtonConfig });

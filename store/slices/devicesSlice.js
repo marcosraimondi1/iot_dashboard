@@ -39,7 +39,7 @@ export const devicesSlice = createSlice({
       }
 
       //if all devices were removed
-      if (devices.length === 0) state.selectedDevice = {};
+      if (!devices || devices.length === 0) state.selectedDevice = {};
       return state;
     },
 

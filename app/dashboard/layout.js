@@ -22,6 +22,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 import authenticated from "../../middleware/authenticated";
 import axios from "axios";
+import { useSnackbar } from "notistack";
 
 export default authenticated(function Dashboard({ children }) {
   const [openNotis, setOpenNotis] = useState(false);
@@ -31,6 +32,7 @@ export default authenticated(function Dashboard({ children }) {
   );
   const notifications = useSelector((state) => state.devices.notifications);
   const token = useSelector((state) => state.auth.token);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
@@ -58,6 +60,20 @@ export default authenticated(function Dashboard({ children }) {
     dispatch(getDevices());
     dispatch(getNotifications());
     dispatch(startMqttClient());
+    // notifications listener
+    window.addEventListener("snackbar", (event) => {
+      const { message, options } = event.detail;
+      enqueueSnackbar(message, options);
+    });
+
+    window.addEventListener("close-snackbar", (event) => {
+      closeSnackbar(event.detail);
+    });
+
+    return () => {
+      window.removeEventListener("snackbar", () => {});
+      window.removeEventListener("close-snackbar", () => {});
+    };
   }, [dispatch]);
 
   const devicesOptions = devices?.map((device) => (

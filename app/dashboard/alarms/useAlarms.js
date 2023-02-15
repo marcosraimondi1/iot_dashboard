@@ -72,19 +72,19 @@ export default function useAlarms() {
   const addRule = () => {
     // add rule to db
     if (selectedWidgetIndex === "") {
-      alert("Missing Variable Field");
+      global.notify("Missing Variable Field", { variant: "error" });
       return;
     }
     if (condition === "") {
-      alert("Missing Condition Field");
+      global.notify("Missing Condition Field", { variant: "error" });
       return;
     }
     if (value === "") {
-      alert("Missing Value Field");
+      global.notify("Missing Value Field", { variant: "error" });
       return;
     }
     if (triggerTime === "") {
-      alert("Missing TriggerTime Field");
+      global.notify("Missing TriggerTime Field", { variant: "error" });
       return;
     }
     const { variable, variableFullName } = device.template.widgets[selectedWidgetIndex].config;

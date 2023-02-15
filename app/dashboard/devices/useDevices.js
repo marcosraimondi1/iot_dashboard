@@ -20,15 +20,15 @@ export default function useDevices() {
   const addDevice = () => {
     // add device to db
     if (deviceTemplateIndex === "") {
-      alert("Missing Template Field");
+      global.notify("Missing Template Field", { variant: "error" });
       return;
     }
     if (deviceName === "") {
-      alert("Missing Name Field");
+      global.notify("Missing Name Field", { variant: "error" });
       return;
     }
     if (dId === "") {
-      alert("Missing Id Field");
+      global.notify("Missing Id Field", { variant: "error" });
       return;
     }
 
@@ -143,12 +143,7 @@ const fetchTemplates = async (token) => {
       return res.data.data;
     }
   } catch (error) {
-    // this.$notify({
-    //   type: "danger",
-    //   icon: "tim-icons icon-alert-circle-exc",
-    //   message: "Error getting templates...",
-    // });
-    console.log(error);
+    global.notify("Error getting templates...", { variant: "error" });
   }
   return [];
 };

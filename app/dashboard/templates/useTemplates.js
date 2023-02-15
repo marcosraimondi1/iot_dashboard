@@ -49,33 +49,16 @@ export default function useTemplates() {
       const res = await axios.delete("/template", axiosHeaders);
 
       if (res.data.status == "fail" && res.data.error == "template in use") {
-        // this.$notify({
-        //   type: "danger",
-        //   icon: "tim-icons icon-alert-circle-exc",
-        //   message:
-        //     template.name +
-        //     " is in use. First remove the devices linked to the template!",
-        // });
-        console.log("en uso");
+        const message = "Template in use. First remove the devices linked to the template!";
+        global.notify(message, { variant: "error" });
         return;
       }
 
       if (res.data.status == "success") {
-        // this.$notify({
-        //   type: "success",
-        //   icon: "tim-icons icon-check-2",
-        //   message: template.name + " was deleted!",
-        // });
-
-        getTemplates();
+        setTemplates(await fetchTemplates(token));
       }
     } catch (error) {
-      // this.$notify({
-      //   type: "danger",
-      //   icon: "tim-icons icon-alert-circle-exc",
-      //   message: "Error getting templates...",
-      // });
-      console.log(error);
+      global.notify("Error deleting template", { variant: "error" });
       return;
     }
   };
@@ -83,11 +66,11 @@ export default function useTemplates() {
   const saveTemplate = async () => {
     // save template to db
     if (templateName === "") {
-      alert("Missing Template Name Field");
+      global.notify("Missing Template Name Field", { variant: "error" });
       return;
     }
     if (widgets.length == 0) {
-      alert("Templates must have at least 1 widget");
+      global.notify("Templates must have at least 1 widget", { variant: "error" });
       return;
     }
     const templateConfig = {
@@ -114,34 +97,10 @@ export default function useTemplates() {
 
       if (res.data.status == "success") {
         setTemplateName("");
-        getTemplates();
         setWidgets([]);
+        setTemplates(await fetchTemplates(token));
       }
     } catch (error) {
-      console.log(error);
-      return;
-    }
-  };
-
-  const getTemplates = async () => {
-    const axiosHeaders = {
-      headers: {
-        token: token //this.$store.state.auth.token,
-      }
-    };
-
-    try {
-      const res = await axios.get("/template", axiosHeaders);
-
-      if (res.data.status == "success") {
-        setTemplates(res.data.data);
-      }
-    } catch (error) {
-      // this.$notify({
-      //   type: "danger",
-      //   icon: "tim-icons icon-alert-circle-exc",
-      //   message: "Error getting templates...",
-      // });
       console.log(error);
       return;
     }
@@ -190,11 +149,7 @@ const fetchTemplates = async (token) => {
       return res.data.data;
     }
   } catch (error) {
-    // this.$notify({
-    //   type: "danger",
-    //   icon: "tim-icons icon-alert-circle-exc",
-    //   message: "Error getting templates...",
-    // });
+    global.notify("Error getting templates", { variant: "error" });
     console.log(error);
   }
   return [];

@@ -131,11 +131,11 @@ export default function IotIndicatorForm({ addWidget }) {
               <Button
                 onClick={() => {
                   if (icon === "") {
-                    alert("Missing Icon Field");
+                    global.notify("Missing Icon Field", { variant: "error" });
                     return;
                   }
                   if (variableFullName == "") {
-                    alert("Missing Variable Name");
+                    global.notify("Missing Variable Name", { variant: "error" });
                     return;
                   }
 
