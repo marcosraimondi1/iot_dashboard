@@ -29,7 +29,7 @@ Si no hay ninguno, entonces los crea.
 Si hay uno o más de dos, lanza advertencia. 
 Para borrar manualmente los recursos y reiniciemos node */
 
-//#response-code
+//https://docs.emqx.io/en/broker/v4.1/advanced/http-api.html#response-code
 
 //list resources
 async function listResources() {
