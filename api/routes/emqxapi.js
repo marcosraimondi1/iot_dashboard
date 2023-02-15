@@ -29,7 +29,7 @@ Si no hay ninguno, entonces los crea.
 Si hay uno o más de dos, lanza advertencia. 
 Para borrar manualmente los recursos y reiniciemos node */
 
-//https://docs.emqx.io/en/broker/v4.1/advanced/http-api.html#response-code
+//#response-code
 
 //list resources
 async function listResources() {
@@ -68,6 +68,15 @@ async function listResources() {
             console.log("\n");
           }
         });
+        let connected1 = await checkResourceStatus(global.saverResource.id);
+
+        let connected2 = await checkResourceStatus(global.alarmResource.id);
+        if (!connected1 || !connected2) {
+          // reconnect resources
+          console.log("RESOURCES DISCONNECTED !!!".bgRed);
+          recreateResources();
+          return;
+        }
       } else {
         function printWarning() {
           console.log(
@@ -174,4 +183,45 @@ setTimeout(() => {
   listResources();
 }, process.env.EMQX_RESOURCES_DELAY);
 
+async function checkResourceStatus(resourceId) {
+  // checks resources are alive
+  const url =
+    "http://" +
+    process.env.EMQX_API_HOST +
+    ":8085/api/v4/resources/" +
+    resourceId;
+  try {
+    const res = await axios.get(url, auth);
+    if (res.status == 200) {
+      const resource = res.data.data;
+
+      if (resource.status[0].is_alive) return true;
+
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return false;
+}
+
+async function recreateResources() {
+  // deletes resources and creates them again
+  console.log("RECREATING RESOURCES !!!!".bgRed);
+  await deleteResources();
+  createResources();
+}
+
+async function deleteResources() {
+  // deletes saverResource and alarmResource
+  const url = "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/resources/";
+  try {
+    await axios.delete(url + global.alarmResource.id, auth);
+    await axios.delete(url + global.saverResource.id, auth);
+    global.alarmResource = null;
+    global.saverResource = null;
+  } catch (error) {
+    console.log(error);
+  }
+}
 module.exports = router;
