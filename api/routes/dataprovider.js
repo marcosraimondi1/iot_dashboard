@@ -8,11 +8,8 @@ const Data = require("../models/data.js");
 router.get("/get-last-data", checkAuth, async (req, res) => {
   try {
     const userId = req.userData._id;
-    const chartTimeAgo = req.query.chartTimeAgo;
     const dId = req.query.dId;
     const variable = req.query.variable;
-
-    const timeAgoMs = Date.now() - chartTimeAgo * 60 * 1000;
 
     const data = await Data.find({
       userId: userId,
