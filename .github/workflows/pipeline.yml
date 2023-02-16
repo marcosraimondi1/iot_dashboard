@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: 'npm' # ahorra tiempo al instalar una sola vez las dependencias
-          cache-dependency-path: package-lock.json
+          # cache-dependency-path: package-lock.json
           node-version: '18'
       
       -  name: Upgrade NPM
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: 'npm'
-          cache-dependency-path: package-lock.json
+          # cache-dependency-path: package-lock.json
           node-version: '18'
       
       -  name: Upgrade NPM
@@ -71,7 +71,7 @@ jobs:
      - uses: actions/setup-node@v2
        with:
          cache: 'npm'
-         cache-dependency-path: package-lock.json
+        #  cache-dependency-path: package-lock.json
          node-version: '18'
       
      -  name: Upgrade NPM
@@ -110,7 +110,7 @@ jobs:
      - uses: actions/setup-node@v2
        with:
          cache: 'npm'
-         cache-dependency-path: package-lock.json
+        #  cache-dependency-path: package-lock.json
          node-version: '18'
       
      -  name: Upgrade NPM
