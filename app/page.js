@@ -24,6 +24,7 @@ export default function App() {
         }}
       >
         <Icon width="1.5em" height="2em" />
+        <h5 style={{ float: "right" }}>Dash</h5>
         <br />
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/auth/login">Login</Link>
