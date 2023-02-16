@@ -27,14 +27,14 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: 'npm' # ahorra tiempo al instalar una sola vez las dependencias
-          cache-dependency-path: pnpm-lock.yaml
-          node-version: '14'
+          cache-dependency-path: package-lock.json
+          node-version: '18'
       
       -  name: Upgrade NPM
          run: npm install -g npm
         
       - name: Install Dependencies
-        run: pnpm install
+        run: npm ci
   
   lint:
     needs: [install]
@@ -47,14 +47,14 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: 'npm'
-          cache-dependency-path: pnpm-lock.yaml
-          node-version: '14'
+          cache-dependency-path: package-lock.json
+          node-version: '18'
       
       -  name: Upgrade NPM
          run: npm install -g npm
         
       - name: Install Dependencies
-        run: pnpm install
+        run: npm ci
 
       - name: Lint
         run: npm run lint
@@ -71,14 +71,14 @@ jobs:
      - uses: actions/setup-node@v2
        with:
          cache: 'npm'
-         cache-dependency-path: pnpm-lock.yaml
-         node-version: '14'
+         cache-dependency-path: package-lock.json
+         node-version: '18'
       
      -  name: Upgrade NPM
         run: npm install -g npm
      
      - name: Install Dependencies
-       run: pnpm install
+       run: npm ci
      
      - name: Set Frontend Env
        run: |
@@ -110,8 +110,8 @@ jobs:
      - uses: actions/setup-node@v2
        with:
          cache: 'npm'
-         cache-dependency-path: pnpm-lock.yaml
-         node-version: '14'
+         cache-dependency-path: package-lock.json
+         node-version: '18'
       
      -  name: Upgrade NPM
         run: npm install -g npm
@@ -122,7 +122,7 @@ jobs:
          path: ./.next
      
      - name: Install Dependencies
-       run: pnpm install
+       run: npm ci
 
      - name: Set Backend Env
        run: |
