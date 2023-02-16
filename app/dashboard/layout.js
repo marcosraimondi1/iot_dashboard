@@ -74,7 +74,7 @@ export default authenticated(function Dashboard({ children }) {
       window.removeEventListener("snackbar", () => {});
       window.removeEventListener("close-snackbar", () => {});
     };
-  }, [dispatch]);
+  }, [dispatch, closeSnackbar, enqueueSnackbar]);
 
   const devicesOptions = devices?.map((device) => (
     <MenuItem key={device.dId} value={device.dId}>

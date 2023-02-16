@@ -24,7 +24,7 @@ export default function App() {
         }}
       >
         <Icon width="1.5em" height="2em" />
-        <br/>
+        <br />
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/auth/login">Login</Link>
         {/* <a href="/api/auth/login">Login</a> */}

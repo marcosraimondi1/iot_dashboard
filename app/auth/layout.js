@@ -21,6 +21,6 @@ export default notAuthenticated(function AuthLayout({ children }) {
       window.removeEventListener("snackbar", () => {});
       window.removeEventListener("close-snackbar", () => {});
     };
-  }, []);
+  }, [closeSnackbar, enqueueSnackbar]);
   return <>{children}</>;
 });

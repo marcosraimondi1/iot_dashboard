@@ -12,11 +12,7 @@ const SvgComponent = (props) => (
           }}
           {...props}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 27.06 146.23"
-            {...props}
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.06 146.23" {...props}>
             <path
               d="M13.53 146.23a13.53 13.53 0 0 0 13.53-13.54V13.53a13.53 13.53 0 0 0-27.06 0v119.16a13.54 13.54 0 0 0 13.53 13.54z"
               fill="#2fc77a"
@@ -33,11 +29,7 @@ const SvgComponent = (props) => (
           }}
           {...props}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 146.43 144.23"
-            {...props}
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 146.43 144.23" {...props}>
             <path
               d="M60.15.07a73.22 73.22 0 0 0 0 144.09 4.51 4.51 0 0 0 5.29-4.45v-18.45a4.47 4.47 0 0 0-3.36-4.36 46.15 46.15 0 0 1 0-89.57A4.47 4.47 0 0 0 65.44 23V4.52A4.51 4.51 0 0 0 60.15.07z"
               fill="#f65349"
@@ -58,11 +50,7 @@ const SvgComponent = (props) => (
           }}
           {...props}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 103.21 146.32"
-            {...props}
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 103.21 146.32" {...props}>
             <path
               d="M42.59 42.61a4.5 4.5 0 0 0-4.51 4.51v85.67a13.53 13.53 0 0 0 14.18 13.51 13.78 13.78 0 0 0 12.88-13.9V47.12a4.51 4.51 0 0 0-4.51-4.51z"
               fill="#07b4e5"
