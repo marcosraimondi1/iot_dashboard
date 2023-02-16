@@ -22,7 +22,7 @@ export default function useTemplates() {
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
-    async () => setTemplates(await fetchTemplates(token))();
+    fetchTemplates(token).then((res) => setTemplates(res));
   }, [token]);
 
   const addWidget = (newWidget) => {
