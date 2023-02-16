@@ -1,4 +1,5 @@
 import Link from "next/Link";
+import Icon from "./Components/Icon/Icon";
 
 export default function App() {
   return (
@@ -22,7 +23,8 @@ export default function App() {
           padding: "20px"
         }}
       >
-        <h1>IoT Dashboard</h1>
+        <Icon width="1.5em" height="2em" />
+        <br/>
         <Link href="/dashboard">Dashboard</Link>
         <Link href="/auth/login">Login</Link>
         {/* <a href="/api/auth/login">Login</a> */}
