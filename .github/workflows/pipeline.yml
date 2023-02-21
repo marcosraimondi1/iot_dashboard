@@ -78,7 +78,7 @@ jobs:
         run: npm install -g npm
      
      - name: Install Dependencies
-       run: npm ci
+       run: npm install
      
      - name: Set Frontend Env
        run: |
@@ -88,8 +88,10 @@ jobs:
           NEXT_PUBLIC_MQTT_PREFIX=${{secrets.NEXT_PUBLIC_MQTT_PREFIX}}
           NEXT_PUBLIC_MQTT_HOST=${{secrets.NEXT_PUBLIC_MQTT_HOST}}
           NEXT_PUBLIC_MQTT_PORT=${{secrets.NEXT_PUBLIC_MQTT_PORT}}
-          EOM 
-          && cat ./.env.local
+          EOM
+
+     - name: Check Environment
+       run: cat ./.env.local 
 
      - name: Build
        run: npm run build

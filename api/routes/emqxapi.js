@@ -67,6 +67,7 @@ async function listResources() {
             console.log("\n");
           }
         });
+
         let connected1 = await checkResourceStatus(global.saverResource.id);
 
         let connected2 = await checkResourceStatus(global.alarmResource.id);
@@ -192,8 +193,18 @@ async function checkResourceStatus(resourceId) {
 async function recreateResources() {
   // deletes resources and creates them again
   console.log("RECREATING RESOURCES !!!!".bgRed);
+
+  // first delete binded rules
+  const rules = await deleteRules();
+
+  // delete resources
   await deleteResources();
-  createResources();
+
+  // create resources
+  listResources();
+
+  // reacreate rules
+  recreateRulesWithNewResource(rules);
 }
 
 async function deleteResources() {
@@ -219,3 +230,43 @@ function printWarning() {
 }
 
 module.exports = router;
+
+async function recreateRulesWithNewResource(rules) {
+  // if no resources delay creating them
+  if (!global.saverResource || !global.alarmResource) {
+    console.log("reacreating rules".yellow);
+    setTimeout(() => recreateRulesWithNewResource(rules), 3000);
+    return;
+  }
+
+  try {
+    await rules.map(async (rule) => {
+      if (rule.description === "SAVER-RULE")
+        rule.actions[0].params.$resource = global?.saverResource?.id;
+      else if (rule.description === "ALARM-RULE")
+        rule.actions[0].params.$resource = global?.alarmResource?.id;
+      else return;
+
+      const url = "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/rules";
+      a = await axios.post(url, rule, auth);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function deleteRules() {
+  try {
+    let url = "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/rules";
+    let res = await axios.get(url, auth);
+    const rules = res.data.data;
+    await rules.map(async (rule) => {
+      url = "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/rules/" + rule.id;
+      res = await axios.delete(url, auth);
+    });
+    return rules;
+  } catch (error) {
+    console.log(error);
+  }
+  return [];
+}
