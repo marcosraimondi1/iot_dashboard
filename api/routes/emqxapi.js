@@ -248,7 +248,7 @@ async function recreateRulesWithNewResource(rules) {
       else return;
 
       const url = "http://" + process.env.EMQX_API_HOST + ":8085/api/v4/rules";
-      a = await axios.post(url, rule, auth);
+      await axios.post(url, rule, auth);
     });
   } catch (error) {
     console.log(error);

@@ -11,48 +11,48 @@ jobs:
   avoid_reduncy:
     runs-on: ubuntu-20.04
     steps:
-     - name: Cancel Previous Redundant Builds
-       # para no tener corriendo dos workflows al mismo tiempo del mismo repositorio
-       uses: styfle/cancel-workflow-action@0.9.1
-       with:
-         access_token: ${{ github.token }}
-  
+      - name: Cancel Previous Redundant Builds
+        # para no tener corriendo dos workflows al mismo tiempo del mismo repositorio
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
   install:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        with: 
+        with:
           fetch-depth: 0
-     
+
       - uses: actions/setup-node@v2
         with:
-          cache: 'npm' # ahorra tiempo al instalar una sola vez las dependencias
+          cache: "npm" # ahorra tiempo al instalar una sola vez las dependencias
           cache-dependency-path: package-lock.json
-          node-version: '18.12.1'
-      
-      -  name: Upgrade NPM
-         run: npm install -g npm
-        
+          node-version: "18.12.1"
+
+      - name: Upgrade NPM
+        run: npm install -g npm
+
       - name: Install Dependencies
         run: npm install
-  
+
   lint:
     needs: [install]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        with: 
+        with:
           fetch-depth: 0
-     
+
       - uses: actions/setup-node@v2
         with:
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: package-lock.json
-          node-version: '18.12.1'
-      
-      -  name: Upgrade NPM
-         run: npm install -g npm
-        
+          node-version: "18.12.1"
+
+      - name: Upgrade NPM
+        run: npm install -g npm
+
       - name: Install Dependencies
         run: npm install
 
@@ -63,25 +63,25 @@ jobs:
     needs: [install]
     runs-on: ubuntu-20.04
     steps:
-     - uses: actions/checkout@v2 
-       # accion creada por github para copiar el repositorio en la maquina virtual donde se ejecuta la accion
-       with:
-        fetch-depth: 0
-     
-     - uses: actions/setup-node@v2
-       with:
-         cache: 'npm'
-         cache-dependency-path: package-lock.json
-         node-version: '18.12.1'
-      
-     -  name: Upgrade NPM
+      - uses: actions/checkout@v2
+        # accion creada por github para copiar el repositorio en la maquina virtual donde se ejecuta la accion
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+        with:
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+          node-version: "18.12.1"
+
+      - name: Upgrade NPM
         run: npm install -g npm
-     
-     - name: Install Dependencies
-       run: npm install
-     
-     - name: Set Frontend Env
-       run: |
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Set Frontend Env
+        run: |
           cat > ./.env.local <<- EOM
           NEXT_PUBLIC_APP_PORT=${{secrets.NEXT_PUBLIC_APP_PORT}}
           NEXT_PUBLIC_AXIOS_BASE_URL=${{secrets.NEXT_PUBLIC_AXIOS_BASE_URL}}
@@ -90,45 +90,45 @@ jobs:
           NEXT_PUBLIC_MQTT_PORT=${{secrets.NEXT_PUBLIC_MQTT_PORT}}
           EOM
 
-     - name: Check Environment
-       run: cat ./.env.local 
+      - name: Check Environment
+        run: cat ./.env.local
 
-     - name: Build
-       run: npm run build
-    
-     - uses: actions/upload-artifact@v3
-       with:
-         name: build
-         path: ./.next
-  
+      - name: Build
+        run: npm run build
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: ./.next
+
   test:
     needs: [lint, build]
     runs-on: ubuntu-20.04
     steps:
-     - uses: actions/checkout@v2 
-       # accion creada por github para copiar el repositorio en la maquina virtual donde se ejecuta la accion
-       with:
-        fetch-depth: 0
-     
-     - uses: actions/setup-node@v2
-       with:
-         cache: 'npm'
-         cache-dependency-path: package-lock.json
-         node-version: '18.12.1'
-      
-     -  name: Upgrade NPM
+      - uses: actions/checkout@v2
+        # accion creada por github para copiar el repositorio en la maquina virtual donde se ejecuta la accion
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+        with:
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+          node-version: "18.12.1"
+
+      - name: Upgrade NPM
         run: npm install -g npm
 
-     - uses: actions/download-artifact@v2
-       with:
-         name: build
-         path: ./.next
-     
-     - name: Install Dependencies
-       run: npm install
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: ./.next
 
-     - name: Set Backend Env
-       run: |
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Set Backend Env
+        run: |
           cat > ./.env <<- EOM
           NODE_ENV=${{secrets.NODE_ENV}}
           API_PORT=${{secrets.API_PORT}}
@@ -146,65 +146,64 @@ jobs:
           EMQX_RESOURCES_DELAY=${{secrets.EMQX_RESOURCES_DELAY}}
           WEBHOOKS_HOST=${{secrets.WEBHOOKS_HOST}}
           EOM
-          
-     - name: Health Check
-       run: |
-         (npm run start&) && sleep 10 &&
-         curl -X GET http://localhost:${{secrets.API_PORT}}/api/health || exit 1
-         
+
+      - name: Health Check
+        run: |
+          (npm run start&) && sleep 10 &&
+          curl -X GET http://localhost:${{secrets.API_PORT}}/api/health || exit 1
 
 # deploy: configurar para cargar a aws automaticamente
-  # deploy:
-  #   if: ${{github.event_name == 'push'}}
-  #   needs: [test]
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v2 
-  #       # accion creada por github para copiar el repositorio en la maquina virtual donde se ejecuta la accion
-  #       with:
-  #        fetch-depth: 0
-      
-  #     - name: Decrypt Pem
-  #       run: gpg --quiet --batch --yes --decrypt --passphrase="$KEY_PASSPHRASE" --output ./ServidorWeb.pem keys/ServidorWeb.pem.gpg
-  #       env:
-  #         KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
-      
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: build
-  #         path: ./backend/build
-      
-  #     - name: Set Backend Env
-  #       run: |
-  #         cat > ./backend/.env <<- EOM
-  #         NODE_ENV=${{secrets.NODE_ENV}}
-  #         PORT=${{secrets.PORT}}
-  #         INSTA_USERNAME=${{secrets.INSTA_USERNAME}}
-  #         INSTA_PASSWORD=${{secrets.INSTA_PASSWORD}}
-  #         SPOT_CLIENT_ID=${{secrets.SPOT_CLIENT_ID}}
-  #         SPOT_CLIENT_SECRET=${{secrets.SPOT_CLIENT_SECRET}}
-  #         SPOT_REDIRECT_URI=${{secrets.SPOT_REDIRECT_URI}}
-  #         BASE_URL=${{secrets.BASE_URL}}
-  #         GAPI_KEY=${{secrets.GAPI_KEY}}
-  #         REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}}
-  #         EOM
-      # - run: ls
-        
-      # - name: Deploy to Server
-      #   uses: easingthemes/ssh-deploy@main
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
-      #     SOURCE: "./backend"
-      #     REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-      #     REMOTE_USER: ${{ secrets.REMOTE_USER }}
-      #     TARGET: ${{ secrets.REMOTE_TARGET }}
-      #     EXCLUDE: "/node_modules/, /ffmpeg/"
+# deploy:
+#   if: ${{github.event_name == 'push'}}
+#   needs: [test]
+#   runs-on: ubuntu-20.04
+#   steps:
+#     - uses: actions/checkout@v2
+#       # accion creada por github para copiar el repositorio en la maquina virtual donde se ejecuta la accion
+#       with:
+#        fetch-depth: 0
 
-      # - name: run aws container
-      #   uses: appleboy/ssh-action@v0.1.4
-      #   with:
-      #     host: ${{ secrets.REMOTE_HOST }}
-      #     username: ${{ secrets.REMOTE_USER }}
-      #     password: ${{ secrets.SSH_KEY }}
-      #     script: sudo echo "HELLO WORLD!" > $HOME/itsAlive.txt
-      #     # script: sudo bash $HOME/webserver/scripts/deploy_containers.sh
+#     - name: Decrypt Pem
+#       run: gpg --quiet --batch --yes --decrypt --passphrase="$KEY_PASSPHRASE" --output ./ServidorWeb.pem keys/ServidorWeb.pem.gpg
+#       env:
+#         KEY_PASSPHRASE: ${{ secrets.KEY_PASSPHRASE }}
+
+#     - uses: actions/download-artifact@v2
+#       with:
+#         name: build
+#         path: ./backend/build
+
+#     - name: Set Backend Env
+#       run: |
+#         cat > ./backend/.env <<- EOM
+#         NODE_ENV=${{secrets.NODE_ENV}}
+#         PORT=${{secrets.PORT}}
+#         INSTA_USERNAME=${{secrets.INSTA_USERNAME}}
+#         INSTA_PASSWORD=${{secrets.INSTA_PASSWORD}}
+#         SPOT_CLIENT_ID=${{secrets.SPOT_CLIENT_ID}}
+#         SPOT_CLIENT_SECRET=${{secrets.SPOT_CLIENT_SECRET}}
+#         SPOT_REDIRECT_URI=${{secrets.SPOT_REDIRECT_URI}}
+#         BASE_URL=${{secrets.BASE_URL}}
+#         GAPI_KEY=${{secrets.GAPI_KEY}}
+#         REACT_APP_API_BASE_URL=${{secrets.REACT_APP_API_BASE_URL}}
+#         EOM
+# - run: ls
+
+# - name: Deploy to Server
+#   uses: easingthemes/ssh-deploy@main
+#   env:
+#     SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+#     SOURCE: "./backend"
+#     REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+#     REMOTE_USER: ${{ secrets.REMOTE_USER }}
+#     TARGET: ${{ secrets.REMOTE_TARGET }}
+#     EXCLUDE: "/node_modules/, /ffmpeg/"
+
+# - name: run aws container
+#   uses: appleboy/ssh-action@v0.1.4
+#   with:
+#     host: ${{ secrets.REMOTE_HOST }}
+#     username: ${{ secrets.REMOTE_USER }}
+#     password: ${{ secrets.SSH_KEY }}
+#     script: sudo echo "HELLO WORLD!" > $HOME/itsAlive.txt
+#     # script: sudo bash $HOME/webserver/scripts/deploy_containers.sh

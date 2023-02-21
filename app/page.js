@@ -1,4 +1,4 @@
-// import Link from "next/Link";
+import Link from "next/Link";
 import Icon from "./Components/Icon/Icon";
 
 export default function App() {
@@ -26,8 +26,8 @@ export default function App() {
         <Icon width="1.5em" height="2em" />
         <h5 style={{ float: "right" }}>Dash</h5>
         <br />
-        <a href="/dashboard">Dashboard</a>
-        <a href="/auth/login">Login</a>
+        <Link href="/dashboard">Dashboard</Link>
+        <Link href="/auth/login">Login</Link>
         {/* <a href="/api/auth/login">Login</a> */}
       </div>
     </div>
