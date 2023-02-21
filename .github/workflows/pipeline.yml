@@ -27,8 +27,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: 'npm' # ahorra tiempo al instalar una sola vez las dependencias
-          # cache-dependency-path: package-lock.json
-          node-version: '18'
+          cache-dependency-path: package-lock.json
+          node-version: '18.12.1'
       
       -  name: Upgrade NPM
          run: npm install -g npm
@@ -47,8 +47,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: 'npm'
-          # cache-dependency-path: package-lock.json
-          node-version: '18'
+          cache-dependency-path: package-lock.json
+          node-version: '18.12.1'
       
       -  name: Upgrade NPM
          run: npm install -g npm
@@ -71,8 +71,8 @@ jobs:
      - uses: actions/setup-node@v2
        with:
          cache: 'npm'
-        #  cache-dependency-path: package-lock.json
-         node-version: '18'
+         cache-dependency-path: package-lock.json
+         node-version: '18.12.1'
       
      -  name: Upgrade NPM
         run: npm install -g npm
@@ -88,7 +88,8 @@ jobs:
           NEXT_PUBLIC_MQTT_PREFIX=${{secrets.NEXT_PUBLIC_MQTT_PREFIX}}
           NEXT_PUBLIC_MQTT_HOST=${{secrets.NEXT_PUBLIC_MQTT_HOST}}
           NEXT_PUBLIC_MQTT_PORT=${{secrets.NEXT_PUBLIC_MQTT_PORT}}
-          EOM
+          EOM 
+          && cat ./.env.local
 
      - name: Build
        run: npm run build
@@ -110,8 +111,8 @@ jobs:
      - uses: actions/setup-node@v2
        with:
          cache: 'npm'
-        #  cache-dependency-path: package-lock.json
-         node-version: '18'
+         cache-dependency-path: package-lock.json
+         node-version: '18.12.1'
       
      -  name: Upgrade NPM
         run: npm install -g npm
@@ -143,7 +144,7 @@ jobs:
           EMQX_RESOURCES_DELAY=${{secrets.EMQX_RESOURCES_DELAY}}
           WEBHOOKS_HOST=${{secrets.WEBHOOKS_HOST}}
           EOM
-
+          && cat ./.env
      - name: Health Check
        run: |
          (npm run start&) && sleep 10 &&
