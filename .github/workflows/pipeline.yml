@@ -34,7 +34,7 @@ jobs:
          run: npm install -g npm
         
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
   
   lint:
     needs: [install]
@@ -54,7 +54,7 @@ jobs:
          run: npm install -g npm
         
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
 
       - name: Lint
         run: npm run lint
@@ -125,7 +125,7 @@ jobs:
          path: ./.next
      
      - name: Install Dependencies
-       run: npm ci
+       run: npm install
 
      - name: Set Backend Env
        run: |
@@ -146,7 +146,7 @@ jobs:
           EMQX_RESOURCES_DELAY=${{secrets.EMQX_RESOURCES_DELAY}}
           WEBHOOKS_HOST=${{secrets.WEBHOOKS_HOST}}
           EOM
-          && cat ./.env
+          
      - name: Health Check
        run: |
          (npm run start&) && sleep 10 &&
