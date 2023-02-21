@@ -147,11 +147,15 @@ jobs:
           WEBHOOKS_HOST=${{secrets.WEBHOOKS_HOST}}
           EOM
 
-      - name: Health Check
+      - name: Backend Health Check
         run: |
-          (npm run start&) && sleep 10 &&
+          (npm run startB&) && sleep 10 &&
           curl -X GET http://localhost:${{secrets.API_PORT}}/api/health || exit 1
 
+      - name: Frontend Health Check
+        run: |
+          (npm run start&) && sleep 10 &&
+          curl -X GET http://localhost:${{secrets.NEXT_PUBLIC_APP_PORT}}/ || exit 1
 # deploy: configurar para cargar a aws automaticamente
 # deploy:
 #   if: ${{github.event_name == 'push'}}
