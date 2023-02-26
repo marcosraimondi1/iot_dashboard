@@ -156,6 +156,7 @@ jobs:
         run: |
           (npm run start&) && sleep 10 &&
           curl -X GET http://localhost:${{secrets.NEXT_PUBLIC_APP_PORT}}/ || exit 1
+
 # deploy: configurar para cargar a aws automaticamente
 # deploy:
 #   if: ${{github.event_name == 'push'}}

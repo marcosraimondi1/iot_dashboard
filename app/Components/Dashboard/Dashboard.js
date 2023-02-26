@@ -13,10 +13,10 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import Button from "@mui/material/Button";
 
 import NavItems from "./NavItems";
 import Copyright from "../Copyright/Copyright";
+import Header from "../DashHeader/DashHeader";
 
 const drawerWidth = 240;
 
@@ -64,13 +64,10 @@ const Drawer = styled(MuiDrawer, {
   }
 }));
 
-DashboardContent.propTypes = {
-  children: PropTypes.element,
-  header: PropTypes.element,
-  logout: PropTypes.func,
-  title: PropTypes.string
+Dashboard.propTypes = {
+  children: PropTypes.element
 };
-function DashboardContent({ children, logout, title, header }) {
+export default function Dashboard({ children }) {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -97,21 +94,9 @@ function DashboardContent({ children, logout, title, header }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            {title}
-          </Typography>
-          {/* ELEMENTOS DE HEADER BAR */}
-          {header}
 
-          {/* USER - LOGOUT */}
-          <Button
-            sx={{ color: "white" }}
-            onClick={() => {
-              logout();
-            }}
-          >
-            Cerrar Sesion
-          </Button>
+          {/* ELEMENTOS DE HEADER BAR */}
+          <Header />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -153,19 +138,5 @@ function DashboardContent({ children, logout, title, header }) {
         </Container>
       </Box>
     </Box>
-  );
-}
-
-Dashboard.propTypes = {
-  children: PropTypes.element,
-  title: PropTypes.string,
-  logout: PropTypes.func
-};
-
-export default function Dashboard({ children, logout, title, header }) {
-  return (
-    <DashboardContent title={title} logout={logout} header={header}>
-      {children}
-    </DashboardContent>
   );
 }
