@@ -9,7 +9,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-
+import Link from "next/link";
 import Notifications from "@/Components/Notifications/Notifications";
 import { logout } from "@/Slices/authSlice";
 import { setSelectedDevice } from "@/Slices/devicesSlice";
@@ -57,7 +57,12 @@ export default function Header() {
             devicesOptions
           ) : (
             <MenuItem value="">
-              <a href="/dashboard/">Create New</a>
+              <Link
+                href={"/dashboard/devices"}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Create New
+              </Link>
             </MenuItem>
           )}
         </Select>

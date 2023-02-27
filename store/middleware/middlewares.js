@@ -19,11 +19,11 @@ const logger = // eslint-disable-line no-unused-vars
 const authentication = (store) => (next) => async (action) => {
   // LOGOUT
   if (action.type === "auth/logout") {
+    window.location.href = "/auth/login";
     global.notify("See you later", { variant: "success" });
     store.dispatch({ type: "devices/logout" }); // borra info guardada
     store.dispatch({ type: "emqx/logout" }); // borra info guardada
     next(action);
-    window.location.href = "/auth/login";
     return;
   }
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDevices } from "@/Slices/devicesSlice";
-import randomString from "../../utils/randomString";
+import randomString from "@/Helper/randomString";
 import axios from "axios";
 
 export default function useAlarms() {
