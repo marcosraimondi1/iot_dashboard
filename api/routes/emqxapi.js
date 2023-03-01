@@ -142,12 +142,15 @@ async function createResources() {
 
 //check if superuser exist if not we create one
 global.check_mqtt_superuser = async function checkMqttSuperUser() {
+  console.log("Validating Superuser".yellow);
   try {
     const superusers = await EmqxAuthRule.find({ type: "superuser" });
 
     if (superusers.length > 0) {
+      console.log("Superuser Valid !".green);
       return;
     } else if (superusers.length == 0) {
+      console.log("Superuser Not Found".red);
       await EmqxAuthRule.create({
         publish: ["#"],
         subscribe: ["#"],
@@ -159,10 +162,10 @@ global.check_mqtt_superuser = async function checkMqttSuperUser() {
         updatedTime: Date.now()
       });
 
-      console.log("Mqtt super user created");
+      console.log("Mqtt super user created".green);
     }
   } catch (error) {
-    console.log("error creating mqtt superuser ");
+    console.log("error creating mqtt superuser".red);
     console.log(error);
   }
 };
