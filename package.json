@@ -8,6 +8,8 @@
     "build": "next build",
     "start": "next start",
     "startB": "node api/index.js",
+    "startAll": "next start | node api/index.js",
+    "startProd": "next build && next start | node api/index.js",
     "lint": "eslint . --ext .js,.jsx",
     "lint:fix": "eslint --fix",
     "format": "prettier --write . --config ./.prettierrc"
