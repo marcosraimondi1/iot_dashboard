@@ -74,7 +74,7 @@ export default function Dashboard({ children }) {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", overflowX: "auto" }}>
       <CssBaseline />
       <AppBar position="absolute" open={open}>
         <Toolbar

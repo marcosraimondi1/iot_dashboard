@@ -32,5 +32,9 @@ export default authenticated(function Dashboard({ children }) {
     };
   }, [dispatch, closeSnackbar, enqueueSnackbar]);
 
-  return <Dash>{children}</Dash>;
+  return (
+    <Dash>
+      <div style={{ minWidth: "600px" }}>{children}</div>
+    </Dash>
+  );
 });

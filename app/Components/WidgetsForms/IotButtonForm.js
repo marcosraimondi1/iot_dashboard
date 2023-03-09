@@ -14,7 +14,7 @@ const colors = [
   { value: "secondary", label: "secondary" }
 ];
 
-const colSizes = [2, 3, 4, 6, 8, 12];
+const colSizes = [3, 4, 6, 8, 12];
 
 export default function IotButtonForm({ addWidget }) {
   const [variableFullName, setVariableFullName] = useState("");

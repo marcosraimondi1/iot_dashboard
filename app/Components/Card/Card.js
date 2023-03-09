@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 
 export default function Card({ children, title }) {
   return (
-    <Paper style={{ margin: "3px" }} elevation={8}>
+    <Paper style={{ margin: "3px", textOverflow: "ellipsis" }} elevation={8}>
       <div style={{ margin: "7px" }}>
         <h4>{title}</h4>
       </div>
