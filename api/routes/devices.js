@@ -4,6 +4,8 @@ const { checkAuth } = require("../middlewares/authentication.js");
 const axios = require("axios");
 
 const Device = require("../models/device.js");
+const Data = require("../models/data.js");
+const Notifications = require("../models/notifications.js");
 const SaverRule = require("../models/emqx_saver_rule.js");
 const Template = require("../models/template.js");
 const AlarmRule = require("../models/emqx_alarm_rule.js");
@@ -116,6 +118,9 @@ router.delete("/device", checkAuth, async (req, res) => {
 
     //deleting all posible alarm rules
     await deleteAllAlarmRules(userId, dId);
+
+    //deleting all notifications and data from this device
+    await deleteAllData(userId, dId);
 
     //deleting all posible mqtt device credentials
     await deleteMqttDeviceCredentials(dId);
@@ -380,6 +385,17 @@ async function deleteAllAlarmRules(userId, dId) {
       await AlarmRule.deleteMany({ userId: userId, dId: dId });
     }
 
+    return true;
+  } catch (error) {
+    console.log(error);
+    return "error";
+  }
+}
+
+async function deleteAllData(userId, dId) {
+  try {
+    await Data.deleteMany({ userId: userId, dId: dId });
+    await Notifications.deleteMany({ userId: userId, dId: dId });
     return true;
   } catch (error) {
     console.log(error);
