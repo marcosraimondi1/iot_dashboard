@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import IotIndicator from "../widgets/IotIndicator";
 import Button from "@mui/material/Button";
+import IconField from "./IconField/IconField";
 
 const colors = [
   { value: "success", label: "success" },
