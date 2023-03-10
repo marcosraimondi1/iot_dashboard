@@ -19,7 +19,8 @@ const colSizes = [3, 4, 6, 8, 12];
 
 export default function IotSwitchForm({ addWidget }) {
   const [variableFullName, setVariableFullName] = useState("");
-  const [icon, setIcon] = useState("");
+  const [icon, setIcon] = useState("lightbulb");
+  const [iconInput, setIconInput] = useState("");
   const [color, setColor] = useState("success");
   const [colSize, setColSize] = useState(6);
 
@@ -62,14 +63,11 @@ export default function IotSwitchForm({ addWidget }) {
               <br />
 
               {/* ICON */}
-              <TextField
-                required
+              <IconField
                 value={icon}
-                onChange={(e) => {
-                  setIcon(e.target.value);
-                }}
-                label="Icon"
-                type="text"
+                setValue={setIcon}
+                inputValue={iconInput}
+                setInputValue={setIconInput}
               />
               <br />
 

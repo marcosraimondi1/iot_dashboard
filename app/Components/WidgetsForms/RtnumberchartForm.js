@@ -19,7 +19,8 @@ const colSizes = [4, 6, 8, 12];
 
 export default function RtnumberchartForm({ addWidget }) {
   const [variableFullName, setVariableFullName] = useState("");
-  const [icon, setIcon] = useState("");
+  const [icon, setIcon] = useState("thermostat");
+  const [iconInput, setIconInput] = useState("");
   const [color, setColor] = useState("success");
   const [colSize, setColSize] = useState(6);
   const [unit, setUnit] = useState("");
@@ -70,14 +71,11 @@ export default function RtnumberchartForm({ addWidget }) {
               <br />
 
               {/* ICON */}
-              <TextField
-                required
+              <IconField
                 value={icon}
-                onChange={(e) => {
-                  setIcon(e.target.value);
-                }}
-                label="Icon"
-                type="text"
+                setValue={setIcon}
+                inputValue={iconInput}
+                setInputValue={setIconInput}
               />
               <br />
 

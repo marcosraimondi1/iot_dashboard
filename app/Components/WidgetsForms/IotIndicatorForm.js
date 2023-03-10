@@ -20,7 +20,8 @@ const colSizes = [3, 4, 6, 8, 12];
 export default function IotIndicatorForm({ addWidget }) {
   // <!-- Form Indicator Type -->
   const [variableFullName, setVariableFullName] = useState("");
-  const [icon, setIcon] = useState("");
+  const [icon, setIcon] = useState("lightbulb");
+  const [iconInput, setIconInput] = useState("");
   const [variableSendFreq, setVariableSendFreq] = useState(30);
   const [color, setColor] = useState("success");
   const [colSize, setColSize] = useState(6);
@@ -65,14 +66,11 @@ export default function IotIndicatorForm({ addWidget }) {
               <br />
 
               {/* ICON */}
-              <TextField
-                required
+              <IconField
                 value={icon}
-                onChange={(e) => {
-                  setIcon(e.target.value);
-                }}
-                label="Icon"
-                type="text"
+                setValue={setIcon}
+                inputValue={iconInput}
+                setInputValue={setIconInput}
               />
               <br />
 

@@ -5,6 +5,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import IotButton from "../widgets/IotButton";
 import Button from "@mui/material/Button";
+import IconField from "./IconField/IconField";
+
 const colors = [
   { value: "success", label: "success" },
   { value: "error", label: "error" },
@@ -18,7 +20,8 @@ const colSizes = [3, 4, 6, 8, 12];
 
 export default function IotButtonForm({ addWidget }) {
   const [variableFullName, setVariableFullName] = useState("");
-  const [icon, setIcon] = useState("");
+  const [icon, setIcon] = useState("lightbulb");
+  const [iconInput, setIconInput] = useState("");
   const [color, setColor] = useState("success");
   const [colSize, setColSize] = useState(6);
   const [message, setMessage] = useState("");
@@ -63,14 +66,11 @@ export default function IotButtonForm({ addWidget }) {
               <br />
 
               {/* ICON */}
-              <TextField
-                required
+              <IconField
                 value={icon}
-                onChange={(e) => {
-                  setIcon(e.target.value);
-                }}
-                label="Icon"
-                type="text"
+                setValue={setIcon}
+                inputValue={iconInput}
+                setInputValue={setIconInput}
               />
               <br />
 
