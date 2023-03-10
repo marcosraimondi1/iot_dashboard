@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import makeid from "@/Helper/randomString";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import IotIndicatorForm from "../../Components/WidgetsForms/IotIndicatorForm";
@@ -19,6 +20,7 @@ export default function useTemplates() {
   const [widgets, setWidgets] = useState([]);
   const [templates, setTemplates] = useState([]);
   const [templateName, setTemplateName] = useState("");
+  const [templateDescription, setTemplateDescription] = useState("");
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
@@ -80,7 +82,7 @@ export default function useTemplates() {
         widget.config.demo = false;
         return widget;
       }),
-      description: ""
+      description: templateDescription
     };
 
     const axiosHeaders = {
@@ -121,22 +123,14 @@ export default function useTemplates() {
     widgets,
     templateName,
     setTemplateName,
+    templateDescription,
+    setTemplateDescription,
     deleteWidget,
     deleteTemplate,
     saveTemplate,
     widgetForm,
     widgetsOptions
   };
-}
-
-function makeid(length) {
-  var result = "";
-  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
 }
 
 const fetchTemplates = async (token) => {

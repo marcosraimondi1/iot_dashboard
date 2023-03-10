@@ -15,6 +15,8 @@ export default function Templates() {
     widgets,
     templateName,
     setTemplateName,
+    templateDescription,
+    setTemplateDescription,
     deleteWidget,
     deleteTemplate,
     saveTemplate,
@@ -55,6 +57,13 @@ export default function Templates() {
             label="Template Name"
             value={templateName}
             onChange={(e) => setTemplateName(e.target.value)}
+            sx={{ width: "100%", margin: "5px" }}
+          ></TextField>
+          <TextField
+            required
+            label="Template Description"
+            value={templateDescription}
+            onChange={(e) => setTemplateDescription(e.target.value)}
             sx={{ width: "100%", margin: "5px" }}
           ></TextField>
           <Button variant="contained" onClick={saveTemplate}>

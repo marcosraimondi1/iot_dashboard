@@ -22,6 +22,7 @@ export default function Lista({ templates, del }) {
           <TableRow>
             <TableCell>Template</TableCell>
             <TableCell>Name</TableCell>
+            <TableCell>Description</TableCell>
             <TableCell align="right">N° Widgets</TableCell>
             <TableCell align="right">Eliminar&nbsp;</TableCell>
           </TableRow>
@@ -34,6 +35,9 @@ export default function Lista({ templates, del }) {
               </TableCell>
               <TableCell component="th" scope="row">
                 {p.name}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {p.description}
               </TableCell>
               <TableCell align="right">{p.widgets.length}</TableCell>
               <TableCell align="right">
