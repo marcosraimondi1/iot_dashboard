@@ -6,8 +6,9 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import AlarmsList from "../../Components/Lists/AlarmsList";
 import useAlarms from "./useAlarms";
-
+import useGetSize from "../useGetSize";
 export default function Alarms() {
+  const { width } = useGetSize();
   const {
     device,
     alarms,
@@ -35,7 +36,7 @@ export default function Alarms() {
           </Grid>
 
           {/* VARIABLE */}
-          <Grid item xs={6}>
+          <Grid item xs={width < 650 ? 12 : 6}>
             <TextField
               required
               select
@@ -44,7 +45,7 @@ export default function Alarms() {
               onChange={(e) => {
                 setSelectedWidgetIndex(e.target.value);
               }}
-              sx={{ width: "100%", margin: "10px" }}
+              sx={{ width: "80%", margin: "10px" }}
             >
               {device?.template?.widgets?.map((w, index) => (
                 <MenuItem key={index} value={index}>
@@ -55,7 +56,7 @@ export default function Alarms() {
           </Grid>
 
           {/* CONDITION */}
-          <Grid item xs={6}>
+          <Grid item xs={width < 650 ? 12 : 6}>
             <TextField
               required
               select
@@ -74,19 +75,19 @@ export default function Alarms() {
           </Grid>
 
           {/* VALUE */}
-          <Grid item xs={6}>
+          <Grid item xs={width < 650 ? 12 : 6}>
             <TextField
               required
               type="number"
               label="Value"
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              sx={{ width: "100%", margin: "10px" }}
+              sx={{ width: "80%", margin: "10px" }}
             />
           </Grid>
 
           {/* TRIGGER TIME */}
-          <Grid item xs={6}>
+          <Grid item xs={width < 650 ? 12 : 6}>
             <TextField
               required
               label="Trigger Time (mins)"

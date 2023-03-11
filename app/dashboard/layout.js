@@ -34,7 +34,7 @@ export default authenticated(function Dashboard({ children }) {
 
   return (
     <Dash>
-      <div style={{ minWidth: "600px" }}>{children}</div>
+      <div style={{ minWidth: "300px" }}>{children}</div>
     </Dash>
   );
 });

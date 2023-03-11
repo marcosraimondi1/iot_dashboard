@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import IotSwitch from "../widgets/IotSwitch";
 import Button from "@mui/material/Button";
 import IconField from "./IconField/IconField";
+import useGetSize from "../../dashboard/useGetSize";
 
 const colors = [
   { value: "success", label: "success" },
@@ -19,6 +20,7 @@ const colors = [
 const colSizes = [3, 4, 6, 8, 12];
 
 export default function IotSwitchForm({ addWidget }) {
+  const { width } = useGetSize();
   const [variableFullName, setVariableFullName] = useState("");
   const [icon, setIcon] = useState("lightbulb");
   const [iconInput, setIconInput] = useState("");
@@ -40,7 +42,7 @@ export default function IotSwitchForm({ addWidget }) {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={6}>
+        <Grid item xs={width < 650 ? 12 : 6}>
           <Card>
             <div
               style={{
@@ -135,7 +137,7 @@ export default function IotSwitchForm({ addWidget }) {
             </div>
           </Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={width < 650 ? 12 : 6}>
           <Grid item xs={colSize}>
             <IotSwitch config={iotSwitchConfig} />
           </Grid>

@@ -6,8 +6,9 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import DevicesList from "../../Components/Lists/DevicesList";
 import useDevices from "./useDevices";
-
+import useGetSize from "../useGetSize";
 export default function Devices() {
+  const { width } = useGetSize();
   const {
     templates,
     devices,
@@ -32,16 +33,16 @@ export default function Devices() {
               <h2>Add New Device</h2>
             </div>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={width < 650 ? 12 : 6}>
             <TextField
               required
               value={deviceName}
               onChange={(e) => setDeviceName(e.target.value)}
               label="Device Name"
-              sx={{ width: "100%", margin: "10px" }}
+              sx={{ width: "80%", margin: "10px" }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={width < 650 ? 12 : 6}>
             <TextField
               required
               value={dId}
@@ -50,7 +51,7 @@ export default function Devices() {
               sx={{ width: "80%", margin: "10px" }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={width < 650 ? 12 : 6}>
             <TextField
               required
               select
@@ -59,7 +60,7 @@ export default function Devices() {
               onChange={(e) => {
                 setDeviceTemplateIndex(e.target.value);
               }}
-              sx={{ width: "100%", margin: "10px" }}
+              sx={{ width: "80%", margin: "10px" }}
             >
               {templates.map((temp, index) => (
                 <MenuItem key={index} value={index}>

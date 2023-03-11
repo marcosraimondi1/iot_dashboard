@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import IotIndicator from "../widgets/IotIndicator";
 import Button from "@mui/material/Button";
 import IconField from "./IconField/IconField";
+import useGetSize from "../../dashboard/useGetSize";
 
 const colors = [
   { value: "success", label: "success" },
@@ -20,6 +21,7 @@ const colSizes = [3, 4, 6, 8, 12];
 
 export default function IotIndicatorForm({ addWidget }) {
   // <!-- Form Indicator Type -->
+  const { width } = useGetSize();
   const [variableFullName, setVariableFullName] = useState("");
   const [icon, setIcon] = useState("lightbulb");
   const [iconInput, setIconInput] = useState("");
@@ -43,7 +45,7 @@ export default function IotIndicatorForm({ addWidget }) {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={6}>
+        <Grid item xs={width < 650 ? 12 : 6}>
           <Card>
             <div
               style={{
@@ -152,7 +154,7 @@ export default function IotIndicatorForm({ addWidget }) {
             </div>
           </Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={width < 650 ? 12 : 6}>
           <Grid item xs={colSize}>
             <IotIndicator config={iotIndicatorConfig} />
           </Grid>

@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import Rtnumberchart from "../widgets/Rtnumberchart";
 import Button from "@mui/material/Button";
 import IconField from "./IconField/IconField";
+import useGetSize from "../../dashboard/useGetSize";
 
 const colors = [
   { value: "success", label: "success" },
@@ -19,6 +20,7 @@ const colors = [
 const colSizes = [4, 6, 8, 12];
 
 export default function RtnumberchartForm({ addWidget }) {
+  const { width } = useGetSize();
   const [variableFullName, setVariableFullName] = useState("");
   const [icon, setIcon] = useState("thermostat");
   const [iconInput, setIconInput] = useState("");
@@ -48,7 +50,7 @@ export default function RtnumberchartForm({ addWidget }) {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={6}>
+        <Grid item xs={width < 650 ? 12 : 6}>
           <Card>
             <div
               style={{
@@ -199,7 +201,7 @@ export default function RtnumberchartForm({ addWidget }) {
             </div>
           </Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={width < 650 ? 12 : 6}>
           <Grid item xs={12}>
             <Rtnumberchart config={rtnumberchartConfig} />
           </Grid>

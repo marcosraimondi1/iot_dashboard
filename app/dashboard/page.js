@@ -5,10 +5,12 @@ import IotSwitch from "../Components/widgets/IotSwitch";
 import Rtnumberchart from "../Components/widgets/Rtnumberchart";
 import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
+import useGetSize from "./useGetSize";
 
 export default function Dashboard() {
-  const selectedDevice = useSelector((state) => state.devices.selectedDevice);
+  const { width } = useGetSize();
 
+  const selectedDevice = useSelector((state) => state.devices.selectedDevice);
   const widgets = selectedDevice?.template?.widgets;
 
   const fixWidget = (widget) => {
@@ -33,11 +35,14 @@ export default function Dashboard() {
     }
   };
 
-  const dashItems = widgets?.map((widget, index) => (
-    <Grid item key={index} xs={widget.config.colSize}>
-      {selectWidget(widget)}
-    </Grid>
-  ));
+  const dashItems = widgets?.map((widget, index) => {
+    let colSize = width <= 650 ? 12 : widget.config.colSize;
+    return (
+      <Grid item key={index} xs={colSize}>
+        {selectWidget(widget)}
+      </Grid>
+    );
+  });
 
   return (
     <Grid container spacing={2}>
