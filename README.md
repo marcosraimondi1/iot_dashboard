@@ -3,8 +3,13 @@ An easy to use and customizable dashboard for visualizing and managing your IoT 
 
 ## Requirements
 - npm ^10.9
+- node ^23.5
 
 ## Build
+
+### Start services
+1. Follow instructions on [http://github.com/marcosraimondi1/iot_dashboard_services](http://github.com/marcosraimondi1/iot_dashboard_services) 
+to start emqx and mongo services.
 
 ### Local development
 1. Clone the repository
@@ -12,9 +17,9 @@ An easy to use and customizable dashboard for visualizing and managing your IoT 
 ```sh
 npm install
 ```
-4. Run locally
+4. Run locally (backend and frontend)
 ```sh
-npm run dev
+npm run startAll
 ```
 5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
