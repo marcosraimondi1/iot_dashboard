@@ -17,6 +17,9 @@ to start emqx and mongo services.
 ```sh
 npm install
 ```
+3. Create .env file. A template is shown in `env-dev`.
+> [!NOTE]  
+> Environment variables must match with the backend environment variables (iot_dashboard/.env).
 4. Run locally (backend and frontend)
 ```sh
 npm run startAll
