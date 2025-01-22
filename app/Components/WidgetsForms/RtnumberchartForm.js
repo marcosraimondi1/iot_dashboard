@@ -70,8 +70,8 @@ export default function RtnumberchartForm({ addWidget }) {
                 }}
                 label="Var Name"
                 type="text"
+                style={{ marginBottom: "10px" }}
               />
-              <br />
 
               {/* ICON */}
               <IconField
@@ -79,8 +79,8 @@ export default function RtnumberchartForm({ addWidget }) {
                 setValue={setIcon}
                 inputValue={iconInput}
                 setInputValue={setIconInput}
+                style={{ marginBottom: "10px" }}
               />
-              <br />
 
               {/* UNIT */}
               <TextField
@@ -91,8 +91,8 @@ export default function RtnumberchartForm({ addWidget }) {
                 }}
                 label="Unit"
                 type="text"
+                style={{ marginBottom: "10px" }}
               />
-              <br />
 
               {/* DECIMAL PLACES */}
               <TextField
@@ -103,8 +103,8 @@ export default function RtnumberchartForm({ addWidget }) {
                 }}
                 label="Decimal Places"
                 type="number"
+                style={{ marginBottom: "10px" }}
               />
-              <br />
 
               {/* SEND FREQ */}
               <TextField
@@ -115,8 +115,8 @@ export default function RtnumberchartForm({ addWidget }) {
                 }}
                 label="Variable Send Frequency (secs)"
                 type="number"
+                style={{ marginBottom: "10px" }}
               />
-              <br />
 
               {/* CHART TIME AGO */}
               <TextField
@@ -127,8 +127,8 @@ export default function RtnumberchartForm({ addWidget }) {
                 }}
                 label="Chart Back Time (mins)"
                 type="number"
+                style={{ marginBottom: "10px" }}
               />
-              <br />
 
               {/* COLOR */}
               <TextField
@@ -140,6 +140,7 @@ export default function RtnumberchartForm({ addWidget }) {
                   setColor(e.target.value);
                 }}
                 label="Color"
+                style={{ marginBottom: "10px" }}
               >
                 {colors.map((option) => (
                   <MenuItem
@@ -151,7 +152,6 @@ export default function RtnumberchartForm({ addWidget }) {
                   </MenuItem>
                 ))}
               </TextField>
-              <br />
 
               {/* SIZE */}
               <TextField
@@ -162,6 +162,7 @@ export default function RtnumberchartForm({ addWidget }) {
                 onChange={(e) => {
                   setColSize(e.target.value);
                 }}
+                style={{ marginBottom: "10px" }}
               >
                 {colSizes.map((xs) => (
                   <MenuItem key={xs} value={xs}>
@@ -169,8 +170,8 @@ export default function RtnumberchartForm({ addWidget }) {
                   </MenuItem>
                 ))}
               </TextField>
+
               {/* ADD BUTTON */}
-              <br />
               <Button
                 onClick={() => {
                   if (icon === "") {

@@ -44,14 +44,17 @@ export default function Header() {
       </Typography>
 
       {/* DEVICE SELECTOR */}
-      <FormControl size="small" sx={{ m: 1, minWidth: 130 }}>
-        <InputLabel id="select-label">{devices.length > 0 ? "Device" : "No Devices"}</InputLabel>
+      <FormControl size="small" sx={{ m: 1, minWidth: 130 }} style={{ color: "white" }}>
+        <InputLabel id="select-label" style={{ color: "white" }}>
+          {devices.length > 0 ? "Device" : "No Devices"}
+        </InputLabel>
         <Select
           labelId="select-label"
           id="demo-simple-select"
           value={selectedDID}
           label="Device"
           onChange={handleChange}
+          style={{ color: "white" }}
         >
           {devices.length > 0 ? (
             devicesOptions
@@ -82,7 +85,7 @@ export default function Header() {
 
       {/* USER - LOGOUT */}
       <Button sx={{ color: "white" }} onClick={handleLogout}>
-        Cerrar Sesion
+        Logout
       </Button>
     </>
   );

@@ -65,8 +65,8 @@ export default function IotIndicatorForm({ addWidget }) {
                 }}
                 label="Var Name"
                 type="text"
+                style={{ marginBottom: "10px" }}
               />
-              <br />
 
               {/* ICON */}
               <IconField
@@ -74,8 +74,8 @@ export default function IotIndicatorForm({ addWidget }) {
                 setValue={setIcon}
                 inputValue={iconInput}
                 setInputValue={setIconInput}
+                style={{ marginBottom: "10px" }}
               />
-              <br />
 
               {/* SEND FREQ */}
               <TextField
@@ -86,8 +86,8 @@ export default function IotIndicatorForm({ addWidget }) {
                 }}
                 label="Variable Send Frequency (secs)"
                 type="number"
+                style={{ marginBottom: "10px" }}
               />
-              <br />
 
               {/* COLOR */}
               <TextField
@@ -99,6 +99,7 @@ export default function IotIndicatorForm({ addWidget }) {
                   setColor(e.target.value);
                 }}
                 label="Color"
+                style={{ marginBottom: "10px" }}
               >
                 {colors.map((option) => (
                   <MenuItem
@@ -110,7 +111,6 @@ export default function IotIndicatorForm({ addWidget }) {
                   </MenuItem>
                 ))}
               </TextField>
-              <br />
 
               {/* SIZE */}
               <TextField
@@ -121,6 +121,7 @@ export default function IotIndicatorForm({ addWidget }) {
                 onChange={(e) => {
                   setColSize(e.target.value);
                 }}
+                style={{ marginBottom: "10px" }}
               >
                 {colSizes.map((xs) => (
                   <MenuItem key={xs} value={xs}>
@@ -128,7 +129,6 @@ export default function IotIndicatorForm({ addWidget }) {
                   </MenuItem>
                 ))}
               </TextField>
-              <br />
               <Button
                 onClick={() => {
                   if (icon === "") {

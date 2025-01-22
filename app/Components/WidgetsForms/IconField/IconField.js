@@ -1,7 +1,7 @@
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import options from "./icons.json";
-export default function IconField({ value, setValue, inputValue, setInputValue }) {
+export default function IconField({ value, setValue, inputValue, setInputValue, style }) {
   return (
     <Autocomplete
       disablePortal
@@ -15,6 +15,7 @@ export default function IconField({ value, setValue, inputValue, setInputValue }
         setInputValue(newInputValue);
       }}
       renderInput={(params) => <TextField {...params} label="Icon" />}
+      style={style}
     />
   );
 }

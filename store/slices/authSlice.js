@@ -9,6 +9,7 @@ export const authSlice = createSlice({
   reducers: {
     // async logic handled in middlewares
     login: (state, action) => {
+      if (!action.payload) return;
       state.token = action.payload.token;
       state.userData = action.payload.userData;
     },

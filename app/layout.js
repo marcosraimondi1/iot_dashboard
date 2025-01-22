@@ -7,9 +7,16 @@ axios.defaults.baseURL = process.env.NEXT_PUBLIC_AXIOS_BASE_URL;
 // MQTT GLOBAL VARIABLES
 global.CLIENT = null;
 global.OPTIONS = {
+  mqtt_prefix: process.env.NEXT_PUBLIC_MQTT_PREFIX,
   host: process.env.NEXT_PUBLIC_MQTT_HOST,
   port: process.env.NEXT_PUBLIC_MQTT_PORT,
   endpoint: "/mqtt",
+  mqtt_url:
+    process.env.NEXT_PUBLIC_MQTT_PREFIX +
+    process.env.NEXT_PUBLIC_MQTT_HOST +
+    ":" +
+    process.env.NEXT_PUBLIC_MQTT_PORT +
+    "/mqtt",
   clean: true,
   connectTimeout: 5000,
   reconnectPeriod: 5000,

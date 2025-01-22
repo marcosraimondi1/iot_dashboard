@@ -299,12 +299,7 @@ const startMqttClient = async (store) => {
 
   const notifSubscribeTopic = store.getState().auth.userData._id + "/+/+/notif";
 
-  const connectUrl =
-    process.env.NEXT_PUBLIC_MQTT_PREFIX +
-    global.OPTIONS.host +
-    ":" +
-    global.OPTIONS.port +
-    global.OPTIONS.endpoint;
+  const connectUrl = global.OPTIONS.mqtt_url;
 
   try {
     global.CLIENT = mqtt.connect(connectUrl, global.OPTIONS);

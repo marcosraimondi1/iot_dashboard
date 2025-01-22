@@ -22,9 +22,12 @@ npm install
 > Environment variables must match with the backend environment variables (iot_dashboard/.env).
 4. Run locally (backend and frontend)
 ```sh
-npm run startAll
+npm run devn & # start backend daemon (nodemon)
+npm run dev # start frontend
+
 ```
 5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Check backend [http://localhost:3001/api/health](http://localhost:3001/api/health)
 
 ### Production
 

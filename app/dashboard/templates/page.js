@@ -38,6 +38,7 @@ export default function Templates() {
           onChange={(e) => {
             setSelectedWidget(e.target.value);
           }}
+          style={{ marginBottom: "10px" }}
         >
           {widgetsOptions.map((option) => (
             <MenuItem key={option.value} value={option.value}>
