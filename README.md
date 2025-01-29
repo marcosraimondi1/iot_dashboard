@@ -36,6 +36,15 @@ npm run dev # start frontend
 ### Production
 
 ## Usage
+1. First register and lgin to access your own dashboard.
+2. Once logged, you will need to create a template, a template is a set of widgets that let you see and interact with different variables on your system. Available widgets are:
+- IoT Button: sends a custom message to the device when clicked.
+- IoT Switch: switches between 2 states (true or false)
+- IoT Indicator: shows the status of a binary variable (ex. on/off).
+- IoT Real Time Number Chart: displays a line chart of data sent by the device.   
+3. Once you have created your template, create a device that will use the template.
+4. After creating the device, you now need to set up your device firmware. An example is shown in [IoT Dashboard Devices](https://github.com/marcosraimondi1/iot_dashboard_devices), you can follow that example or configure your own device.
+5. Once you have connected your device, you should be able to interact with it from the dashboard.  
 ## Screenshots
 
 **Main dashboard**:
