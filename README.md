@@ -1,6 +1,10 @@
 # IOT DASHBOARD
-An easy to use and customizable dashboard for visualizing and managing your IoT devices. 
+An easy to use and customizable dashboard for visualizing and managing your IoT devices.
 
+Check this other repositories for the full integration:
+- [IoT Dashboard Services](https://github.com/marcosraimondi1/iot_dashboard_services)
+- [IoT Dashboard Devices](https://github.com/marcosraimondi1/iot_dashboard_devices)
+ 
 ## Requirements
 - npm ^10.9
 - node ^23.5
