@@ -37,3 +37,16 @@ npm run dev # start frontend
 
 ## Usage
 ## Screenshots
+
+**Main dashboard**:
+
+![dashboard](https://github.com/user-attachments/assets/6ed2f284-dc81-4a79-a158-265b2aec2408)
+
+
+**Notifications from emqx rules**:
+
+![2025-01-29-191225_1394x939_scrot](https://github.com/user-attachments/assets/f88f3fdb-b5fe-4c49-8a2b-5c3970e1b985)
+
+**Template Creation**:
+
+![templates](https://github.com/user-attachments/assets/a8e3ee3a-d7fd-4a27-a6a0-cd74b63dfe09)
