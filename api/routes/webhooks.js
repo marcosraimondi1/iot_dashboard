@@ -26,7 +26,7 @@ router.post("/getdevicecredentials", async (req, res) => {
 
     const device = await Device.findOne({ dId: dId });
 
-    if (password != device.password) {
+    if (password != device?.password) {
       return res.status(401).json();
     }
 
