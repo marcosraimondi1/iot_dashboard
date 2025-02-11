@@ -132,6 +132,7 @@ jobs:
         run: |
           cat > ./.env <<- EOM
           NODE_ENV=${{secrets.NODE_ENV}}
+          environment=test
           API_PORT=${{secrets.API_PORT}}
           MONGO_USERNAME=${{secrets.MONGO_USERNAME}}
           MONGO_PASSWORD=${{secrets.MONGO_PASSWORD}}
