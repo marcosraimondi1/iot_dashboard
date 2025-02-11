@@ -28,7 +28,7 @@ jobs:
         with:
           cache: "npm" # ahorra tiempo al instalar una sola vez las dependencias
           cache-dependency-path: package-lock.json
-          node-version: "18.12.1"
+          node-version: "23.5.0"
 
       - name: Upgrade NPM
         run: npm install -g npm
@@ -48,7 +48,7 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: package-lock.json
-          node-version: "18.12.1"
+          node-version: "23.5.0"
 
       - name: Upgrade NPM
         run: npm install -g npm
@@ -72,7 +72,7 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: package-lock.json
-          node-version: "18.12.1"
+          node-version: "23.5.0"
 
       - name: Upgrade NPM
         run: npm install -g npm
@@ -114,7 +114,7 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: package-lock.json
-          node-version: "18.12.1"
+          node-version: "23.5.0"
 
       - name: Upgrade NPM
         run: npm install -g npm
