@@ -41,6 +41,9 @@ npm run dev # start frontend
 
 ### Production
 
+You can serve the application from any remote server by correctly setting up the environment variables for connecting with the external services.
+Check out [IoT Dashboard Services](https://github.com/marcosraimondi1/iot_dashboard_services) for more information on how to deploy the app into a server.
+
 ## Usage
 1. First register and lgin to access your own dashboard.
 2. Once logged, you will need to create a template, a template is a set of widgets that let you see and interact with different variables on your system. Available widgets are:
